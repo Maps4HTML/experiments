@@ -346,6 +346,7 @@
                 title.innerText = "Feature";
                 path._path.appendChild(title);
               }
+              path._path.setAttribute("aria-expanded", "false");
             }
           }
         }
@@ -2544,6 +2545,7 @@
           if (this._templatedLayer) {
               map.removeLayer(this._templatedLayer);
           }
+          map.fire("checkdisabled");
           map.off("popupopen", this._attachSkipButtons);
       },
       getZoomBounds: function () {
@@ -3513,6 +3515,7 @@
         if(path) {
           // e.target = this._map
           // Looks for keydown, more specifically tab and shift tab
+          path.setAttribute("aria-expanded", "true");
           map.on("keydown", focusFeature);
         } else {
           map.on("keydown", focusMap);
@@ -3561,6 +3564,7 @@
             map.off("keydown", focusFeature);
             map.off("keydown", focusMap);
             map.off('popupclose', removeHandlers);
+            if(path) path.setAttribute("aria-expanded", "false");
           }
         }
       },
