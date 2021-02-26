@@ -11,9 +11,11 @@
     <body>
         <feature id="restaurant_point.77" class="restaurant_point">
             <geometry>
-                <point>
-                    <coordinates>-75.7153402 45.4081719</coordinates>
-                </point>
+                <multipolygon>
+                    <polygon>
+                        <coordinates>-75.71543400037297 45.40819502909854 -75.71530820037297 45.40823052909854 -75.71525730037297 45.40814162909854 -75.71538320037297 45.40810612909854 -75.71543400037297 45.40819502909854</coordinates>
+                    </polygon>
+                </multipolygon>
             </geometry>
             <properties>
                 <table>
@@ -102,9 +104,11 @@
         </feature>
         <feature id="restaurant_point.2" class="restaurant_point">
             <geometry>
-                <point>
-                    <coordinates>-75.690192 45.4186583</coordinates>
-                </point>
+                <multipolygon>
+                    <polygon>
+                        <coordinates>-75.6902755031953 45.41868067160079 -75.6901497031953 45.418716171600785 -75.6900988031953 45.41862727160078 -75.6902247031953 45.41859177160079 -75.6902755031953 45.41868067160079</coordinates>
+                    </polygon>
+                </multipolygon>
             </geometry>
             <properties>
                 <table>
@@ -193,9 +197,11 @@
         </feature>
         <feature id="restaurant_point.9" class="restaurant_point">
             <geometry>
-                <point>
-                    <coordinates>-75.6910006 45.4078828</coordinates>
-                </point>
+                <multipolygon>
+                    <polygon>
+                        <coordinates>-75.69108408413759 45.407905135087496 -75.6909582841376 45.40794063508749 -75.69090738413759 45.40785173508749 -75.69103328413759 45.407816235087495 -75.69108408413759 45.407905135087496</coordinates>
+                    </polygon>
+                </multipolygon>
             </geometry>
             <properties>
                 <table>
@@ -284,9 +290,11 @@
         </feature>
         <feature id="restaurant_point.13" class="restaurant_point">
             <geometry>
-                <point>
-                    <coordinates>-75.7077782 45.4107226</coordinates>
-                </point>
+                <multipolygon>
+                    <polygon>
+                        <coordinates>-75.70786179432208 45.410746385011166 -75.70773599432209 45.41078188501116 -75.70768509432209 45.41069298501116 -75.70781099432209 45.410657485011164 -75.70786179432208 45.410746385011166</coordinates>
+                    </polygon>
+                </multipolygon>
             </geometry>
             <properties>
                 <table>
@@ -375,9 +383,11 @@
         </feature>
         <feature id="restaurant_point.18" class="restaurant_point">
             <geometry>
-                <point>
-                    <coordinates>-75.7063457 45.4110604</coordinates>
-                </point>
+                <multipolygon>
+                    <polygon>
+                        <coordinates>-75.70642921479893 45.41108327733854 -75.70630341479894 45.41111877733854 -75.70625251479893 45.411029877338535 -75.70637841479893 45.41099437733854 -75.70642921479893 45.41108327733854</coordinates>
+                    </polygon>
+                </multipolygon>
             </geometry>
             <properties>
                 <table>
