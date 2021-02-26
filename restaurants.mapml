@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <meta content="text/mapml" http-equiv="Content-Type" />
         <meta name="projection" content="CBMTILE"/>
-        <meta name="zoom" content="min=0,max=16,value=3" />
+        <meta name="zoom" content="min=0,max=22,value=3" />
         <meta name="cs" content="gcrs" />
         <meta name="extent" content="top-left-easting=1509080.1964270622,top-left-northing=-169400.558801122,bottom-right-easting=1512094.3357886747,bottom-right-northing=-172702.5654051304" />
     </head>
