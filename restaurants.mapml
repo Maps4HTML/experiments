@@ -11,6 +11,7 @@
     </head>
     <body>
         <feature id="restaurant_point.77" class="restaurant_point">
+          <featurecaption>Hung Sum Restaurant</featurecaption>
             <geometry>
                 <multipolygon>
                     <polygon>
@@ -104,6 +105,7 @@
             </properties>
         </feature>
         <feature id="restaurant_point.2" class="restaurant_point">
+          <featurecaption>Big Daddy's</featurecaption>
             <geometry>
                 <multipolygon>
                     <polygon>
@@ -197,6 +199,7 @@
             </properties>
         </feature>
         <feature id="restaurant_point.9" class="restaurant_point">
+          <featurecaption>Hareg Cafe &amp; Variety</featurecaption>
             <geometry>
                 <multipolygon>
                     <polygon>
@@ -290,6 +293,7 @@
             </properties>
         </feature>
         <feature id="restaurant_point.13" class="restaurant_point">
+          <featurecaption>Phucket Royal</featurecaption>
             <geometry>
                 <multipolygon>
                     <polygon>
@@ -383,6 +387,7 @@
             </properties>
         </feature>
         <feature id="restaurant_point.18" class="restaurant_point">
+          <featurecaption>Sushi 88</featurecaption>
             <geometry>
                 <multipolygon>
                     <polygon>
@@ -476,6 +481,7 @@
             </properties>
         </feature>
         <feature id="restaurant_polygon.2" class="restaurant_polygon">
+          <featurecaption>Banditos</featurecaption>
             <geometry>
                 <multipolygon>
                     <polygon>
@@ -593,6 +599,7 @@
             </properties>
         </feature>
         <feature id="restaurant_polygon.7" class="restaurant_polygon">
+          <featurecaption>India Palace</featurecaption>
             <geometry>
                 <multipolygon>
                     <polygon>
@@ -710,6 +717,7 @@
             </properties>
         </feature>
         <feature id="restaurant_polygon.20" class="restaurant_polygon">
+          <featurecaption>The Prescott</featurecaption>
             <geometry>
                 <multipolygon>
                     <polygon>
