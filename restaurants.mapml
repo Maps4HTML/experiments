@@ -760,7 +760,7 @@
                         </tr>
                         <tr>
                             <th scope="row">website</th>
-                            <td itemprop="website">http://www.theprescott.com/</td>
+                            <td itemprop="website"><a href="http://www.theprescott.com/">The Prescott</a></td>
                         </tr>
                         <tr>
                             <th scope="row">phone</th>
