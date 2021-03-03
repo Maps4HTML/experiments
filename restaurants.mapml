@@ -13,11 +13,9 @@
         <feature id="restaurant_point.77" class="restaurant_point">
           <featurecaption>Hung Sum Restaurant</featurecaption>
             <geometry>
-                <multipolygon>
-                    <polygon>
-                        <coordinates>-75.71543400037297 45.40819502909854 -75.71530820037297 45.40823052909854 -75.71525730037297 45.40814162909854 -75.71538320037297 45.40810612909854 -75.71543400037297 45.40819502909854</coordinates>
-                    </polygon>
-                </multipolygon>
+                <point>
+                        <coordinates>-75.71543400037297 45.40819502909854</coordinates>
+                </point>
             </geometry>
             <properties>
                 <table>
@@ -107,11 +105,9 @@
         <feature id="restaurant_point.2" class="restaurant_point">
           <featurecaption>Big Daddy's</featurecaption>
             <geometry>
-                <multipolygon>
-                    <polygon>
-                        <coordinates>-75.6902755031953 45.41868067160079 -75.6901497031953 45.418716171600785 -75.6900988031953 45.41862727160078 -75.6902247031953 45.41859177160079 -75.6902755031953 45.41868067160079</coordinates>
-                    </polygon>
-                </multipolygon>
+                <point>
+                  <coordinates>-75.6902755031953 45.41868067160079</coordinates>
+                </point>
             </geometry>
             <properties>
                 <table>
@@ -201,11 +197,9 @@
         <feature id="restaurant_point.9" class="restaurant_point">
           <featurecaption>Hareg Cafe &amp; Variety</featurecaption>
             <geometry>
-                <multipolygon>
-                    <polygon>
-                        <coordinates>-75.69108408413759 45.407905135087496 -75.6909582841376 45.40794063508749 -75.69090738413759 45.40785173508749 -75.69103328413759 45.407816235087495 -75.69108408413759 45.407905135087496</coordinates>
-                    </polygon>
-                </multipolygon>
+              <point>
+                <coordinates>-75.69108408413759 45.407905135087496</coordinates>
+              </point>
             </geometry>
             <properties>
                 <table>
@@ -295,11 +289,9 @@
         <feature id="restaurant_point.13" class="restaurant_point">
           <featurecaption>Phucket Royal</featurecaption>
             <geometry>
-                <multipolygon>
-                    <polygon>
-                        <coordinates>-75.70786179432208 45.410746385011166 -75.70773599432209 45.41078188501116 -75.70768509432209 45.41069298501116 -75.70781099432209 45.410657485011164 -75.70786179432208 45.410746385011166</coordinates>
-                    </polygon>
-                </multipolygon>
+              <point>
+                <coordinates>-75.70786179432208 45.410746385011166</coordinates>
+              </point>
             </geometry>
             <properties>
                 <table>
@@ -389,11 +381,9 @@
         <feature id="restaurant_point.18" class="restaurant_point">
           <featurecaption>Sushi 88</featurecaption>
             <geometry>
-                <multipolygon>
-                    <polygon>
-                        <coordinates>-75.70642921479893 45.41108327733854 -75.70630341479894 45.41111877733854 -75.70625251479893 45.411029877338535 -75.70637841479893 45.41099437733854 -75.70642921479893 45.41108327733854</coordinates>
-                    </polygon>
-                </multipolygon>
+              <point>
+                <coordinates>-75.70642921479893 45.41108327733854</coordinates>
+              </point>
             </geometry>
             <properties>
                 <table>
@@ -483,11 +473,9 @@
         <feature id="restaurant_polygon.2" class="restaurant_polygon">
           <featurecaption>Banditos</featurecaption>
             <geometry>
-                <multipolygon>
-                    <polygon>
-                        <coordinates>-75.689609 45.405803 -75.68949 45.405836 -75.689486 45.405829 -75.689448 45.40584 -75.689352 45.405724 -75.689414 45.405706 -75.689411 45.405701 -75.689419 45.405698 -75.689414 45.405689 -75.689465 45.405675 -75.68947 45.405684 -75.68953 45.405667 -75.689535 45.405675 -75.68955 45.405671 -75.689562 45.405691 -75.689546 45.405695 -75.689609 45.405803</coordinates>
-                    </polygon>
-                </multipolygon>
+              <point>
+                  <coordinates>-75.689609 45.405803</coordinates>
+              </point>
             </geometry>
             <properties>
                 <table>
@@ -601,11 +589,9 @@
         <feature id="restaurant_polygon.7" class="restaurant_polygon">
           <featurecaption>India Palace</featurecaption>
             <geometry>
-                <multipolygon>
-                    <polygon>
-                        <coordinates>-75.7019048 45.4191548 -75.7018285 45.4191868 -75.7016736 45.4190052 -75.7016464 45.4189734 -75.7017227 45.4189414 -75.7019048 45.4191548</coordinates>
-                    </polygon>
-                </multipolygon>
+              <point>
+                  <coordinates>-75.7019048 45.4191548</coordinates>
+              </point>
             </geometry>
             <properties>
                 <table>
@@ -719,11 +705,9 @@
         <feature id="restaurant_polygon.20" class="restaurant_polygon">
           <featurecaption>The Prescott</featurecaption>
             <geometry>
-                <multipolygon>
-                    <polygon>
-                        <coordinates>-75.7093517 45.4005727 -75.7090062 45.400672 -75.7089022 45.4004936 -75.7088772 45.4005023 -75.7088336 45.4004303 -75.7088672 45.40042 -75.7089701 45.4003887 -75.7091934 45.4003223 -75.7093517 45.4005727</coordinates>
-                    </polygon>
-                </multipolygon>
+              <point>
+                  <coordinates>-75.7093517 45.4005727</coordinates>
+              </point>
             </geometry>
             <properties>
                 <table>
