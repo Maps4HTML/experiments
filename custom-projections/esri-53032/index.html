@@ -54,6 +54,18 @@
      </noscript> 
   </head>
   <body>
+    <mapml-viewer projection="ESRI-53032" zoom="2" lat="0" lon="0" controls>
+      <layer- label="test" checked>
+<!--        <meta name="extent" content="cs=tilematrix,top-left-horizontal=7,top-left-vertical=7,bottom-right-horizontal=11,bottom-right-vertical=1,zoom=2"-->
+<!--<meta name="extent" content="top-left-column=7,top-left-row=7,bottom-right-column=11,bottom-right-row=1,zoom=2">-->
+        <extent units="ESRI-53032">
+          <input type="zoom" name="z" min="0" max="6" >
+          <input type="location" name="x" axis="column" units="tilematrix">
+          <input type="location" name="y" axis="row" units="tilematrix">
+          <link rel="tile" tref="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/NCR_RCN/MapServer/tile/{z}/{y}/{x}/">
+        </extent>
+      </layer->
+    </mapml-viewer>
     <script type="module">
       let customProjectionDefinition = `
     {
@@ -69,15 +81,5 @@
       let cProjection = map.defineCustomProjection(customProjectionDefinition);    
       map.projection = cProjection;
     </script>
-    <mapml-viewer projection="ESRI-53032" zoom="0" lat="0" lon="0" controls>
-      <layer- label="test" checked>
-        <extent units="ESRI-53032">
-          <input type="zoom" name="z" min="0" max="6" value="6">
-          <input type="location" name="x" axis="column" units="tilematrix" min="123" max="185">
-          <input type="location" name="y" axis="row" units="tilematrix" min="114" max="188">
-          <link rel="tile" tref="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/NCR_RCN/MapServer/tile/[z}/{x}/{y}">
-        </extent>
-      </layer->
-    </mapml-viewer>
   </body>
 </html>
