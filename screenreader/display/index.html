@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Ottawa Restaurants Map with display: none eliminated</title>
+    <script type="module" src="../role-with-display/dist/mapml-viewer.js"></script>
+     <style> 
+       html,
+       body {
+         height: 100%;
+       }
+       body {
+         margin: 0;
+       }
+       *, ::before, ::after {
+         box-sizing: border-box;
+       }
+        
+       /* Specifying the `:defined` selector is recommended to style the map 
+       element, such that styles don't apply when fallback content is in use 
+       (e.g. when scripting is disabled or when custom/built-in elements isn't 
+       supported in the browser). */ 
+       mapml-viewer:defined { 
+         /* Responsive map. */ 
+          max-width: 100%;  
+          
+         /* Full viewport. */ 
+          width: 100%;  
+          height: 100%;  
+          
+         /* Remove default (native-like) border. */ 
+         /* border: none; */ 
+       } 
+        
+     </style> 
+     <noscript> 
+       <style> 
+         /* Ensure fallback content (children of the map element) is displayed if 
+         custom/built-in elements is supported but javascript is disabled. */ 
+         mapml-viewer:not(:defined) > :not(layer-) { 
+           display: initial; 
+         } 
+       </style> 
+     </noscript> 
+  </head>
+  <body>
+    <mapml-viewer arial-label="Map with display: none eliminated" projection="CBMTILE" zoom="17" lat="45.4069740362364" lon="-75.70155300710053" >
+      <layer- label="CBMT" src="https://geogratis.gc.ca/mapml/en/cbmtile/cbmt/" checked hidden></layer->
+      <layer- label="Ottawa Restaurants" src="../restaurants.mapml" checked></layer->
+    </mapml-viewer>
+  </body>
+</html>
