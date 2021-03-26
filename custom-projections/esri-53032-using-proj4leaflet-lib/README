@@ -1,0 +1,4 @@
+This example uses the versions of proj4, proj4leaflet and leaflet that are distributed with the examples directory of
+proj4leaflet, so version specific and you can't get those specific files from npm.
+
+This example WORKS as far as I can tell.

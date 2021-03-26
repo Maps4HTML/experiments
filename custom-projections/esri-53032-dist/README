@@ -1,0 +1,4 @@
+The index.html page here uses the MODIFIED (for use as modules) leaflet, proj4 and proj4leaflet libraries that we distribute with mapml-viewer.
+
+This example FAILS / does not work for this projection.
+
