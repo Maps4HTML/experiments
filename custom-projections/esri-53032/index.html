@@ -52,9 +52,24 @@
          } 
        </style> 
      </noscript> 
+    <script type="module">
+      let customProjectionDefinition = `
+    {
+            "projection": "ESRI-53032",
+            "proj4string" : "+proj=aeqd +lat_0=90 +lon_0=-90 +x_0=0 +y_0=0 +ellps=sphere +units=m +no_defs +type=crs",
+            "code" : "ESRI:53032",
+            "origin" : [-20015200,20015200],
+            "resolutions" :  [33073,16536.5,8268.246,4134.123,2067.061,1033.531,516.765],
+            "bounds" : [[-4861825.5,-4564849.0],[4861825.5,3664151.75]],
+            "tilesize" : 256
+        }`;
+      let map = document.querySelector("mapml-viewer");
+      let cProjection = map.defineCustomProjection(customProjectionDefinition);    
+      map.projection = cProjection;
+    </script>
   </head>
   <body>
-    <mapml-viewer projection="ESRI-53032" zoom="2" lat="0" lon="0" controls>
+    <mapml-viewer projection="ESRI-53032" zoom="4" lat="0" lon="0" controls>
       <layer- label="test" checked>
 <!--        <meta name="extent" content="cs=tilematrix,top-left-horizontal=7,top-left-vertical=7,bottom-right-horizontal=11,bottom-right-vertical=1,zoom=2"-->
 <!--<meta name="extent" content="top-left-column=7,top-left-row=7,bottom-right-column=11,bottom-right-row=1,zoom=2">-->
@@ -66,20 +81,5 @@
         </extent>
       </layer->
     </mapml-viewer>
-    <script type="module">
-      let customProjectionDefinition = `
-    {
-            "projection": "ESRI-53032",
-            "proj4string" : "+proj=aeqd +lat_0=0 +lon_0=0 +x_0=0 +y_0=0 +a=6371000 +b=6371000 +units=m +no_defs",
-            "code" : "ESRI:53032",
-            "origin" : [-20015200,20015200],
-            "resolutions" :  [33073,16536.5,8268.246,4134.123,2067.061,1033.531,516.765],
-            "bounds" : [[-4861825.5,-4564849.0],[4861825.5,3664151.75]],
-            "tilesize" : 256
-        }`;
-      let map = document.querySelector("mapml-viewer");
-      let cProjection = map.defineCustomProjection(customProjectionDefinition);    
-      map.projection = cProjection;
-    </script>
   </body>
 </html>
