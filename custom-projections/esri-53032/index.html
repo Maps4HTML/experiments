@@ -72,9 +72,9 @@
     <mapml-viewer projection="ESRI-53032" zoom="2" lat="90" lon="-90" controls>
       <layer- label="test" checked>
         <extent units="ESRI-53032">
-          <input type="zoom" name="z" min="0" max="6" >
-          <input type="location" name="x" axis="column" units="tilematrix">
-          <input type="location" name="y" axis="row" units="tilematrix">
+          <input type="zoom" name="z" min="0" max="6" value="2" >
+          <input type="location" name="x" axis="column" units="tilematrix" min="6" max="12">
+          <input type="location" name="y" axis="row" units="tilematrix" min="6" max="12">
           <link rel="tile" tref="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/NCR_RCN/MapServer/tile/{z}/{y}/{x}/">
         </extent>
       </layer->
