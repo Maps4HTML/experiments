@@ -1,7 +1,0 @@
-This directory uses the mapml-viewer custom projection feature, using the versions
-of proj4, proj4js and proj4leaflet that we get from npm and then modify for use
-as modules.
-
-UPDATE: The example works with proj4js version 2.3.14, but fails at proj4js 2.4+
-
-
