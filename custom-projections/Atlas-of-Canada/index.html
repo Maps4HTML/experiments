@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Custom Projection ESRI:53032</title>
-    <script type="module" src="../dist/mapml-viewer.js"></script>
+    <title>Atlas of Canada Azimuthal Equal Distance Wall map</title>
+    <script type="module" src="../../dist/mapml-viewer.js"></script>
      <style> 
        html, 
        body { 
@@ -54,9 +54,9 @@
      </noscript> 
     <script type="module">
       let customProjectionDefinition = `{
-            "projection": "ESRI-53032",
+            "projection": "IPYTILE",
             "proj4string" : "+proj=aeqd +lat_0=90 +lon_0=-90 +x_0=0 +y_0=0 +ellps=sphere +units=m +no_defs +type=crs",
-            "code" : "ESRI:53032",
+            "code" : "IPYTILE",
             "origin" : [-20015200,20015200],
             "resolutions" :  [33073,16536.5,8268.246,4134.123,2067.061,1033.531,516.765],
             "bounds" : [[-4861825.5,-4564849.0],[4861825.5,3664151.75]],
@@ -68,14 +68,15 @@
     </script>
   </head>
   <body>
-    <mapml-viewer projection="ESRI-53032" zoom="2" lat="83.48919" lon="-87.7687" controls>
+    <mapml-viewer projection="IPYTILE" zoom="2" lat="83.48919" lon="-87.7687" controls>
       <layer- label="test" checked>
         <link rel="license" title="Canadian Federal Geospatial Platform" href="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/NCR_RCN/MapServer/">
-        <extent units="ESRI-53032">
+        <extent units="IPYTILE">
           <input type="zoom" name="z" min="0" max="6" value="2" >
           <input type="location" name="x" axis="column" units="tilematrix" min="6" max="12">
           <input type="location" name="y" axis="row" units="tilematrix" min="6" max="12">
           <link rel="tile" tref="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/NCR_RCN/MapServer/tile/{z}/{y}/{x}/">
+          <link rel="tile" tref="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/NCR_RCN_A/MapServer/tile/{z}/{y}/{x}/">
         </extent>
       </layer->
     </mapml-viewer>
