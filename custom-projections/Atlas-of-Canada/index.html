@@ -54,27 +54,27 @@
      </noscript> 
     <script type="module">
       let customProjectionDefinition = `{
-            "projection": "IPYTILE",
+            "projection": "ATLAS_POLAR_MAP",
             "proj4string" : "+proj=aeqd +lat_0=90 +lon_0=-90 +x_0=0 +y_0=0 +ellps=sphere +units=m +no_defs +type=crs",
-            "code" : "IPYTILE",
+            "code" : "ATLAS_POLAR_MAP",
             "origin" : [-20015200,20015200],
             "resolutions" :  [33073,16536.5,8268.246,4134.123,2067.061,1033.531,516.765],
-            "bounds" : [[-4861825.5,-4564849.0],[4861825.5,3664151.75]],
+            "bounds" : [[4979939,-4846977],[-5139071,3980038]],
             "tilesize" : 256
         }`;
       let map = document.querySelector("mapml-viewer");
-      let cProjection = map.defineCustomProjection(customProjectionDefinition);    
-      map.projection = cProjection;
+      let cProjection = map.defineCustomProjection(customProjectionDefinition);
+      map.projection =  cProjection;
     </script>
   </head>
   <body>
-    <mapml-viewer projection="IPYTILE" zoom="2" lat="83.48919" lon="-87.7687" controls>
+    <mapml-viewer projection="ATLAS_POLAR_MAP" zoom="2" lat="83.48919" lon="-87.7687" controls>
       <layer- label="test" checked>
         <link rel="license" title="Canadian Federal Geospatial Platform" href="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/NCR_RCN/MapServer/">
-        <extent units="IPYTILE">
-          <input type="zoom" name="z" min="0" max="6" value="2" >
-          <input type="location" name="x" axis="column" units="tilematrix" min="6" max="12">
-          <input type="location" name="y" axis="row" units="tilematrix" min="6" max="12">
+        <extent units="ATLAS_POLAR_MAP">
+          <input type="zoom" name="z" min="0" max="6" value="6" >
+          <input type="location" name="x" axis="column" units="tilematrix" min="116" max="186">
+          <input type="location" name="y" axis="row" units="tilematrix" min="125" max="184">
           <link rel="tile" tref="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/NCR_RCN/MapServer/tile/{z}/{y}/{x}/">
           <link rel="tile" tref="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/NCR_RCN_A/MapServer/tile/{z}/{y}/{x}/">
         </extent>
