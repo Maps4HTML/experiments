@@ -1,6 +1,6 @@
 <mapml xmlns="http://www.w3.org/1999/xhtml/">
     <head>
-        <title>Atlas of Canada Polar Wall Map with Annotation</title>
+        <title>Atlas of Canada Polar Wall Map Annotation</title>
         <meta charset="utf-8" />
         <meta content="text/mapml" http-equiv="Content-Type" />
         <link rel="license" title="Canadian Federal Geospatial Platform" href="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/NCR_RCN/MapServer/"></link>
@@ -20,7 +20,7 @@
         <input type="zoom" name="z" min="0" max="6" value="6" />
         <input type="location" name="x" axis="column" units="tilematrix" min="116" max="186" />
         <input type="location" name="y" axis="row" units="tilematrix" min="125" max="184" />
-        <link rel="tile" tref="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/NCR_RCN/MapServer/tile/{z}/{y}/{x}/" />
+<!--        <link rel="tile" tref="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/NCR_RCN/MapServer/tile/{z}/{y}/{x}/" />-->
         <link rel="tile" tref="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/NCR_RCN_A/MapServer/tile/{z}/{y}/{x}/" />
       </extent>
     </body>
