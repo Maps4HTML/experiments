@@ -52,30 +52,22 @@
        </style> 
      </noscript> 
     <script type="module">
-      let customProjectionDefinition = `{
-            "projection": "EPSG3573", 
-            "proj4string" : "+proj=laea +lat_0=90 +lon_0=-100 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs", 
-            "origin" : [-4889334.802955,4889334.802955], 
-            "resolutions" : [38197.92815,19098.96407,9549.482037,4774.741019,2387.370509,1193.685255,596.8426273,298.4213137,149.2106568,74.60532841,37.30266421],  
-            "bounds" : [[-4594983,4507258],[4655569,-4562485]],  
-            "tilesize" : 256 
-        }`;
       let map = document.querySelector("mapml-viewer");
-      let cProjection = map.defineCustomProjection(customProjectionDefinition);    
+      let cProjection = map.defineCustomProjection(`{ "projection": "EPSG3573", "proj4string" : "+proj=laea +lat_0=90 +lon_0=-100 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs",  "origin" : [-4889334.802955,4889334.802955], "resolutions" : [38197.92815,19098.96407,9549.482037,4774.741019,2387.370509,1193.685255,596.8426273,298.4213137,149.2106568,74.60532841,37.30266421], "bounds" : [[-4594983,4507258],[4655569,-4562485]], "tilesize" : 256 }`);    
+      // this is necessary to get things started, unfortunately declarative won't work 
       map.projection = cProjection;
+      
+      map.defineCustomProjection(`{ "projection": "EPSG3572", "proj4string" : "+proj=laea +lat_0=90 +lon_0=-150 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs", "origin" : [-4889334.802955,4889334.802955], "resolutions" : [38197.92815,19098.96407,9549.482037,4774.741019,2387.370509,1193.685255,596.8426273000001,298.4213137,149.2106568,74.60532841,37.30266421],  "bounds" : [[-4889334.802955,-4889334.802955],[4889334.802955,4889334.802955]],  "tilesize" : 256 }`);
+      map.defineCustomProjection(`{ "projection": "EPSG3574", "proj4string" : "+proj=laea +lat_0=90 +lon_0=-40 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs", "origin" : [-4889334.802955,4889334.802955], "resolutions" : [38197.92815,19098.96407,9549.482037,4774.741019,2387.370509,1193.685255,596.8426273000001,298.4213137,149.2106568,74.60532841,37.30266421],  "bounds" : [[-4889334.802955,-4889334.802955],[4889334.802955,4889334.802955]],  "tilesize" : 256 }`);
+      map.defineCustomProjection(`{ "projection": "EPSG3575", "proj4string" : "+proj=laea +lat_0=90 +lon_0=10 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs", "origin" : [-4889334.802955,4889334.802955], "resolutions" : [38197.92815,19098.96407,9549.482037,4774.741019,2387.370509,1193.685255,596.8426273000001,298.4213137,149.2106568,74.60532841,37.30266421],  "bounds" : [[-4889334.802955,-4889334.802955],[4889334.802955,4889334.802955]],  "tilesize" : 256 }`);
+      map.defineCustomProjection(`{ "projection": "EPSG3576", "proj4string" : "+proj=laea +lat_0=90 +lon_0=90 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs", "origin" : [-4889334.802955,4889334.802955], "resolutions" : [38197.92815,19098.96407,9549.482037,4774.741019,2387.370509,1193.685255,596.8426273000001,298.4213137,149.2106568,74.60532841,37.30266421],  "bounds" : [[-4889334.802955,-4889334.802955],[4889334.802955,4889334.802955]],  "tilesize" : 256 }`);
+      map.defineCustomProjection(`{ "projection": "EPSG3571", "proj4string" : "+proj=laea +lat_0=90 +lon_0=180 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs", "origin" : [-4889334.802955,4889334.802955], "resolutions" : [38197.92815,19098.96407,9549.482037,4774.741019,2387.370509,1193.685255,596.8426273000001,298.4213137,149.2106568,74.60532841,37.30266421],  "bounds" : [[-4889334.802955,-4889334.802955],[4889334.802955,4889334.802955]],  "tilesize" : 256 }`); 
+      map.defineCustomProjection(`{ "projection": "ATLAS_POLAR_MAP", "proj4string" : "+proj=aeqd +lat_0=90 +lon_0=-90 +x_0=0 +y_0=0 +ellps=sphere +units=m +no_defs +type=crs", "origin" : [-20015200,20015200], "resolutions" :  [33073,16536.5,8268.246,4134.123,2067.061,1033.531,516.765], "bounds" : [[4979939,-4846977],[-5139071,3980038]], "tilesize" : 256 }`);
     </script>
   </head>
   <body>
-    <mapml-viewer projection="EPSG3573" zoom="1" lat="90" lon="-90" controls>
-      <layer- label="Arctic SDI" checked>
-        <link rel="license" title="&copy; Arctic Council" href="http://catalogue.arctic-sdi.org/geonetwork/srv/eng/catalog.search#/metadata/8b4f2b34-2d0d-4744-ae0f-d7989b9f7a02/formatters/xsl-view?root=div&view=advanced">
-        <extent units="EPSG3573">
-          <input type="zoom" name="TileMatrix" min="0" max="11" value="0">
-          <input type="location" name="TileCol" axis="column" units="tilematrix" min="0" max="1">
-          <input type="location" name="TileRow" axis="row" units="tilematrix" min="0" max="1">
-          <link rel="tile" tref="http://basemap.arctic-sdi.org/mapcache/wmts/1.0.0/arctic_cascading/default/3573/{TileMatrix}/{TileRow}/{TileCol}.png">
-        </extent>
-      </layer->
+    <mapml-viewer projection="EPSG3573" zoom="2" lat="90" lon="-90" controls>
+      <layer- label="Canada's Arctic SDI Partnership" src='canada/links.mapml' checked></layer->
     </mapml-viewer>
   </body>
 </html>
