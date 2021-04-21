@@ -59,17 +59,17 @@
     </script>
   </head>
   <body>
-    <map is="web-map" zoom="0" lon="-119.187354" lat="49.871068" controls projection="BCTILE">
+    <map is="web-map" zoom="3" lon="-125.667383" lat="54.60128" controls projection="BCTILE">
       <layer- label="BC basemap" checked>
         <link rel="license" title="Government of British Columbia" href="https://maps.gov.bc.ca/arcserver/rest/services/province/albers_cache/MapServer/wmts/">
         <extent units="BCTILE">
-          <input type="zoom" name="z" min="0" max="13">
-          <input type="location" name="x" axis="column" units="tilematrix">
-          <input type="location" name="y" axis="row" units="tilematrix">
+          <input type="zoom" name="z" min="0" max="11" value="3">
+          <input type="location" name="x" axis="column" units="tilematrix" min="42" max="50">
+          <input type="location" name="y" axis="row" units="tilematrix" min="56" max="64">
           <link rel="tile" tref="https://maps.gov.bc.ca/arcgis/rest/services/province/albers_cache/MapServer/WMTS/tile/1.0.0/province_albers_cache/default/default028mm/{z}/{y}/{x}.jpg">
         </extent>
       </layer->
-      <layer- label="British Columbia Geological Survey" src="bcgs.mapml"></layer->
+      <layer- label="British Columbia Geological Survey" src="bcgs.mapml" checked></layer->
     </map>
   </body>
 </html>

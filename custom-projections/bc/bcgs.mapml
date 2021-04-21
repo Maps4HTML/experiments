@@ -5,8 +5,9 @@
     <title>British Columbia Geological Survey</title>
     <meta name="projection" content="BCTILE"/>
     <meta name="cs" content="gcrs"/>
-    <meta name="extent" content="top-left-easting=-219204,top-left-northing=2065365,bottom-right-easting=2191523,bottom-right-northing=93819"/>
+    <meta name="extent" content="top-left-easting=1188042.41,top-left-northing=388313.19,bottom-right-easting=1200891.70,bottom-right-northing=379439.25"/>
   </head>
+  
   <body>
     <feature id="bcgs">
       <featurecaption>British Columbia Geological Survey</featurecaption>
@@ -14,9 +15,11 @@
         <id>British Columbia Geological Survey</id>
       </properties>
       <geometry>
+        <map-a href="#11,-123.362105,48.430882">
         <point>
           <coordinates>-123.362105 48.430882</coordinates>
           </point>
+          </map-a>
       </geometry>
     </feature>
   </body>
