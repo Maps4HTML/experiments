@@ -18,7 +18,7 @@
            and therefore candidates for standardization in / by browsers.
       -->
       <extent units="ATLAS_POLAR_MAP">
-        <input type="zoom" name="z" min="5" max="6" value="6" />
+        <input type="zoom" name="z" min="4" max="5" value="6" />
         <input type="location" name="x" axis="column" units="tilematrix" min="116" max="186" />
         <input type="location" name="y" axis="row" units="tilematrix" min="125" max="184" />
         <link rel="tile" tref="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/NCR_RCN/MapServer/tile/{z}/{y}/{x}/" />
