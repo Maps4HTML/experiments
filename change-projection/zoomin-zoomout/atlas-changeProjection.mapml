@@ -1,0 +1,29 @@
+<mapml xmlns="http://www.w3.org/1999/xhtml/">
+    <head>
+        <meta charset="utf-8" />
+        <title>Atlas of Canada Polar Wall Map</title>
+        <meta content="text/mapml" http-equiv="Content-Type" />
+        <link rel="license" title="Canadian Federal Geospatial Platform" href="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/NCR_RCN/MapServer/"></link>
+        <meta name="projection" content="ATLAS_POLAR_MAP"/>
+        <link rel="zoomin" href="cbmt-changeProjection.mapml" type="text/mapml" />
+        <link rel="zoomout" href="asdi-changeProjection.mapml" type="text/mapml" />
+    </head>        
+    <body>
+      <!-- 
+           That this file can be viewed on a map that defines the ATLAS_POLAR_MAP
+           projection, without having it defined here, defines a use case:
+           if we develop the definition of TCRS into a standard, we could register
+           TCRS identifiers and associated definitions on spatialreference.org (perhaps)
+           Eventually, it would become evident that certain TCRS would become "popular"
+           and therefore candidates for standardization in / by browsers.
+      -->
+      <extent units="ATLAS_POLAR_MAP">
+        <input type="zoom" name="z" min="5" max="6" value="6" />
+        <input type="location" name="x" axis="column" units="tilematrix" min="116" max="186" />
+        <input type="location" name="y" axis="row" units="tilematrix" min="125" max="184" />
+        <link rel="tile" tref="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/NCR_RCN/MapServer/tile/{z}/{y}/{x}/" />
+        <link rel="tile" tref="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/NCR_RCN_A/MapServer/tile/{z}/{y}/{x}/" />
+      </extent>
+    </body>
+</mapml>
+
