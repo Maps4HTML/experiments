@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Province of British Columbia Albers tile cache</title>
+    <script type="module" src="../../dist/web-map.js"></script>
+    <style>
+      html,
+      body {
+        height: 100%;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      
+      /* Specifying the `:defined` selector is recommended to style the map
+      element, such that styles don't apply when fallback content is in use
+      (e.g. when scripting is disabled or when custom/built-in elements isn't
+      supported in the browser). */
+      map[is="web-map"]:defined {
+        /* Responsive map. */
+        /* max-width: 100%; */
+        
+        /* Full viewport. */
+         width: 100%; 
+         height: 100%; 
+        
+        /* Remove default (native-like) border. */
+        /* border: none; */
+      }
+      
+      /* Pre-style to avoid FOUC of inline layer- and fallback content. */
+      map[is="web-map"]:not(:defined) + img[usemap],
+      map[is="web-map"]:not(:defined) > :not(area):not(.mapml-web-map) {
+        display: none;
+      }
+      /* Ensure inline layer content is hidden if custom/built-in elements isn't
+      supported, or if javascript is disabled. This needs to be defined separately
+      from the above, because the `:not(:defined)` selector invalidates the entire
+      declaration in browsers that do not support it. */
+      layer- {
+        display: none;
+      }
+    </style>
+    <script type="module">
+    /* EPSG:3005 */
+      let customProjectionDefinition = `{
+            "projection": "BCTILE",
+            "proj4string" : "+proj=aea +lat_1=50 +lat_2=58.5 +lat_0=45 +lon_0=-126 +x_0=1000000 +y_0=0 +ellps=GRS80 +datum=NAD83 +units=m +no_defs",
+            "origin" : [-13239300, 19868500],
+            "resolutions" :  [9783.9400003175,4891.969998835831,2445.9849999470835,1222.9925001058336,611.4962500529168,305.74812489416644,152.8740625,76.4370312632292,38.2185156316146,19.10925781316146,9.554628905257811,4.7773144526289055,2.3886572265790367,1.1943286131572264],
+            "bounds" : [[-219204, 93819], [2191523, 2065365]],
+            "tilesize" : 256
+        }`;
+      let map = document.querySelector("map");
+      let cProjection = map.defineCustomProjection(customProjectionDefinition);
+      map.projection =  cProjection;
+    </script>
+  </head>
+  <body>
+    <map is="web-map" zoom="0" lon="-119.187354" lat="49.871068" controls projection="BCTILE">
+      <layer- label="BC basemap" checked>
+        <link rel="license" title="Government of British Columbia" href="https://maps.gov.bc.ca/arcserver/rest/services/province/albers_cache/MapServer/wmts/">
+        <extent units="BCTILE">
+          <input type="zoom" name="z" min="0" max="13">
+          <input type="location" name="x" axis="column" units="tilematrix">
+          <input type="location" name="y" axis="row" units="tilematrix">
+          <link rel="tile" tref="https://maps.gov.bc.ca/arcgis/rest/services/province/albers_cache/MapServer/WMTS/tile/1.0.0/province_albers_cache/default/default028mm/{z}/{y}/{x}.jpg">
+        </extent>
+      </layer->
+      <layer- label="British Columbia Geological Survey" src="bcgs.mapml"></layer->
+    </map>
+  </body>
+</html>

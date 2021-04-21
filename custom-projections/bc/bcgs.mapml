@@ -1,0 +1,23 @@
+<mapml lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/mapml"/>
+    <title>British Columbia Geological Survey</title>
+    <meta name="projection" content="BCTILE"/>
+    <meta name="cs" content="gcrs"/>
+    <meta name="extent" content="top-left-easting=-219204,top-left-northing=2065365,bottom-right-easting=2191523,bottom-right-northing=93819"/>
+  </head>
+  <body>
+    <feature id="bcgs">
+      <featurecaption>British Columbia Geological Survey</featurecaption>
+      <properties>
+        <id>British Columbia Geological Survey</id>
+      </properties>
+      <geometry>
+        <point>
+          <coordinates>-123.362105 48.430882</coordinates>
+          </point>
+      </geometry>
+    </feature>
+  </body>
+</mapml>
