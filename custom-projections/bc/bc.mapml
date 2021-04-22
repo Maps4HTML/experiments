@@ -1,0 +1,31 @@
+<mapml lang="en" xmlns="http://www.w3.org/1999/xhtml/">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/mapml"/>
+    <title>British Columbia Albers base map</title>
+    <meta name="projection" content="BCTILE"/>
+    <meta name="cs" content="gcrs"/>
+    <link rel="license" title="Government of British Columbia" href="https://maps.gov.bc.ca/arcserver/rest/services/province/albers_cache/MapServer/wmts/"/>
+  </head>
+  <body>
+    <extent units="BCTILE">
+      <input type="zoom" name="z" min="0" max="11" value="3"/>
+      <input type="location" name="x" axis="column" units="tilematrix" min="42" max="50"/>
+      <input type="location" name="y" axis="row" units="tilematrix" min="56" max="64"/>
+      <link rel="tile" tref="https://maps.gov.bc.ca/arcgis/rest/services/province/albers_cache/MapServer/WMTS/tile/1.0.0/province_albers_cache/default/default028mm/{z}/{y}/{x}.jpg"/>
+    </extent>
+    <feature id="bcgs">
+      <featurecaption>British Columbia Geological Survey</featurecaption>
+      <properties>
+        <id>British Columbia Geological Survey</id>
+      </properties>
+      <geometry>
+        <map-a href="#11,-123.362105,48.430882">
+        <point>
+          <coordinates>-123.362105 48.430882</coordinates>
+          </point>
+          </map-a>
+      </geometry>
+    </feature>
+  </body>
+</mapml>
