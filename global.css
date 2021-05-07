@@ -1,0 +1,48 @@
+*, ::before, ::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  line-height: 1.5;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+
+/*
+ * map viewers
+ */
+[is="web-map"], mapml-viewer {
+  height: 100%;
+  max-width: 100%;
+  width: 100%;
+}
+/* https://github.com/Maps4HTML/Web-Map-Custom-Element/issues/350#issuecomment-834466757 */
+[is="web-map"], mapml-viewer {
+  box-sizing: inherit;
+}
+/* Ensure inline layer content is hidden if custom/built-in elements isn't
+supported, or if javascript is disabled. This needs to be defined separately
+from the above, because the `:not(:defined)` selector invalidates the entire
+declaration in browsers that do not support it. */
+layer- {
+ display: none;
+}
+/* Pre-style to avoid FOUC of inline layer- and fallback content. */
+mapml-viewer:not(:defined) + img[usemap],
+mapml-viewer:not(:defined) > :not(area):not(.mapml-web-map) {
+  display: none;
+}
+/* Pre-style to avoid FOUC of inline layer- and fallback content. */
+[is="web-map"]:not(:defined) + img[usemap],
+[is="web-map"]:not(:defined) > :not(area):not(.mapml-web-map) {
+  display: none;
+}
