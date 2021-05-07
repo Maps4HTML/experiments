@@ -9,8 +9,8 @@
       body {
        padding: 0 1rem;
       }
-      a {
-       display: block;
+      .example li { 
+        list-style-type: none
       }
     </style>
   </head>
@@ -20,22 +20,34 @@
       
       <section>
         <h2>Screenreader / accessibility validation</h2>
-        <a href="screenreader/restaurants/">Restaurant locations in Ottawa</a>
-        <a href="painting/">Non-geographic image map</a>
+      <ul class="example">
+        <li><a href="screenreader/restaurants/">Restaurant locations in Ottawa</a>
+        <li><a href="painting/">Non-geographic image map</a>
+      </ul>
       </section>
       
       <section id="georeferencing-api">
         <h2>Custom Projections aka the Georeferencing API</h2>
-        <a href="custom-projections/Arctic-SDI/">Lambert Equal Area Azimuthal - laea</a>
-        <a href="custom-projections/Atlas-of-Canada/">Atlas of Canada Polar Wall Map - aeqd</a>
-        <a href="custom-projections/bc/">British Columbia Albers Equal Area</a>
-        <a href="change-projection/zoomin-zoomout/mapml-viewer/">Change projection on zoom change</a>
+        <ul class="example">
+          <li><a href="custom-projections/Arctic-SDI/">Lambert Equal Area Azimuthal - laea</a>
+          <li><a href="custom-projections/Atlas-of-Canada/">Atlas of Canada Polar Wall Map - aeqd</a>
+          <li><a href="custom-projections/bc/">British Columbia Albers Equal Area</a>
+          <li><a href="change-projection/zoomin-zoomout/mapml-viewer/">Change projection on zoom change</a>
+          <li><a href="change-projection/projection-negotiation/">Negotiate map resource projection</a>
+        </ul>
       </section>
       
       <section>
         <h2>Vector tiles</h2>
-        <a href="vector-tiles/mapml/mapml-viewer/">MapML vector tiles styled with external CSS stylesheet</a>
-      </section>
-    </main>
+      <ul class="example">
+        <li><a href="vector-tiles/mapml/mapml-viewer/">MapML vector tiles styled with external CSS stylesheet</a>
+      </ul>
+    </section>
+    <section>
+      <h2>Miscellaneous</h2>
+      <ul class="example">
+        <li>Minimum Snow and Ice: <a href="datacube/">Time Dimension &lt;select&gt;</a></li>
+      </ul>
+    </section>
   </body>
 </html>

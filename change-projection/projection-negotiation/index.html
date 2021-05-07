@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Projection Negotiation</title>
+        <script type="module" src="../../dist/mapml-viewer.js"></script>
+        <link rel="stylesheet" href="../../global.css">
+        <style>
+          mapml-viewer { 
+            display: inline-block;
+            width: 49%;
+            height: 80%;
+          }
+        </style>
+        <script>
+          function addToMaps() {
+            const t = document.querySelector('#negotiable-map-content');
+            var copy1 = t.content.cloneNode(true);
+            var copy2 = t.content.cloneNode(true);
+            document.querySelector('mapml-viewer[projection=CBMTILE]').appendChild(copy1);
+            document.querySelector('mapml-viewer[projection=OSMTILE]').appendChild(copy2);
+          }
+        </script>
+    </head>
+  <body>
+    <template id="negotiable-map-content">
+      <layer- src="msi-tiles-osmtile.mapml" checked></layer->
+    </template>
+    <p><a href="msi-tiles-osmtile.mapml" target="_blank">Minimum Snow and Ice Probability (view source in new tab)</a> <button onclick="addToMaps()" >Add to single source to both maps</button></p>
+  <mapml-viewer projection="CBMTILE" zoom="4" lat="60" lon="-90" controls>
+    <layer- label="CBMT" src="https://geogratis.gc.ca/mapml/en/cbmtile/cbmt/" checked hidden></layer->
+  </mapml-viewer>
+  <mapml-viewer projection="OSMTILE" zoom="4" lat="60" lon="-90" controls>
+    <layer- label="CBMT" src="https://geogratis.gc.ca/mapml/en/osmtile/cbmt/" checked hidden></layer->
+  </mapml-viewer>
+  </body>
+</html>
