@@ -3,62 +3,43 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Ottawa Restaurants</title>
-    <script type="module" src="dist/mapml-viewer.js"></script>
+    <title>Examples and Experiments</title>
      <style> 
        html,
        body {
          height: 100%;
        }
        body {
-         margin: 0;
+         margin: 20px;
        }
        *, ::before, ::after {
          box-sizing: border-box;
        }
-        
-       /* Specifying the `:defined` selector is recommended to style the map 
-       element, such that styles don't apply when fallback content is in use 
-       (e.g. when scripting is disabled or when custom/built-in elements isn't 
-       supported in the browser). */ 
-       mapml-viewer:defined { 
-         /* Responsive map. */ 
-          max-width: 100%;  
-          
-         /* Full viewport. */ 
-          width: 100%;  
-          height: 100%;  
-          
-         /* Remove default (native-like) border. */ 
-         /* border: none; */ 
-       } 
-        
-       /* Pre-style to avoid FOUC of inline layer- and fallback content. */ 
-       mapml-viewer:not(:defined) > * { 
-         display: none; 
-       } 
-       /* Ensure inline layer content is hidden if custom/built-in elements isn't 
-       supported, or if javascript is disabled. This needs to be defined separately 
-       from the above, because the `:not(:defined)` selector invalidates the entire 
-       declaration in browsers that do not support it. */ 
-       layer- { 
-         display: none; 
-       } 
+       a {display: block}
+      * {
+          font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+          font-size: 16px;
+          line-height: 1.5;
+          word-wrap: break-word;
+      }
      </style> 
-     <noscript> 
-       <style> 
-         /* Ensure fallback content (children of the map element) is displayed if 
-         custom/built-in elements is supported but javascript is disabled. */ 
-         mapml-viewer:not(:defined) > :not(layer-) { 
-           display: initial; 
-         } 
-       </style> 
-     </noscript> 
   </head>
   <body>
-    <mapml-viewer projection="CBMTILE" zoom="17" lat="45.4069740362364" lon="-75.70155300710053" >
-      <layer- label="CBMT" src="https://geogratis.gc.ca/mapml/en/cbmtile/cbmt/" checked hidden></layer->
-      <layer- label="Ottawa Restaurants" src="restaurants.mapml" checked></layer->
-    </mapml-viewer>
+    <section>
+      <h3>Screenreader / accessibility validation</h3>
+    <a href="screenreader/restaurants/">Restaurant locations in Ottawa</a>
+    <a href="painting/">Non-geographic image map</a>
+    </section>
+    <section id="georeferencing-api">
+      <h3>Custom Projections aka the Georeferencing API</h3>
+      <a href="custom-projections/Arctic-SDI/">Lambert Equal Area Azimuthal - laea</a>
+      <a href="custom-projections/Atlas-of-Canada/">Atlas of Canada Polar Wall Map - aeqd</a>
+      <a href="custom-projections/bc/">British Columbia Albers Equal Area</a>
+        <a href="change-projection/zoomin-zoomout/mapml-viewer/">Change projection on zoom change</a>
+    </section>
+    <section>
+      <h3>Vector tiles</h3>
+        <a href="vector-tiles/mapml/mapml-viewer/">MapML vector tiles styled with external CSS stylesheet</a>
+    </section>
   </body>
 </html>
