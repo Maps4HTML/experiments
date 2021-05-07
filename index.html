@@ -4,42 +4,38 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Examples and Experiments</title>
-     <style> 
-       html,
-       body {
-         height: 100%;
-       }
-       body {
-         margin: 20px;
-       }
-       *, ::before, ::after {
-         box-sizing: border-box;
-       }
-       a {display: block}
-      * {
-          font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
-          font-size: 16px;
-          line-height: 1.5;
-          word-wrap: break-word;
+    <link rel="stylesheet" href="global.css">
+    <style>
+      body {
+       padding: 0 1rem;
       }
-     </style> 
+      a {
+       display: block;
+      }
+    </style>
   </head>
   <body>
-    <section>
-      <h3>Screenreader / accessibility validation</h3>
-    <a href="screenreader/restaurants/">Restaurant locations in Ottawa</a>
-    <a href="painting/">Non-geographic image map</a>
-    </section>
-    <section id="georeferencing-api">
-      <h3>Custom Projections aka the Georeferencing API</h3>
-      <a href="custom-projections/Arctic-SDI/">Lambert Equal Area Azimuthal - laea</a>
-      <a href="custom-projections/Atlas-of-Canada/">Atlas of Canada Polar Wall Map - aeqd</a>
-      <a href="custom-projections/bc/">British Columbia Albers Equal Area</a>
+    <main>
+      <h1>Experiments</h1>
+      
+      <section>
+        <h2>Screenreader / accessibility validation</h2>
+        <a href="screenreader/restaurants/">Restaurant locations in Ottawa</a>
+        <a href="painting/">Non-geographic image map</a>
+      </section>
+      
+      <section id="georeferencing-api">
+        <h2>Custom Projections aka the Georeferencing API</h2>
+        <a href="custom-projections/Arctic-SDI/">Lambert Equal Area Azimuthal - laea</a>
+        <a href="custom-projections/Atlas-of-Canada/">Atlas of Canada Polar Wall Map - aeqd</a>
+        <a href="custom-projections/bc/">British Columbia Albers Equal Area</a>
         <a href="change-projection/zoomin-zoomout/mapml-viewer/">Change projection on zoom change</a>
-    </section>
-    <section>
-      <h3>Vector tiles</h3>
+      </section>
+      
+      <section>
+        <h2>Vector tiles</h2>
         <a href="vector-tiles/mapml/mapml-viewer/">MapML vector tiles styled with external CSS stylesheet</a>
-    </section>
+      </section>
+    </main>
   </body>
 </html>

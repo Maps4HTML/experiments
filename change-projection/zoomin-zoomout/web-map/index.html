@@ -5,54 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Change projection at z=9</title>
     <script type="module" src="../../../dist/web-map.js"></script>
-    <style>
-      html,
-      body {
-        height: 100%;
-      }
-      * {
-        margin: 0;
-        padding: 0;
-      }
-      
-      /* Specifying the `:defined` selector is recommended to style the map
-      element, such that styles don't apply when fallback content is in use
-      (e.g. when scripting is disabled or when custom/built-in elements isn't
-      supported in the browser). */
-      map[is="web-map"]:defined {
-        /* Responsive map. */
-/*         max-width: 100%; */
-        
-        /* Full viewport. */
-         width: 100%; 
-         height: 100%; 
-        
-        /* Remove default (native-like) border. */
-         border: none; 
-      }
-      
-      /* Pre-style to avoid FOUC of inline layer- and fallback content. */
-      map[is="web-map"]:not(:defined) + img[usemap],
-      map[is="web-map"]:not(:defined) > :not(area):not(.mapml-web-map) {
-        display: none;
-      }
-      /* Ensure inline layer content is hidden if custom/built-in elements isn't
-      supported, or if javascript is disabled. This needs to be defined separately
-      from the above, because the `:not(:defined)` selector invalidates the entire
-      declaration in browsers that do not support it. */
-      layer- {
-        display: none;
-      }
-    </style>
-    <noscript>
-      <style>
-        /* Ensure client-side image map fallbacks are displayed if custom/built-in
-        elements is supported but javascript is disabled. */
-        map[is="web-map"]:not(:defined) + img[usemap] {
-          display: initial;
-        }
-      </style>
-    </noscript>
+    <link rel="stylesheet" href="../../../global.css">
     <script type="module">
       let customProjectionDefinition = `{
             "projection": "EPSG3573", 
