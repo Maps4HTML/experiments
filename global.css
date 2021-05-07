@@ -37,11 +37,9 @@ layer- {
  display: none;
 }
 /* Pre-style to avoid FOUC of inline layer- and fallback content. */
-mapml-viewer:not(:defined) + img[usemap],
-mapml-viewer:not(:defined) > :not(area):not(.mapml-web-map) {
+mapml-viewer:not(:defined) > * {
   display: none;
 }
-/* Pre-style to avoid FOUC of inline layer- and fallback content. */
 [is="web-map"]:not(:defined) + img[usemap],
 [is="web-map"]:not(:defined) > :not(area):not(.mapml-web-map) {
   display: none;
