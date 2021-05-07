@@ -1,3 +1,3 @@
-# experiments
+# Experiments
 
-First experiment is [here](https://maps4html.org/experiments/index.html)
+Experiments are listed here: https://maps4html.org/experiments/index.html
