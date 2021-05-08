@@ -11,11 +11,11 @@
         <table>
           <th>Meaning</th><th>Symbol</th>
           <tr>
-            <td>Snow or ice (94% prob)</td>
+            <td>Snow or ice (&gt; 94% probability)</td>
             <td><img src="https://datacube.services.geo.ca/assets/legend/legend_msi_binary.png"/></td>
           </tr>
           <tr>
-            <td>Minimum Sea Ice</td>
+            <td>Probability of the annual minimum snow and ice presence</td>
             <td><img src="https://datacube.services.geo.ca/assets/legend/legend_msi_color.png"/></td>
           </tr>
         </table>
