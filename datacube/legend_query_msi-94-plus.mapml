@@ -1,0 +1,26 @@
+<mapml xmlns="http://www.w3.org/1999/xhtml/">
+  <head>
+    <title>Legend</title>
+    <meta charset="utf-8" />
+    <meta name="projection" content="CBMTILE"/>
+  </head>
+  <body>
+    <feature>
+      <featurecaption>Legend</featurecaption>
+      <properties>
+        <table>
+          <th>Meaning</th><th>Symbol</th>
+          <tr>
+            <td>Snow or ice (94% prob)</td>
+            <td><img src="https://datacube.services.geo.ca/assets/legend/legend_msi_binary.png"/></td>
+          </tr>
+          <tr>
+            <td>Minimum Sea Ice</td>
+            <td><img src="https://datacube.services.geo.ca/assets/legend/legend_msi_color.png"/></td>
+          </tr>
+        </table>
+      </properties>
+    </feature>
+  </body>
+</mapml>
+
