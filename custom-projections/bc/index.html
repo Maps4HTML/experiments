@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Province of British Columbia Albers tile cache</title>
-    <script type="module" src="../../dist/web-map.js"></script>
+    <script type="module" src="../../dist/mapml-viewer.js"></script>
     <link rel="stylesheet" href="../../global.css">
     <script type="module">
     /* EPSG:3005 */
@@ -16,13 +16,13 @@
             "bounds" : [[-219204, 93819], [2191523, 2065365]],
             "tilesize" : 256
         }`;
-      let map = document.querySelector("map");
+      let map = document.querySelector("mapml-viewer");
       let cProjection = map.defineCustomProjection(customProjectionDefinition);
       map.projection =  cProjection;
     </script>
   </head>
   <body>
-    <map is="web-map" zoom="3" lon="-125.667383" lat="54.60128" controls projection="BCTILE">
+    <mapml-viewer zoom="3" lon="-125.667383" lat="54.60128" controls projection="BCTILE">
       <layer- label="BC basemap" checked>
         <link rel="license" title="Government of British Columbia" href="https://maps.gov.bc.ca/arcserver/rest/services/province/albers_cache/MapServer/wmts/">
         <extent units="BCTILE">
@@ -33,6 +33,6 @@
         </extent>
       </layer->
       <layer- label="British Columbia Geological Survey" src="bcgs.mapml" checked></layer->
-    </map>
+    </mapml-viewer>
   </body>
 </html>

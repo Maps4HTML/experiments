@@ -1,0 +1,32 @@
+<mapml xmlns="http://www.w3.org/1999/xhtml/">
+  <head>
+    <title>Arctic SDI Contribution of USA</title>
+    <meta charset="UTF-8"/>
+    <meta content="text/mapml" http-equiv="Content-Type"/>
+    <meta name="cs" content="pcrs"/>
+    <meta name="extent" content="top-left-easting=-12618539.76,top-left-northing=12618539.76,bottom-right-easting=12618539.76,bottom-right-northing=-12618539.76"/>
+    <meta name="projection" content="EPSG3572"/>
+    <link href="http://open.canada.ca/en/open-government-licence-canada" rel="license" title="Open Government License"/>
+    <link rel="style" href="../denmark/alternates.mapml" title="Denmark"/>
+    <link rel="style" href="../finland/alternates.mapml" title="Finland"/>
+    <link rel="style" href="../iceland/alternates.mapml" title="Iceland"/>
+    <link rel="style" href="../norway/alternates.mapml" title="Norway"/>
+    <link rel="style" href="../russia/alternates.mapml" title="Russia"/>
+    <link rel="style" href="../sweden/alternates.mapml" title="Sweden"/>
+    <link rel="self style" href="../usa/alternates.mapml" title="U.S.A."/>
+    <link rel="style" href="../canada/alternates.mapml" title="Canada"/>
+    <style>
+      .asdi-countries {
+      fill: #efefd5; fill-opacity: 0.2; stroke-width: 1; stroke: #d2c2c1; stroke-opacity: 1; stroke-dasharray: 3;
+      }
+    </style>
+  </head>
+  <body>
+    <extent units="EPSG3572">
+      <input type="zoom" name="TileMatrix" min="0" max="11" value="0"/>
+      <input type="location" name="TileCol" axis="column" units="tilematrix" min="0" max="1"/>
+      <input type="location" name="TileRow" axis="row" units="tilematrix" min="0" max="1"/>
+      <link rel="tile" tref="http://basemap.arctic-sdi.org/mapcache/wmts/1.0.0/arctic_cascading/default/3572/{TileMatrix}/{TileRow}/{TileCol}.png"/>
+    </extent>
+  </body>
+</mapml>

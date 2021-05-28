@@ -7,6 +7,14 @@
     <meta name="cs" content="pcrs"/>
     <meta name="projection" content="EPSG3575"/>
     <link href="http://open.canada.ca/en/open-government-licence-canada" rel="license" title="Open Government License"/>
+    <link rel="style" href="../denmark/links.mapml" title="Denmark"/>
+    <link rel="style" href="../finland/links.mapml" title="Finland"/>
+    <link rel="style" href="../iceland/links.mapml" title="Iceland"/>
+    <link rel="style" href="../norway/links.mapml" title="Norway"/>
+    <link rel="style" href="../russia/links.mapml" title="Russia"/>
+    <link rel="self style" href="../sweden/links.mapml" title="Sweden"/>
+    <link rel="style" href="../usa/links.mapml" title="U.S.A."/>
+    <link rel="style" href="../canada/links.mapml" title="Canada"/>
     <style>
       .asdi-countries {
       fill: #efefd5; fill-opacity: 0.2; stroke-width: 1; stroke: #d2c2c1; stroke-opacity: 1; stroke-dasharray: 3;

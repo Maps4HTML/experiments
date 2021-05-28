@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/mapml;projection=CBMTILE"/>
     <meta charset="utf-8"/>
     <link rel="zoomin" href="osm-changeProjection.mapml" type="text/mapml"/> 
-    <link rel="zoomout" href="atlas-changeProjection.mapml" type="text/mapml"/> 
+    <link rel="zoomout" href="/experiments/linking/features/canada.mapml" type="text/mapml"/> 
   </head>
   <body>
     <extent units="CBMTILE" >
