@@ -1,0 +1,33 @@
+<mapml lang="en"  xmlns="http://www.w3.org/1999/xhtml/">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Surficial Geology - British Geological Survey</title>
+    <meta name="projection" content="BNG"/>
+    <meta name="zoom" content="min=5,max=12" />
+<!--    <meta name="extent" content="top-left-easting=1188042.41,top-left-northing=388313.19,bottom-right-easting=1200891.70,bottom-right-northing=379439.25"/>-->
+  </head>
+  
+  <body>
+    <extent units="BNG">
+      <input name="z" type="zoom" min="6" max="9" />
+      <input name="xmin" type="location" units="tilematrix" position="top-left" axis="easting" min="240755" max="261199" />
+      <input name="ymin" type="location" units="tilematrix" position="bottom-left" axis="northing" min="628735" max="658452" />
+      <input name="xmax" type="location" units="tilematrix" position="top-right" axis="easting" min="240755" max="261199" />
+      <input name="ymax" type="location" units="tilematrix" position="top-left" axis="northing" min="628735" max="658452" />
+      <link rel="tile" tref="https://map.bgs.ac.uk/arcgis/services/BGS_Detailed_Geology/MapServer/WMSServer?version=1.3.0&amp;request=GetMap&amp;layers=BGS.50k.Superficial.deposits&amp;STYLES=default&amp;format=image/png&amp;crs=epsg:27700&amp;BBOX={xmin},{ymin},{xmax},{ymax}&amp;WIDTH=256&amp;HEIGHT=256&amp;z={z}" />
+
+      <!--      <link rel="tile" tref="http://ogc.bgs.ac.uk/cgi-bin/BGS_1GE_Geology/wms?version=1.3.0&amp;request=GetMap&amp;layers=GBR_Kilmarnock_BGS_50k_ShrinkSwell&amp;format=image/png&amp;crs=epsg:27700&amp;BBOX={xmin},{ymin},{xmax},{ymax}&amp;WIDTH=256&amp;HEIGHT=256&amp;z={z}"/>-->
+      
+      <input name="i" type="location" units="map" axis="i"/>
+      <input name="j" type="location" units="map" axis="j"/>
+      <input name="wd" type="width"/>
+      <input name="hg" type="height"/>
+      <input name="ixmin" type="location" units="pcrs" position="top-left" axis="easting" min="240755" max="261199" />
+      <input name="iymin" type="location" units="pcrs" position="bottom-left" axis="northing" min="628735" max="658452" />
+      <input name="ixmax" type="location" units="pcrs" position="top-right" axis="easting" min="240755" max="261199" />
+      <input name="iymax" type="location" units="pcrs" position="top-left" axis="northing" min="628735" max="658452" />
+      <link rel="query" tref="https://map.bgs.ac.uk/arcgis/services/BGS_Detailed_Geology/MapServer/WMSServer?version=1.3.0&amp;request=GetFeatureInfo&amp;i={i}&amp;j={j}&amp;radius=0&amp;query_layers=BGS.50k.Superficial.deposits&amp;info_format=text/html&amp;layers=BGS.50k.Superficial.deposits&amp;STYLES=default&amp;format=image/png&amp;crs=epsg:27700&amp;BBOX={ixmin},{iymin},{ixmax},{iymax}&amp;WIDTH={wd}&amp;HEIGHT={hg}&amp;z={z}" />
+
+    </extent>        
+  </body>
+</mapml>

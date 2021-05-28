@@ -19,10 +19,25 @@
       map.defineCustomProjection(`{ "projection": "EPSG3571", "proj4string" : "+proj=laea +lat_0=90 +lon_0=180 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs", "origin" : [-4889334.802955,4889334.802955], "resolutions" : [38197.92815,19098.96407,9549.482037,4774.741019,2387.370509,1193.685255,596.8426273000001,298.4213137,149.2106568,74.60532841,37.30266421],  "bounds" : [[-4889334.802955,-4889334.802955],[4889334.802955,4889334.802955]],  "tilesize" : 256 }`); 
       map.defineCustomProjection(`{ "projection": "ATLAS_POLAR_MAP", "proj4string" : "+proj=aeqd +lat_0=90 +lon_0=-90 +x_0=0 +y_0=0 +ellps=sphere +units=m +no_defs +type=crs", "origin" : [-20015200,20015200], "resolutions" :  [33073,16536.5,8268.246,4134.123,2067.061,1033.531,516.765], "bounds" : [[4979939,-4846977],[-5139071,3980038]], "tilesize" : 256 }`);
     </script>
+
+    <script type="module">
+    /* EPSG:3005 */
+      let customProjectionDefinition = `{
+            "projection": "BCTILE",
+            "proj4string" : "+proj=aea +lat_1=50 +lat_2=58.5 +lat_0=45 +lon_0=-126 +x_0=1000000 +y_0=0 +ellps=GRS80 +datum=NAD83 +units=m +no_defs",
+            "origin" : [-13239300, 19868500],
+            "resolutions" :  [9783.9400003175,4891.969998835831,2445.9849999470835,1222.9925001058336,611.4962500529168,305.74812489416644,152.8740625,76.4370312632292,38.2185156316146,19.10925781316146,9.554628905257811,4.7773144526289055,2.3886572265790367,1.1943286131572264],
+            "bounds" : [[-219204, 93819], [2191523, 2065365]],
+            "tilesize" : 256
+        }`;
+      let map = document.querySelector("mapml-viewer");
+      let cProjection = map.defineCustomProjection(customProjectionDefinition);
+    </script>
   </head>
   <body>
     <mapml-viewer projection="EPSG3573" zoom="2" lat="90" lon="-90" controls>
-      <layer- label="Canada's Arctic SDI Partnership" src='canada/links.mapml' checked></layer->
+<!--      <layer- label="Style-based approach to linking the Arctic nations SDIs" src="canada/alternates.mapml" checked></layer->-->
+      <layer- label="Explicit links to Canada's Arctic SDI Partners" src='canada/links.mapml' checked></layer->
     </mapml-viewer>
   </body>
 </html>
