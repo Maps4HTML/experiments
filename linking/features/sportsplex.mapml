@@ -6,17 +6,10 @@
     <meta name="projection" content="CBMTILE"/>
     <meta name="cs" content="pcrs"/>
     <meta content="text/mapml;projection=CBMTILE" http-equiv="Content-Type"/>
-    <link href="https://www.arcgis.com/home/item.html?id=4be6c94b65ee408999d2d4483a30febf" rel="license" title="Â© Salt Lake County Assessor"/>
+    <link href="https://www.arcgis.com/home/item.html?id=4be6c94b65ee408999d2d4483a30febf" rel="license" title="© Salt Lake County Assessor"/>
     <link href="http://localhost:8081/geoserver/mapml/nrcan:sportsplex-outline/cbmtile?style=" rel="self style" title="polygon"/>
   </head>
   <body>
-    <extent units="CBMTILE">
-      <input name="z" type="zoom" value="25" min="0" max="25"/>
-      <input name="x" type="location" axis="column" units="tilematrix" min="2135775" max="2135782"/>
-      <input name="y" type="location" axis="row" units="tilematrix" min="2332146" max="2332152"/>
-      <link tref="http://localhost:8081/geoserver/gwc/service/wmts?request=GetTile&amp;tilematrixset=CBMTILE&amp;tilematrix={z}&amp;TileRow={y}&amp;service=WMTS&amp;format=image/png&amp;style=&amp;TileCol={x}&amp;version=1.0.0&amp;layer=nrcan:sportsplex-outline" rel="tile"/>
-      <link tref="http://localhost:8081/geoserver/gwc/service/wmts?request=GetTile&amp;tilematrixset=CBMTILE&amp;tilematrix={z}&amp;TileRow={y}&amp;service=WMTS&amp;format=image/png&amp;style=&amp;TileCol={x}&amp;version=1.0.0&amp;layer=nrcan:sportsplex-details" rel="tile"/>
-    </extent>     
         <feature id="sportsplex-rooms.1" class="sportsplex-rooms">
             <featurecaption>NW Stairs</featurecaption>
             <geometry>
