@@ -16,7 +16,13 @@
         </style>
     </head>
     <body>
-        <feature id="nl" class="canada nl">
+      <extent units="CBMTILE">
+        <input name="z" type="zoom" value="17" min="0" max="17"/>
+        <input name="y" type="location" units="tilematrix" axis="row" min="29750" max="34475"/>
+        <input name="x" type="location" units="tilematrix" axis="column" min="26484" max="32463"/>
+        <link rel="tile" tref="https://geoappext.nrcan.gc.ca/arcgis/rest/services/BaseMaps/CBMT3978/MapServer/tile/{z}/{y}/{x}?m4h=t"/>
+      </extent>
+          <feature id="nl" class="canada nl">
             <featurecaption>Newfoundland and Labrador</featurecaption>
             <geometry cs="gcrs">
               <map-a href="#6,-57.526403664050136,53.13791890133216" target="_self">  

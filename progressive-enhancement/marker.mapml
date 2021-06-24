@@ -1,0 +1,59 @@
+<mapml lang="en">
+  <head>
+    <title>The Man With Two Hats</title>
+    <meta http-equiv="Content-Type" content="text/mapml"/>
+    <meta charset="utf-8"/>
+    <meta name="projection" content="OSMTILE"/>
+    <meta name="cs" content="gcrs"/>
+    <link rel="license" href="foo" title="Foo © Natural Resources Canada"/>
+  </head>
+  <body>
+    <feature id="aPoint">
+      <properties>
+        <table>
+          <tr>
+            <th>code</th>
+            <td>1200020</td>
+          </tr>
+          <tr>
+            <th>accuracy</th>
+            <td>26</td>
+          </tr>
+          <tr>
+            <th>valdate</th>
+            <td>1995</td>
+          </tr>
+          <tr>
+            <th>image</th>
+            <td><a href="https://www.veterans.gc.ca/eng/remembrance/memorials/national-inventory-canadian-memorials/details/9304">
+              <img src="https://www.veterans.gc.ca/images/remembrance/memorials/national-inventory-canadian-memorials/mem/35059-173a.jpg" width="60" height="60"/>
+            </a>
+            </td>
+          </tr>
+          <tr>
+            <th>theme</th>
+            <td>FO</td>
+          </tr>
+          <tr>
+            <th>type</th>
+            <td>2</td>
+          </tr>
+          <tr>
+            <th>elevation</th>
+            <td>61</td>
+          </tr>
+          <tr>
+            <th>altiaccu</th>
+            <td>5</td>
+          </tr>
+        </table>
+      </properties>
+      <geometry>
+        <point>
+          <coordinates>-75.705278 45.397778</coordinates>
+        </point>
+      </geometry>
+    </feature>
+
+  </body>
+</mapml>

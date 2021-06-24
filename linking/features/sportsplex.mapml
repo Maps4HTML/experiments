@@ -1,15 +1,23 @@
 <mapml xmlns="http://www.w3.org/1999/xhtml/">
   <head>
-    <title>sportsplex-outline</title>
-    <base href="http://localhost:8081/geoserver/mapml/"/>
+    <title>Fictitious building interior (relocated)</title>
     <meta charset="utf-8"/>
     <meta name="projection" content="CBMTILE"/>
     <meta name="cs" content="pcrs"/>
-    <meta content="text/mapml;projection=CBMTILE" http-equiv="Content-Type"/>
+    <meta content="text/mapml" http-equiv="Content-Type"/>
     <link href="https://www.arcgis.com/home/item.html?id=4be6c94b65ee408999d2d4483a30febf" rel="license" title="© Salt Lake County Assessor"/>
-    <link href="http://localhost:8081/geoserver/mapml/nrcan:sportsplex-outline/cbmtile?style=" rel="self style" title="polygon"/>
   </head>
   <body>
+    <extent units="CBMTILE">
+      <input name="z" type="zoom" min="18" max="24"/>
+      <input name="xmin" type="location" units="pcrs" position="top-left" axis="easting" />
+      <input name="ymin" type="location" units="pcrs" position="bottom-left" axis="northing" />
+      <input name="xmax" type="location" units="pcrs" position="top-right" axis="easting" />
+      <input name="ymax" type="location" units="pcrs" position="top-left" axis="northing" />
+      <input name="w" type="width"/>
+      <input name="h" type="height"/>
+      <link rel="image" tref="http://geogratis.gc.ca/maps/CBMT?SERVICE=WMS&amp;VERSION=1.1.1&amp;SRS=EPSG:3978&amp;LAYERS=CBMT&amp;BBOX={xmin},{ymin},{xmax},{ymax}&amp;REQUEST=GetMap&amp;FORMAT=image/png&amp;TRANSPARENT=TRUE&amp;WIDTH={w}&amp;HEIGHT={h}&amp;STYLES=&amp;m4h=t"/>
+    </extent>
         <feature id="sportsplex-rooms.1" class="sportsplex-rooms">
             <featurecaption>NW Stairs</featurecaption>
             <geometry>

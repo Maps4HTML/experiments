@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Progressive Enhancement</title>
+    <script type="module" src="/experiments/dist/web-map.js"></script>
+    <link rel="stylesheet" href="/experiments/global.css">
+    <style>
+      .transparency {
+        opacity: 0.2;
+      }
+    </style>
+  </head>
+  <body>
+    <img usemap="#dowslake" src="map1.png" alt="Dow's Lake area" />
+    <map name="dowslake" is="web-map" zoom="17" lat="45.398043" lon="-75.70683" projection="OSMTILE" controls>
+      <layer- id="osm" src="https://geogratis.gc.ca/mapml/en/osmtile/osm/" label="Open Street Map" checked></layer->
+      <!-- the HTML author can create MapML files and serve them as layers if they prefer -->
+      <layer- id="marker" label="Marker layer" src="marker.mapml"></layer->
+
+      <!-- you could do this more precisely with shape="poly" and appropriate coords, but I was too lazy -->
+      <area is="map-area" href='https://example.com/marker/' alt="Marker" coords="255,145,275,190" shape="rect" style="fill: none;stroke: blue;stroke-width: 3px">
+
+      <area is="map-area" id="donut" alt="Circle" href='https://example.com/circle/' coords="250,250,25" shape="circle" style="fill: white; stroke: aqua; stroke-width: 5px;fill-opacity: 0.0">
+      <!-- the "hole" is not a link (no href), so it is not interactive -->
+      <area is="map-area" id="hole" coords="250,250,7" shape="circle" style="fill: blue; stroke: none;fill-opacity: 0.3;">
+      <area is="map-area" id="rect" href='https://example.com/rectangle/' alt="Rectangle" coords="345,290,415,320" shape="rect" style="fill: greenyellow; stroke: blue; stroke-width: 3px;fill-opacity: 0.4">
+      <area is="map-area" id="poly" href='https://example.com/polygon/' alt="Polygon" coords="392,116,430,100,441,128,405,145" shape="poly" style="fill: pink; stroke: blue; stroke-width: 3px;fill-opacity: 0.4">
+    </map>
+  </body>
+</html>
