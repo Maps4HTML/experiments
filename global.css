@@ -21,6 +21,7 @@ body {
   height: 100%;
   max-width: 100%;
   width: 100%;
+  vertical-align: middle;
 }
 /* Ensure inline layer content is hidden if custom/built-in elements isn't
 supported, or if javascript is disabled. This needs to be defined separately
