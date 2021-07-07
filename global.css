@@ -21,10 +21,7 @@ body {
   height: 100%;
   max-width: 100%;
   width: 100%;
-}
-/* https://github.com/Maps4HTML/Web-Map-Custom-Element/issues/350#issuecomment-834466757 */
-[is="web-map"]:defined, mapml-viewer:defined {
-  box-sizing: inherit;
+  vertical-align: middle;
 }
 /* Ensure inline layer content is hidden if custom/built-in elements isn't
 supported, or if javascript is disabled. This needs to be defined separately
