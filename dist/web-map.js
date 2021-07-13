@@ -52,7 +52,7 @@ export class WebMap extends HTMLMapElement {
     }
   }
   get projection() {
-    return this.hasAttribute("projection") ? this.getAttribute("projection") : "OSMTILE";
+    return this.hasAttribute("projection") ? this.getAttribute("projection") : "";
   }
   set projection(val) {
     if(val && M[val]){
