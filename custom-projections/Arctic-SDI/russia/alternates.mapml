@@ -1,5 +1,5 @@
 <mapml xmlns="http://www.w3.org/1999/xhtml">
-  <head xmlns:html="http://www.w3.org/1999/xhtml/">
+  <head xmlns:html="http://www.w3.org/1999/xhtml">
     <title>Russia Arctic SDI Contribution</title>
     <meta charset="UTF-8"/>
     <meta content="text/mapml" http-equiv="Content-Type"/>
@@ -21,7 +21,7 @@
       }
     </style>
   </head>
-  <body xmlns:html="http://www.w3.org/1999/xhtml/">
+  <body xmlns:html="http://www.w3.org/1999/xhtml">
     <extent units="EPSG3576">
       <input type="zoom" name="TileMatrix" min="0" max="11" value="0"/>
       <input type="location" name="TileCol" axis="column" units="tilematrix" min="0" max="1"/>
