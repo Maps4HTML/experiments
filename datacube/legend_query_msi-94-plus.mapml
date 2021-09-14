@@ -1,13 +1,13 @@
-<mapml xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <title>Legend</title>
-    <meta charset="utf-8" />
-    <meta name="projection" content="CBMTILE"/>
-  </head>
-  <body>
-    <feature>
-      <featurecaption>Legend</featurecaption>
-      <properties>
+<mapml- xmlns="http://www.w3.org/1999/xhtml">
+  <map-head>
+    <map-title>Legend</map-title>
+    <map-meta charset="utf-8" />
+    <map-meta name="projection" content="CBMTILE"/>
+  </map-head>
+  <map-body>
+    <map-feature>
+      <map-featurecaption>Legend</map-featurecaption>
+      <map-properties>
         <table>
           <th>Meaning</th><th>Symbol</th>
           <tr>
@@ -19,8 +19,8 @@
             <td><img src="https://datacube.services.geo.ca/assets/legend/legend_msi_binary.png"/></td>
           </tr>
         </table>
-      </properties>
-    </feature>
-  </body>
-</mapml>
+      </map-properties>
+    </map-feature>
+  </map-body>
+</mapml->
 

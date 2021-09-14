@@ -1,31 +1,31 @@
-<mapml xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta charset="utf-8" />
-        <title>Canada's Arctic SDI Contribution</title>
-        <meta content="text/mapml" http-equiv="Content-Type" />
-        <link rel="license" title="&amp;copy; Arctic Council" href="http://catalogue.arctic-sdi.org/geonetwork/srv/eng/catalog.search#/metadata/8b4f2b34-2d0d-4744-ae0f-d7989b9f7a02/formatters/xsl-view?root=div&amp;view=advanced">></link>
-        <meta name="projection" content="EPSG3573"/>
-        <meta name="cs" content="pcrs"/>
-        <link rel="style" href="../denmark/alternates.mapml" title="Denmark"/>
-        <link rel="style" href="../finland/alternates.mapml" title="Finland"/>
-        <link rel="style" href="../iceland/alternates.mapml" title="Iceland"/>
-        <link rel="style" href="../norway/alternates.mapml" title="Norway"/>
-        <link rel="style" href="../russia/alternates.mapml" title="Russia"/>
-        <link rel="style" href="../sweden/alternates.mapml" title="Sweden"/>
-        <link rel="style" href="../usa/alternates.mapml" title="U.S.A."/>
-        <link rel="self style" href="../canada/alternates.mapml" title="Canada"/>
-        <style>
+<mapml- xmlns="http://www.w3.org/1999/xhtml">
+    <map-head>
+        <map-meta charset="utf-8"></map-meta>
+        <map-title>Canada's Arctic SDI Contribution</map-title>
+        <map-meta content="text/mapml" http-equiv="Content-Type" />
+        <map-link rel="license" title="&amp;copy; Arctic Council" href="http://catalogue.arctic-sdi.org/geonetwork/srv/eng/catalog.search#/metadata/8b4f2b34-2d0d-4744-ae0f-d7989b9f7a02/formatters/xsl-view?root=div&amp;view=advanced">></map-link>
+        <map-meta name="projection" content="EPSG3573"/>
+        <map-meta name="cs" content="pcrs"/>
+        <map-link rel="style" href="../denmark/alternates.mapml" title="Denmark"/>
+        <map-link rel="style" href="../finland/alternates.mapml" title="Finland"/>
+        <map-link rel="style" href="../iceland/alternates.mapml" title="Iceland"/>
+        <map-link rel="style" href="../norway/alternates.mapml" title="Norway"/>
+        <map-link rel="style" href="../russia/alternates.mapml" title="Russia"/>
+        <map-link rel="style" href="../sweden/alternates.mapml" title="Sweden"/>
+        <map-link rel="style" href="../usa/alternates.mapml" title="U.S.A."/>
+        <map-link rel="self style" href="../canada/alternates.mapml" title="Canada"/>
+        <map-style>
           .asdi-countries {
             fill: #efefd5; fill-opacity: 0.2; stroke-width: 1; stroke: #d2c2c1; stroke-opacity: 1; stroke-dasharray: 3;
           }
-        </style>
-    </head>
-    <body>
-        <extent units="EPSG3573">
-          <input type="zoom" name="TileMatrix" min="0" max="11" value="0"/>
-          <input type="location" name="TileCol" axis="column" units="tilematrix" min="0" max="1"/>
-          <input type="location" name="TileRow" axis="row" units="tilematrix" min="0" max="1"/>
-          <link rel="tile" tref="http://basemap.arctic-sdi.org/mapcache/wmts/1.0.0/arctic_cascading/default/3573/{TileMatrix}/{TileRow}/{TileCol}.png"/>
-        </extent>
-    </body>
-</mapml>
+        </map-style>
+    </map-head>
+    <map-body>
+        <map-extent units="EPSG3573">
+          <map-input type="zoom" name="TileMatrix" min="0" max="11" value="0"/>
+          <map-input type="location" name="TileCol" axis="column" units="tilematrix" min="0" max="1"/>
+          <map-input type="location" name="TileRow" axis="row" units="tilematrix" min="0" max="1"/>
+          <map-link rel="tile" tref="http://basemap.arctic-sdi.org/mapcache/wmts/1.0.0/arctic_cascading/default/3573/{TileMatrix}/{TileRow}/{TileCol}.png"/>
+        </map-extent>
+    </map-body>
+</mapml->

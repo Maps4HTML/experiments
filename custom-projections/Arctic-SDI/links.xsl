@@ -6,7 +6,7 @@
       <xsl:apply-templates select="node() | @*"/>
     </xsl:copy>
   </xsl:template>
-  <xsl:template  match="h:head/node()[position()=last()]" xpath-default-namespace="http://www.w3.org/1999/xhtml" >
+  <xsl:template  match="h:map-head/node()[position()=last()]" xpath-default-namespace="http://www.w3.org/1999/xhtml" >
     <xsl:copy>
       <xsl:apply-templates select="node() | @*"/>
     </xsl:copy>
@@ -18,14 +18,14 @@
   </xsl:template>
 <!--  <xsl:template match="h:link[@projection]"/>-->
   <xsl:template match="h:meta[@name='projection']">
-    <meta name="projection">
+    <map-meta name="projection">
       <xsl:attribute name="content">EPSG<xsl:value-of select="substring-after(@content,'EPSG:')"/></xsl:attribute>
-    </meta>
+    </map-meta>
     
   </xsl:template>
   <xsl:template match="h:body">
     <xsl:copy>
-        <extent>
+        <map-extent>
           <xsl:attribute name="units">EPSG<xsl:value-of select="substring-after(//h:meta[@name='projection']/@content,'EPSG:')"></xsl:value-of></xsl:attribute>
           <input type="zoom" name="TileMatrix" min="0" max="11" value="0"/>
           <input type="location" name="TileCol" axis="column" units="tilematrix" min="0" max="1"/>
@@ -33,7 +33,7 @@
           <link rel="tile">
             <xsl:attribute name="tref">http://basemap.arctic-sdi.org/mapcache/wmts/1.0.0/arctic_cascading/default/<xsl:value-of select="substring-after(//h:meta[@name='projection']/@content,'EPSG:')"></xsl:value-of>/{TileMatrix}/{TileRow}/{TileCol}.png</xsl:attribute>
           </link>
-        </extent>
+        </map-extent>
       <xsl:apply-templates select="node() | @*"/>
     </xsl:copy>
   </xsl:template>
@@ -45,7 +45,7 @@
       <xsl:apply-templates select="node() | @*[local-name() != 'id'] "/>
     </xsl:copy>
   </xsl:template>
-  <xsl:template match="h:geometry[ancestor::h:feature[h:featurecaption = 'United States of America']]">
+  <xsl:template match="h:map-geometry[ancestor::h:feature[h:featurecaption = 'United States of America']]">
     <xsl:copy>
       <map-a>
         <xsl:attribute name="href">usa/links.mapml</xsl:attribute>
@@ -61,7 +61,7 @@
       <xsl:apply-templates select="node() | @*[local-name() != 'id'] "/>
     </xsl:copy>
   </xsl:template>
-  <xsl:template match="h:geometry">
+  <xsl:template match="h:map-geometry">
     <xsl:copy>
       <map-a>
         <xsl:attribute name="href"><xsl:value-of select="translate(../h:featurecaption, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')"/>/links.mapml</xsl:attribute>

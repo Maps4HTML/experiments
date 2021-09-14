@@ -1,14 +1,14 @@
-<mapml xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta charset="utf-8" />
-        <title>Atlas of Canada Polar Wall Map</title>
-        <meta content="text/mapml" http-equiv="Content-Type" />
-        <link rel="license" title="Canadian Federal Geospatial Platform" href="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/NCR_RCN/MapServer/"></link>
-        <meta name="projection" content="ATLAS_POLAR_MAP"/>
-        <link rel="zoomin" href="/experiments/linking/features/canada.mapml" type="text/mapml" />
-        <link rel="zoomout" href="asdi-changeProjection.mapml" type="text/mapml" />
-    </head>        
-    <body>
+<mapml- xmlns="http://www.w3.org/1999/xhtml">
+    <map-head>
+        <map-meta charset="utf-8"></map-meta>
+        <map-title>Atlas of Canada Polar Wall Map</map-title>
+        <map-meta content="text/mapml" http-equiv="Content-Type" />
+        <map-link rel="license" title="Canadian Federal Geospatial Platform" href="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/NCR_RCN/MapServer/"></map-link>
+        <map-meta name="projection" content="ATLAS_POLAR_MAP"/>
+        <map-link rel="zoomin" href="/experiments/linking/features/canada.mapml" type="text/mapml" />
+        <map-link rel="zoomout" href="asdi-changeProjection.mapml" type="text/mapml" />
+    </map-head>        
+    <map-body>
       <!-- 
            That this file can be viewed on a map that defines the ATLAS_POLAR_MAP
            projection, without having it defined here, defines a use case:
@@ -17,13 +17,13 @@
            Eventually, it would become evident that certain TCRS would become "popular"
            and therefore candidates for standardization in / by browsers.
       -->
-      <extent units="ATLAS_POLAR_MAP">
-        <input type="zoom" name="z" min="4" max="5" value="6" />
-        <input type="location" name="x" axis="column" units="tilematrix" min="116" max="186" />
-        <input type="location" name="y" axis="row" units="tilematrix" min="125" max="184" />
-        <link rel="tile" tref="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/NCR_RCN/MapServer/tile/{z}/{y}/{x}/" />
-        <link rel="tile" tref="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/NCR_RCN_A/MapServer/tile/{z}/{y}/{x}/" />
-      </extent>
-    </body>
-</mapml>
+      <map-extent units="ATLAS_POLAR_MAP">
+        <map-input type="zoom" name="z" min="4" max="5" value="6" />
+        <map-input type="location" name="x" axis="column" units="tilematrix" min="116" max="186" />
+        <map-input type="location" name="y" axis="row" units="tilematrix" min="125" max="184" />
+        <map-link rel="tile" tref="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/NCR_RCN/MapServer/tile/{z}/{y}/{x}/" />
+        <map-link rel="tile" tref="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/NCR_RCN_A/MapServer/tile/{z}/{y}/{x}/" />
+      </map-extent>
+    </map-body>
+</mapml->
 
