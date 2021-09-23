@@ -1,15 +1,15 @@
-<mapml lang="en">
-  <head>
-    <title>The Man With Two Hats</title>
-    <meta http-equiv="Content-Type" content="text/mapml"/>
-    <meta charset="utf-8"/>
-    <meta name="projection" content="OSMTILE"/>
-    <meta name="cs" content="gcrs"/>
-    <link rel="license" href="foo" title="Foo © Natural Resources Canada"/>
-  </head>
-  <body>
-    <feature id="aPoint">
-      <properties>
+<mapml- lang="en">
+  <map-head>
+    <map-title>The Man With Two Hats</map-title>
+    <map-meta http-equiv="Content-Type" content="text/mapml"/>
+    <map-meta charset="utf-8"/>
+    <map-meta name="projection" content="OSMTILE"/>
+    <map-meta name="cs" content="gcrs"/>
+    <map-link rel="license" href="foo" title="Foo © Natural Resources Canada"/>
+  </map-head>
+  <map-body>
+    <map-feature id="aPoint">
+      <map-properties>
         <table>
           <tr>
             <th>code</th>
@@ -47,13 +47,13 @@
             <td>5</td>
           </tr>
         </table>
-      </properties>
-      <geometry>
-        <point>
-          <coordinates>-75.705278 45.397778</coordinates>
-        </point>
-      </geometry>
-    </feature>
+      </map-properties>
+      <map-geometry>
+        <map-point>
+          <map-coordinates>-75.705278 45.397778</map-coordinates>
+        </map-point>
+      </map-geometry>
+    </map-feature>
 
-  </body>
-</mapml>
+  </map-body>
+</mapml->
