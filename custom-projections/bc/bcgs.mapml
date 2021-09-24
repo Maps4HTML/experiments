@@ -1,26 +1,26 @@
-<mapml lang="en"  xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="Content-Type" content="text/mapml"/>
-    <title>British Columbia Geological Survey</title>
-    <meta name="projection" content="BCTILE"/>
-    <meta name="cs" content="gcrs"/>
-    <meta name="extent" content="top-left-easting=1188042.41,top-left-northing=388313.19,bottom-right-easting=1200891.70,bottom-right-northing=379439.25"/>
-  </head>
+<mapml- lang="en"  xmlns="http://www.w3.org/1999/xhtml">
+  <map-head>
+    <map-meta charset="utf-8"/>
+    <map-meta http-equiv="Content-Type" content="text/mapml"/>
+    <map-title>British Columbia Geological Survey</map-title>
+    <map-meta name="projection" content="BCTILE"/>
+    <map-meta name="cs" content="gcrs"/>
+    <map-meta name="extent" content="top-left-easting=1188042.41,top-left-northing=388313.19,bottom-right-easting=1200891.70,bottom-right-northing=379439.25"/>
+  </map-head>
   
-  <body>
-    <feature id="bcgs">
-      <featurecaption>British Columbia Geological Survey</featurecaption>
-      <properties>
+  <map-body>
+    <map-feature id="bcgs">
+      <map-featurecaption>British Columbia Geological Survey</map-featurecaption>
+      <map-properties>
         <id>British Columbia Geological Survey</id>
-      </properties>
-      <geometry>
+      </map-properties>
+      <map-geometry>
         <map-a href="#11,-123.362105,48.430882">
-        <point>
-          <coordinates>-123.362105 48.430882</coordinates>
-          </point>
+        <map-point>
+          <map-coordinates>-123.362105 48.430882</map-coordinates>
+          </map-point>
           </map-a>
-      </geometry>
-    </feature>
-  </body>
-</mapml>
+      </map-geometry>
+    </map-feature>
+  </map-body>
+</mapml->

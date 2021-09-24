@@ -23,69 +23,69 @@
   <body>
       <p>This example illustrates a few features of the Web-Map-Custom-Element mapml-viewer, as well as some concepts from MapML that it supports:</p>
       <ul>
-        <li>Making whole features into map links: &lt;geometry&gt;&lt;map-a href="..."&gt;...&lt;/map-a&gt;&lt;/geometry&gt;</li>
+        <li>Making whole features into map links: &lt;map-geometry&gt;&lt;map-a href="..."&gt;...&lt;/map-a&gt;&lt;/map-geometry&gt;</li>
         <li>Linking to a location within the current map using a URL fragment like href="#zoom,longitude,latitude"</li>
         <li>Different representations of the same feature at different zoom levels / scales.</li>
-        <li>Declarative scaling of features and tiles beyond their 'native' zoom level, to support extremely responsive images (&lt;meta name="zoom" content="min=0,max=7"&gt;)</li>
+        <li>Declarative scaling of features and tiles beyond their 'native' zoom level, to support extremely responsive images (&lt;map-meta name="zoom" content="min=0,max=7"&gt;)</li>
         <li>Default link style for map-a element (hyperlink <a href="#">blue</a>)</li>
         <li>Support for the <a href="https://wiki.osgeo.org/wiki/Tile_Map_Service_Specification">tms</a> link attribute: &lt;link rel="tile" tms tref="..."&gt;</li>
       </ul>
       <mapml-viewer projection="WGS84" zoom="2" lon="-111.062839" lat="-8.059046" controls>
         <layer- label="Painting" checked>
-          <meta name="zoom" content="min=0,max=7">
-          <extent units="WGS84">
-              <input name="zoomLevel" type="zoom" value="1" min="0" max="4"/>
-              <input name="row" type="location" axis="row" units="tilematrix" min="0" max="2"/>
-              <input name="col" type="location" axis="column" units="tilematrix" min="0" max="2"/>
-              <link tms rel="tile" tref="https://maps4html.org/TiledArt-Rousseau/TheBanksOfTheBièvreNearBicêtre/{zoomLevel}/{col}/{row}.png" />
-          </extent>
+          <map-meta name="zoom" content="min=0,max=7"></map-meta>
+          <map-extent units="WGS84">
+              <map-input  name="zoomLevel" type="zoom" value="1" min="0" max="4"></map-input>
+              <map-input  name="row" type="location" axis="row" units="tilematrix" min="0" max="2"></map-input>
+              <map-input  name="col" type="location" axis="column" units="tilematrix" min="0" max="2"></map-input>
+              <map-link tms rel="tile" tref="https://maps4html.org/TiledArt-Rousseau/TheBanksOfTheBièvreNearBicêtre/{zoomLevel}/{col}/{row}.png" />
+          </map-extent>
           </layer->
           <layer- label="People" checked>
-            <meta name="projection" content="WGS84">
-            <feature id="girl2" class="child" zoom="2">
-              <featurecaption>Girl - zoom=2</featurecaption>
-              <geometry>
+            <map-meta name="projection" content="WGS84"></map-meta>
+            <map-feature id="girl2" class="child" zoom="2">
+              <map-featurecaption>Girl - zoom=2</map-featurecaption>
+              <map-geometry>
                 <map-a href="#5,-158.518400,-74.697610">
-                  <polygon>
-                    <coordinates>-158.561948 -69.558455 -159.440739 -70.832538 -162.384689 -75.709198 -160.890744 -78.916371 -159.371228 -80.304936 -154.563449 -79.751115 -157.683157 -69.646323 -158.561948 -69.558455</coordinates>
-                  </polygon>
+                  <map-polygon>
+                    <map-coordinates>-158.561948 -69.558455 -159.440739 -70.832538 -162.384689 -75.709198 -160.890744 -78.916371 -159.371228 -80.304936 -154.563449 -79.751115 -157.683157 -69.646323 -158.561948 -69.558455</map-coordinates>
+                  </map-polygon>
                 </map-a>
-              </geometry>
-              <properties></properties>
-            </feature>
-            <feature id="girl5" class="child" zoom="5">
-              <featurecaption>Girl - zoom=5</featurecaption>
-              <geometry>
+              </map-geometry>
+              <map-properties></map-properties>
+            </map-feature>
+            <map-feature id="girl5" class="child" zoom="5">
+              <map-featurecaption>Girl - zoom=5</map-featurecaption>
+              <map-geometry>
                 <map-a href="https://example.org/" type="text/html">
-                  <polygon>
-                    <coordinates>-158.561948 -69.558455 -159.440739 -70.832538 -162.384689 -75.709198 -160.890744 -78.916371 -159.371228 -80.304936 -154.563449 -79.751115 -157.683157 -69.646323 -158.561948 -69.558455</coordinates>
-                  </polygon>
+                  <map-polygon>
+                    <map-coordinates>-158.561948 -69.558455 -159.440739 -70.832538 -162.384689 -75.709198 -160.890744 -78.916371 -159.371228 -80.304936 -154.563449 -79.751115 -157.683157 -69.646323 -158.561948 -69.558455</map-coordinates>
+                  </map-polygon>
                 </map-a>
-              </geometry>
-              <properties></properties>
-            </feature>
-            <feature id="boy" class="child">
-              <featurecaption>Boy</featurecaption>
-              <geometry>
+              </map-geometry>
+              <map-properties></map-properties>
+            </map-feature>
+            <map-feature id="boy" class="child">
+              <map-featurecaption>Boy</map-featurecaption>
+              <map-geometry>
                 <map-a href="#6,-161.021739,-66.656315">
-                  <polygon>
-                    <coordinates>-159.659797 -70.786203 -159.659797 -62.175162 -162.296170 -62.175162 -162.296170 -70.786203 -159.659797 -70.786203</coordinates>
-                  </polygon>
+                  <map-polygon>
+                    <map-coordinates>-159.659797 -70.786203 -159.659797 -62.175162 -162.296170 -62.175162 -162.296170 -70.786203 -159.659797 -70.786203</map-coordinates>
+                  </map-polygon>
                 </map-a>
-              </geometry>
-              <properties></properties>
-            </feature>
-            <feature id="couple" class="parents">
-              <featurecaption>Parents</featurecaption>
-              <geometry>
+              </map-geometry>
+              <map-properties></map-properties>
+            </map-feature>
+            <map-feature id="couple" class="parents">
+              <map-featurecaption>Parents</map-featurecaption>
+              <map-geometry>
                 <map-a href="#6,-157.815362,-54.619839">
-                  <polygon>
-                    <coordinates>-160.012339 -51.105128 -155.706263 -51.280864 -155.047170 -58.969293 -160.363856 -58.749623 -160.012339 -51.105128</coordinates>
-                  </polygon>
+                  <map-polygon>
+                    <map-coordinates>-160.012339 -51.105128 -155.706263 -51.280864 -155.047170 -58.969293 -160.363856 -58.749623 -160.012339 -51.105128</map-coordinates>
+                  </map-polygon>
                 </map-a>
-              </geometry>
-              <properties></properties>
-            </feature>
+              </map-geometry>
+              <map-properties></map-properties>
+            </map-feature>
         </layer->
       </mapml-viewer>
     </body>

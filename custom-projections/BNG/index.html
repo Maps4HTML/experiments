@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>British National Grid custom projection</title>
+    <map-title>British National Grid custom projection</map-title>
     <script type="module" src="../../dist/mapml-viewer.js"></script>
     <link rel="stylesheet" href="../../global.css">
     <!-- 
@@ -103,27 +103,27 @@
     <!-- when using  -->
     <mapml-viewer zoom="0" lat="54.41338" lon="-3.19995" controls>
       <layer- label="OS Roads tile map in BNG custom projection" checked>
-        <meta name="projection" content="BNG">
-        <extent units="BNG">
-          <input name="z" type="zoom" min="0" max="9"/>
-          <input name="y" type="location" units="tilematrix" axis="row" />
-          <input name="x" type="location" units="tilematrix" axis="column"/>
-          <link rel="tile"   tref="https://api.os.uk/maps/raster/v1/wmts?key=TtPU7xWvj7AmV6uePZRYWFXuKVHzRTq7&tileMatrixSet=EPSG:27700&version=1.0.0&style=default&layer=Road_27700&service=WMTS&request=GetTile&tileCol={x}&tileRow={y}&tileMatrix={z}">
-        </extent>        
+        <map-meta name="projection" content="BNG"></map-meta>
+        <map-extent units="BNG">
+          <map-input  name="z" type="zoom" min="0" max="9"></map-input>
+          <map-input  name="y" type="location" units="tilematrix" axis="row" ></map-input>
+          <map-input  name="x" type="location" units="tilematrix" axis="column"></map-input>
+          <map-link rel="tile"   tref="https://api.os.uk/maps/raster/v1/wmts?key=TtPU7xWvj7AmV6uePZRYWFXuKVHzRTq7&tileMatrixSet=EPSG:27700&version=1.0.0&style=default&layer=Road_27700&service=WMTS&request=GetTile&tileCol={x}&tileRow={y}&tileMatrix={z}">
+        </map-extent>        
       </layer->
       <layer- checked src="bgs-surficial-geology.mapml"></layer->
       <layer- label="BNG Shrink/Swell WMS" >
-        <meta name="projection" content="BNG">
-        <meta name="extent" content="top-left-easting=54224.000100,top-left-northing=5192.999900,bottom-right-easting=655627.000000,bottom-right-northing=1220319.000000">
-        <extent units="BNG">
-            <input name="xmin" type="location" rel="map" position="top-left" axis="easting" units="pcrs" min="240755" max="261199" />
-            <input name="ymin" type="location" rel="map" position="bottom-left" axis="northing" units="pcrs" min="628735" max="658452" />
-            <input name="xmax" type="location" rel="map" position="top-right" axis="easting" units="pcrs"  min="240755" max="261199"  />
-            <input name="ymax" type="location" rel="map" position="top-left" axis="northing" units="pcrs"  min="628735" max="658452" />
-            <input name="w" type="width" min="1" max="10000" />
-            <input name="h" type="height" min="1" max="10000" />
-          <link rel="image" tref="http://ogc.bgs.ac.uk/cgi-bin/BGS_1GE_Geology/wms?version=1.3.0&request=GetMap&layers=GBR_Kilmarnock_BGS_50k_ShrinkSwell&format=image/png&crs=epsg:27700&BBOX={xmin},{ymin},{xmax},{ymax}&WIDTH={w}&HEIGHT={h}">
-        </extent>      
+        <map-meta name="projection" content="BNG"></map-meta>
+        <map-meta name="extent" content="top-left-easting=54224.000100,top-left-northing=5192.999900,bottom-right-easting=655627.000000,bottom-right-northing=1220319.000000"></map-meta>
+        <map-extent units="BNG">
+            <map-input  name="xmin" type="location" rel="map" position="top-left" axis="easting" units="pcrs" min="240755" max="261199" ></map-input>
+            <map-input  name="ymin" type="location" rel="map" position="bottom-left" axis="northing" units="pcrs" min="628735" max="658452" ></map-input>
+            <map-input  name="xmax" type="location" rel="map" position="top-right" axis="easting" units="pcrs"  min="240755" max="261199"  ></map-input>
+            <map-input  name="ymax" type="location" rel="map" position="top-left" axis="northing" units="pcrs"  min="628735" max="658452" ></map-input>
+            <map-input  name="w" type="width" min="1" max="10000" ></map-input>
+            <map-input  name="h" type="height" min="1" max="10000" ></map-input>
+          <map-link rel="image" tref="http://ogc.bgs.ac.uk/cgi-bin/BGS_1GE_Geology/wms?version=1.3.0&request=GetMap&layers=GBR_Kilmarnock_BGS_50k_ShrinkSwell&format=image/png&crs=epsg:27700&BBOX={xmin},{ymin},{xmax},{ymax}&WIDTH={w}&HEIGHT={h}">
+        </map-extent>      
       </layer->
     </mapml-viewer>
   </body>
