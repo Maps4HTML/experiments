@@ -1,10 +1,10 @@
 <mapml- xmlns="http://www.w3.org/1999/xhtml">
    <map-head>
       <map-title>ne_10m_admin_0_countries</map-title>
-      <map-meta charset="utf-8"/>
-      <map-meta content="text/mapml" http-equiv="Content-Type"/>
-      <map-meta name="projection" content="OSMTILE"/>
-      <map-meta name="cs" content="pcrs"/>
+      <map-meta charset="utf-8"></map-meta>
+      <map-meta content="text/mapml" http-equiv="Content-Type"></map-meta>
+      <map-meta name="projection" content="OSMTILE"></map-meta>
+      <map-meta name="cs" content="pcrs"></map-meta>
    </map-head>
    <map-body>
       <map-feature id="fclass.68" class="fclass">

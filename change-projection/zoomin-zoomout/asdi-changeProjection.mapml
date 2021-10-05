@@ -2,11 +2,11 @@
     <map-head>
         <map-meta charset="utf-8"></map-meta>
         <map-title>Arctic SDI for Canada</map-title>
-        <map-meta content="text/mapml" http-equiv="Content-Type" />
-        <map-link rel="license" title="&amp;copy; Arctic Council" href="http://catalogue.arctic-sdi.org/geonetwork/srv/eng/catalog.search#/map-metadata/8b4f2b34-2d0d-4744-ae0f-d7989b9f7a02/formatters/xsl-view?root=div&amp;view=advanced">></map-link>
+        <map-meta content="text/mapml" http-equiv="Content-Type" ></map-meta>
+        <map-link rel="license" title="&amp;copy; Arctic Council" href="http://catalogue.arctic-sdi.org/geonetwork/srv/eng/catalog.search#/map-metadata/8b4f2b34-2d0d-4744-ae0f-d7989b9f7a02/formatters/xsl-view?root=div&amp;view=advanced"></map-link>
         <map-link rel="zoomin" href="atlas-changeProjection.mapml" type="text/mapml" />
-        <map-meta name="projection" content="EPSG3573"/>
-        <map-meta name="cs" content="pcrs"/>
+        <map-meta name="projection" content="EPSG3573"></map-meta>
+        <map-meta name="cs" content="pcrs"></map-meta>
         <map-style>
           .asdi-countries {
             fill: #efefd5; fill-opacity: 0.2; stroke-width: 1; stroke: #d2c2c1; stroke-opacity: 1; stroke-dasharray: 3;

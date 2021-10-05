@@ -1,8 +1,8 @@
 <mapml- 
     <map-head>
       <map-title>World Countries - WGS84</map-title>
-      <map-meta charset="utf-8" />
-      <map-meta name="zoom" content="min=0,max=6" />
+      <map-meta charset="utf-8" ></map-meta>
+      <map-meta name="zoom" content="min=0,max=6" ></map-meta>
       <map-link rel="stylesheet" href="../vector-tile.css" />
     </map-head>
     <map-body>

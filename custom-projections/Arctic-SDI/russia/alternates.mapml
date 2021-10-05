@@ -1,11 +1,11 @@
 <mapml- xmlns="http://www.w3.org/1999/xhtml">
   <map-head xmlns:html="http://www.w3.org/1999/xhtml">
     <map-title>Russia Arctic SDI Contribution</map-title>
-    <map-meta charset="UTF-8"/>
-    <map-meta content="text/mapml" http-equiv="Content-Type"/>
-    <map-meta name="extent" content="top-left-easting=-12618539.76,top-left-northing=12618539.76,bottom-right-easting=12530838.03,bottom-right-northing=-12618539.76"/>
-    <map-meta name="projection" content="EPSG3576"/>
-    <map-meta name="cs" content="pcrs"/>
+    <map-meta charset="UTF-8"></map-meta>
+    <map-meta content="text/mapml" http-equiv="Content-Type"></map-meta>
+    <map-meta name="extent" content="top-left-easting=-12618539.76,top-left-northing=12618539.76,bottom-right-easting=12530838.03,bottom-right-northing=-12618539.76"></map-meta>
+    <map-meta name="projection" content="EPSG3576"></map-meta>
+    <map-meta name="cs" content="pcrs"></map-meta>
     <map-link href="http://open.canada.ca/en/open-government-licence-canada" rel="license" title="Open Government License"/>
     <map-link rel="style" href="../denmark/alternates.mapml" title="Denmark"/>
     <map-link rel="style" href="../finland/alternates.mapml" title="Finland"/>

@@ -1,8 +1,8 @@
 <mapml- xmlns="http://www.w3.org/1999/xhtml">
   <map-head>
     <map-title>Labelled Satellite Imagery</map-title>
-    <map-meta http-equiv="Content-Type" content="text/mapml"/>
-    <map-meta charset="utf-8"/>
+    <map-meta http-equiv="Content-Type" content="text/mapml"></map-meta>
+    <map-meta charset="utf-8"></map-meta>
     <map-link rel="license" href="https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/" title="Source: Esri, HERE, Garmin, &amp;copy;OpenStreetMap contributors, Maxar, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community"/>
     <map-link rel="style" title="National Geographic Basemap" href="natgeo.mapml"/>
     <map-link rel="self style" title="Satellite Imagery with place names" href="labelled_imagery.mapml"/>
