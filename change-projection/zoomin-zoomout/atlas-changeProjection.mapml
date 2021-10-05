@@ -2,9 +2,9 @@
     <map-head>
         <map-meta charset="utf-8"></map-meta>
         <map-title>Atlas of Canada Polar Wall Map</map-title>
-        <map-meta content="text/mapml" http-equiv="Content-Type" />
+        <map-meta content="text/mapml" http-equiv="Content-Type" ></map-meta>
         <map-link rel="license" title="Canadian Federal Geospatial Platform" href="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/NCR_RCN/MapServer/"></map-link>
-        <map-meta name="projection" content="ATLAS_POLAR_MAP"/>
+        <map-meta name="projection" content="ATLAS_POLAR_MAP"></map-meta>
         <map-link rel="zoomin" href="/experiments/linking/features/canada.mapml" type="text/mapml" />
         <map-link rel="zoomout" href="asdi-changeProjection.mapml" type="text/mapml" />
     </map-head>        

@@ -1,8 +1,8 @@
 <mapml- xmlns="http://www.w3.org/1999/xhtml">
   <map-head>
     <map-title>Legend</map-title>
-    <map-meta charset="utf-8" />
-    <map-meta name="projection" content="CBMTILE"/>
+    <map-meta charset="utf-8" ></map-meta>
+    <map-meta name="projection" content="CBMTILE"></map-meta>
   </map-head>
   <map-body>
     <map-feature>

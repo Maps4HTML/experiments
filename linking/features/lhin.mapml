@@ -1,10 +1,10 @@
 <mapml- xmlns="http://www.w3.org/1999/xhtml">
   <map-head>
-    <map-meta charset="utf-8"/>
+    <map-meta charset="utf-8"></map-meta>
     <map-title>LHIN</map-title>
-    <map-meta name="cs" content="pcrs"/>
-    <map-meta name="projection" content="CBMTILE"/>
-    <map-meta name="extent" content="top-left-easting=1230415.67, top-left-northing=-70161.76, bottom-right-easting=1656326.24, bottom-right-northing=-293265.51"/>
+    <map-meta name="cs" content="pcrs"></map-meta>
+    <map-meta name="projection" content="CBMTILE"></map-meta>
+    <map-meta name="extent" content="top-left-easting=1230415.67, top-left-northing=-70161.76, bottom-right-easting=1656326.24, bottom-right-northing=-293265.51"></map-meta>
     <map-link href="http://open.canada.ca/en/open-government-licence-canada" rel="license" title="Open Government License"/>
   </map-head>
   <map-body>

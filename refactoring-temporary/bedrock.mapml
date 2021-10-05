@@ -1,8 +1,8 @@
 <mapml- xmlns="http://www.w3.org/1999/xhtml/">
   <map-head>
     <map-title>Natural Resources Canada - NRCan - Bedrock Geology - Groundwater Projects</map-title>
-    <map-meta http-equiv="Content-Type" content="text/mapml;projection=CBMTILE"/>
-    <map-meta charset="utf-8"/>
+    <map-meta http-equiv="Content-Type" content="text/mapml;projection=CBMTILE"></map-meta>
+    <map-meta charset="utf-8"></map-meta>
     <map-link rel="license" href="http://open.canada.ca/en/open-government-licence-canada" title="Open Government Licence - Canada"/>
   </map-head>
   <map-body>

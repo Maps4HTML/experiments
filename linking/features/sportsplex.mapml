@@ -1,10 +1,10 @@
 <mapml- xmlns="http://www.w3.org/1999/xhtml">
   <map-head>
     <map-title>Fictitious building interior (relocated)</map-title>
-    <map-meta charset="utf-8"/>
-    <map-meta name="projection" content="CBMTILE"/>
-    <map-meta name="cs" content="pcrs"/>
-    <map-meta content="text/mapml" http-equiv="Content-Type"/>
+    <map-meta charset="utf-8"></map-meta>
+    <map-meta name="projection" content="CBMTILE"></map-meta>
+    <map-meta name="cs" content="pcrs"></map-meta>
+    <map-meta content="text/mapml" http-equiv="Content-Type"></map-meta>
     <map-link href="https://www.arcgis.com/home/item.html?id=4be6c94b65ee408999d2d4483a30febf" rel="license" title="© Salt Lake County Assessor"/>
   </map-head>
   <map-body>

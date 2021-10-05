@@ -2,10 +2,10 @@
     <map-head>
         <map-meta charset="utf-8"></map-meta>
         <map-title>Canada's Arctic SDI Contribution</map-title>
-        <map-meta content="text/mapml" http-equiv="Content-Type" />
-        <map-link rel="license" title="&amp;copy; Arctic Council" href="http://catalogue.arctic-sdi.org/geonetwork/srv/eng/catalog.search#/metadata/8b4f2b34-2d0d-4744-ae0f-d7989b9f7a02/formatters/xsl-view?root=div&amp;view=advanced">></map-link>
-        <map-meta name="projection" content="EPSG3573"/>
-        <map-meta name="cs" content="pcrs"/>
+        <map-meta content="text/mapml" http-equiv="Content-Type" ></map-meta>
+        <map-link rel="license" title="&amp;copy; Arctic Council" href="http://catalogue.arctic-sdi.org/geonetwork/srv/eng/catalog.search#/metadata/8b4f2b34-2d0d-4744-ae0f-d7989b9f7a02/formatters/xsl-view?root=div&amp;view=advanced"></map-link>
+        <map-meta name="projection" content="EPSG3573"></map-meta>
+        <map-meta name="cs" content="pcrs"></map-meta>
         <map-link rel="style" href="../denmark/alternates.mapml" title="Denmark"/>
         <map-link rel="style" href="../finland/alternates.mapml" title="Finland"/>
         <map-link rel="style" href="../iceland/alternates.mapml" title="Iceland"/>
