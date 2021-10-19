@@ -9,8 +9,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 
-    <!--<script type="module" src="Web-Map-Custom-Element-0.8.0/mapml-viewer.js"></script>-->
-
     <script type="module" src="../../dist/mapml-viewer.js"></script>
     <style>
         html, body {
@@ -45,6 +43,7 @@
         }
         .results_container {
             overflow: scroll;
+            overflow: auto;
             display:none;
             height:100%;
         }
@@ -54,151 +53,216 @@
         .search {
             height:81%;
             float:left;
+            width: 20%;
+            max-width: 20%;
+            margin: auto;
+        }
+        .search_input {
+            width:70%;
+        }
+        .search_button {
+            width:20%;
         }
       </style>
 </head>
 <body>
     
-    
-    
-    <div class = "search">
+    <div class="search" role="search">
         <h2>GeoName Search</h2>
 
-        <input type="text" id="query" size="20%"/>
-        <button onclick="update()">Search</button>
-
-        <div id="results_count"></div>
+        <input type="search" class="search_input" id="query" placeholder="Locations in Canada" autocomplete="off" name="query" size="20%"/>
+        <button onclick="update()" class="search_button btn btn-primary btn-sm" id="searchBtn">Search</button>
+        
+        <br>
+        <output id="results_count" for="query"></output>
         <div id="results" class="results_container"></div>
     </div>
 
-    <mapml-viewer projection="OSMTILE" zoom="4" lat="58.276703" lon="-103.710938" controls id="map">
+    <mapml-viewer projection="OSMTILE" zoom="4" lat="58.276703" lon="-103.710938" controls controlslist="nofullscreen" id="map">
         <layer- label="OpenStreetMap" src="https://geogratis.gc.ca/mapml/en/osmtile/osm/" checked></layer->
     </mapml-viewer>
 
-
+    <!-- ############################################### TEMPLATES ############################################### -->
     <!-- Template layer to add to the mapml-viewer -->
     <template id = "new_layer">
         <layer- label="Test" checked="" id="layer">
             <map-meta name="projection" content="OSMTILE"></map-meta>
-            <map-feature id="Test_Extent" class="child" zoom="2">
+            <map-feature class="child" zoom="2">
                 <map-featurecaption id="caption">Bounding Box Extent</map-featurecaption>
                 <map-geometry id="geom">
-                    <map-polygon id="poly">
-                        <map-coordinates id="coords"></map-coordinates>
-                    </map-polygon>
                 </map-geometry>
-                <map-properties></map-properties>
+                <map-properties id="properties"></map-properties>
             </map-feature>
         </layer->
     </template>
 
-    <template id ="multi-linestring">
+    <!-- Template to add geometrycollection layers and its component -->
+    <template id="geometrycollection_temp">
+        <map-geometrycollection id="geometrycollection"></map-geometrycollection>
+    </template>
+
+    <!-- Templates to add features to geometry -->
+    <template id ="linestring">
         <map-linestring>
             <map-coordinates id="coords"></map-coordinates>
         </map-linestring>
     </template>
 
-    <script>
-        // Select the mapml-viewer
-        mapp = document.querySelector("#map");
-        //mapp.zoomTo(5,6,10);
+    <template id="polygon">
+        <map-polygon id="poly">
+        </map-polygon>
+    </template>
 
-        // Will store the json result
-        var placeholder = ""; 
+    <template id="point_temp">
+        <map-point id="point">
+        </map-point>
+    </template>
+
+    <!-- Template to add coordinates to features -->
+    <template id="coords_temp">
+        <map-coordinates id="coords"></map-coordinates>
+    </template>
+    <!-- ############################################### TEMPLATES ############################################### -->
+    
+    <script>
+        // Handling pressing Enter on focused search results divs
+        function handleEnter(e) {
+            var keycode = (e.keyCode ? e.keyCode : e.which);
+            if (keycode == '13') {
+                document.activeElement.click();
+            }
+        }
+
+        // Handling enter on the input search box, the search button is clicked
+        var input = document.getElementById("query");
+        input.addEventListener("keyup", function(event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                document.getElementById("searchBtn").click();
+            }
+        });
+
+        // Select the mapml-viewer
+        let mapp = document.querySelector("#map");
+
+        // Will store the json search results
+        var search_results = ""; 
 
         // Computes the zoom extent based on bounding box's decimal degrees
-        // GetZoomExtent: listof(Num, Num, Num, Num) -> Int(3-16)
-        function GetZoomExtent (bbox) {
+        // getZoomExtent: listof(Num, Num, Num, Num) -> Int(3-16)
+        function getZoomExtent (bbox) {
             var x = [bbox[0], bbox[2]];
             var y = [bbox[1], bbox[3]];
             var difference = Math.max(Math.abs(x[0]-x[1]), Math.abs(y[0]-y[1])).toPrecision(2);
 
             // choosing zoom level, based on the decimal degree extent
             if (difference >=30) {
-                //console.log("zoom - 3, " + difference);
                 return 3;
             } else if (difference >=25) {
-                //console.log("zoom - 4, " + difference);
                 return 4;
             } else if (difference >= 10) {
-                //console.log("Zoom - 5, " + difference);
                 return 5;
             } else if (difference >= 5) {
-                //console.log("zoom - 6, " + difference);
                 return 6;
             } else if (difference >= 3) {
-                //console.log("zoom - 7, " + difference);
                 return 7;
             } else if (difference >= 2) {
-                //console.log("zoom - 8, " + difference);
                 return 8;
             } else if (difference >= 1) {
-                //console.log("zoom - 9, " + difference);
                 return 9;
             } else if (difference >= 0.7) {
-                //console.log("zoom - 10, " + difference);
                 return 10;
             } else if (difference >= 0.5) {
-                //console.log("zoom - 11, " + difference);
                 return 11;
             } else if (difference >= 0.2) {
-                //console.log("zoom - 12, " + difference);
                 return 12;
             } else if (difference >= 0.1) {
-                //console.log("zoom - 13, " + difference);
                 return 13;
-            } else if (difference == 0.04) { // Multipoint feature
-                //console.log("zoom (Multipoint Feature) - 10, " + difference);
+            } else if (difference == 0.04) { // Point feature
                 return 10;
             } else if (difference >= 0.05) {
-                //console.log("zoom - 14, " + difference);
                 return 14;
             } else if (difference >= 0.02){
-                //console.log("zoom - 15, " + difference);
                 return 15;
             } else {
-                //console.log("zoom - 16, " + difference);
                 return 16;
             }
         }
 
+        // Takes GeoJSON Properties to return a HTML table
+        // properties2Table: Str -> HTML Table
+        function properties2Table(json) {
+            var _table_ = document.createElement('table');
+
+            // Creating a Table Header
+            let thead = _table_.createTHead();
+            let row = thead.insertRow();
+            let th1 = document.createElement("th");
+            let th2 = document.createElement("th");
+            th1.appendChild(document.createTextNode("Property name"));
+            th2.appendChild(document.createTextNode("Property value"));
+            th1.setAttribute("role", "columnheader");
+            th2.setAttribute("role", "columnheader");
+            th1.setAttribute("scope", "col");
+            th2.setAttribute("scope", "col");
+            row.appendChild(th1);
+            row.appendChild(th2);
+            
+            // Creating table body and populating it from the JSON
+            let tbody = _table_.createTBody();
+            for (var key in json) {
+                if (json.hasOwnProperty(key)) {
+
+                    let row = tbody.insertRow();
+                    let th = document.createElement("th");
+                    let td = document.createElement("td");
+                    th.appendChild(document.createTextNode(key));
+                    td.appendChild(document.createTextNode(json[key]));
+                    th.setAttribute("scope", "row");
+                    td.setAttribute("itemprop", key);
+                    row.appendChild(th);
+                    row.appendChild(td);
+                }
+            }
+
+            return _table_;
+        }
+
         // Sorts GEOJSON to to be used by MapMl
-        // geojson2mapml: Str -> list(listof(list), Int(0-3))
-        async function geojson2mapml(url) {
+        // geoJson2MapMl: Str -> list(listof(list), Int(0-3), HTML Table)
+        async function geoJson2MapMl(url) {
             let response = await fetch(url);
             let data = await response.json();
 
-            arrs = data.geometry;
+            let arrs = data.geometry;
 
-            //console.log(data.geometry.type);
+            let table = properties2Table(data.properties);
+
             // Checking the type of feature
             if (data.geometry.type == "MultiPolygon") {
-                return [arrs.coordinates, 1];
+                return [arrs.coordinates, 1, table];
             } else if (data.geometry.type == "MultiPoint") {
-                return [arrs.coordinates, 0];
+                return [arrs.coordinates, 0, table];
             } else if (data.geometry.type == "GeometryCollection") {
-                return [arrs.geometries, 2];
+                return [arrs.geometries, 2, table];
             } else if (data.geometry.type == "MultiLineString") {
-                return [arrs.coordinates, 3];
+                return [arrs.coordinates, 3, table];
             } else {
-                return [arrs, data.geometry.type];
+                return [arrs, data.geometry.type, table];
             }
             
         }
 
         // Draws a new layer and moves the map to the layer
-        // map_pane: Int -> None
+        // mapPane: Int -> None
         // Effects: Changes map's zoom and location. Also creates and adds a new layer to the map
-        async function map_pane(id) {
-            //console.log(id);
-            //console.log("Latitude: " + placeholder[id].latitude + ", Longitude: " + placeholder[id].longitude);
-            var feature_geojson = placeholder[id].feature.links.self.href + ".geojson";
+        async function mapPane(id) {
+            var feature_geojson = search_results[id].feature.links.self.href + ".geojson";
             console.log(feature_geojson);
-            //console.log(placeholder[id].bbox);
 
             // zooming to location
-            var zoom = GetZoomExtent(placeholder[id].bbox);
-            mapp.zoomTo(placeholder[id].latitude, placeholder[id].longitude, zoom);
+            var zoom = getZoomExtent(search_results[id].bbox);
+            mapp.zoomTo(search_results[id].latitude, search_results[id].longitude, zoom);
 
             // Creating a new layer based on the template
             var template = document.querySelector('#new_layer');
@@ -206,121 +270,180 @@
             
             // Setting Layer Name
             var layer = clone.getElementById("layer"); 
-            layer.setAttribute("label", placeholder[id].name);
+            layer.setAttribute("label", search_results[id].name);
 
             // Setting feature caption
             var map_featurecaption = clone.getElementById("caption");
-            map_featurecaption.innerHTML = placeholder[id].name;
+            map_featurecaption.innerHTML = search_results[id].name;
 
-            // Converting GeoJSON to MapML
-            var map_coordindates = clone.getElementById("coords");
-            //map_coordindates.innerHTML = placeholder[id].bbox[0] + " " + placeholder[id].bbox[1] + " " + placeholder[id].bbox[2] + " " + placeholder[id].bbox[3];
+            // Accessing the geom element to append features to
+            var geom = clone.getElementById("geom");
 
-            a = await geojson2mapml(feature_geojson);
-            //console.log(a);
+            // Getting information about the feature being added
+            feature = await geoJson2MapMl(feature_geojson);
 
-            // If it is a MultiPolygon
-            if (a[1] == 1) {
-                a = a[0][0][0];
-                out = ""
-                for (i = 0; i < a.length; i++) {
-                    out = out + a[i][0] + " " + a[i][1] + " ";
+            // Adding the properties 
+            var properties = clone.getElementById("properties");
+            properties.appendChild(feature[2]);
+
+            if (feature[1] == 1) { // ################ If it is a MultiPolygon ################
+
+                // Create polygon
+                var polygon_template = document.querySelector('#polygon');     
+                var clone_polygon = polygon_template.content.cloneNode(true);
+                clone_polygon = clone_polygon.getElementById("poly");
+
+                for (i=0;i<feature[0][0].length;i++) {
+                    // Create map-coords to add to the polygon
+                    var coords_template = document.querySelector('#coords_temp');
+                    var clone_coords = coords_template.content.cloneNode(true);
+                    clone_coords = clone_coords.getElementById("coords");
+
+                    let c = feature[0][0][i];
+                    out = ""
+                    for (y = 0; y < c.length; y++) {
+                        out = out + c[y][0] + " " + c[y][1] + " ";
+                    }
+                    clone_coords.innerHTML = out;
+                    clone_polygon.appendChild(clone_coords);
                 }
-                //console.log(out);
-                map_coordindates.innerHTML = out;
-            } else if (a[1] == 0) { // If it is MultiPoint
-                out = a[0][0][0] + " " + a[0][0][1];
-                //console.log(a[0][0]);
-                map_coordindates.innerHTML = out;
-            } else if (a[1] == 2) { //  If it is GeometryCollection
-                console.log("GeometryCollection", a);
-                alert("GeometryCollection not supported");
-
-                //for (i=0;i<a[0].length;i++) {
-                //    var polygon_template = document.querySelector('#multi-linestring');
-                //    var clone_polygon = polygon_template.content.cloneNode(true);
-                //    out = "";
-                //    var polygon_coordindates = clone_polygon.getElementById("coords");
-                //
-                //    console.log(a[0][i].coordinates.length);
-                //    for (y=0;y<a[0][i].coordinates.length;y++) {
-                //        out = out + a[0][i].coordinates[y][0] + " " + a[0][i].coordinates[y][1] + " "; 
-                //    }
-                //    console.log(out);
-                //    ////////////////////////////////////////////////////
-                //}
+                geom.appendChild(clone_polygon);
                 
-            } else if (a[1] == 3) { // If it is MultiLineString
-                //console.log(a);
+            } else if (feature[1] == 0) { // ################ If it is MultiPoint ################
+                out = feature[0][0][0] + " " + feature[0][0][1];
+                
+                // Create Point element
+                var point_template = document.querySelector('#point_temp');     
+                var clone_point = point_template.content.cloneNode(true);
+                clone_point = clone_point.getElementById("point");
 
-                var geom = clone.getElementById("geom"); 
-                //console.log(geom);
+                // Create map-coords to add to the point
+                var coords_template = document.querySelector('#coords_temp');
+                var clone_coords = coords_template.content.cloneNode(true);
+                clone_coords = clone_coords.getElementById("coords");
 
-                for (i=0;i<a[0].length;i++) {
-                    var polygon_template = document.querySelector('#multi-linestring');
-                    var clone_polygon = polygon_template.content.cloneNode(true);
+                clone_coords.innerHTML = out;
+
+                clone_point.appendChild(clone_coords);
+                geom.appendChild(clone_point);
+            } else if (feature[1] == 2) { //  ################ If it is GeometryCollection ################ 
+
+                var geometrycollection_template = document.querySelector('#geometrycollection_temp');
+                var clone_geometrycollection = geometrycollection_template.content.cloneNode(true);
+                clone_geometrycollection = clone_geometrycollection.getElementById("geometrycollection");
+
+                // Going over each feature in the geometrycollection
+                for (i=0;i<feature[0].length;i++) {
+                    if (feature[0][i].type == "LineString") {
+                        var linestring_template = document.querySelector('#linestring');
+                        var clone_linestring = linestring_template.content.cloneNode(true);
+                        var linestring_coordindates = clone_linestring.getElementById("coords");
+                        
+                        var out = "";
+
+                        for (x=0;x<feature[0][i].coordinates.length;x++) {
+                            out = out + feature[0][i].coordinates[x][0] + " " + feature[0][i].coordinates[x][1] + " ";
+                        }
+
+                        linestring_coordindates.innerHTML = out;
+                        clone_geometrycollection.appendChild(clone_linestring);
+                        
+                    } else if (feature[0][i].type == "Polygon") {
+                        var polygon_template = document.querySelector('#polygon');
+                        
+                        var clone_polygon = polygon_template.content.cloneNode(true);
+                        clone_polygon = clone_polygon.getElementById("poly");
+                        
+                        // Going over each coordinates
+                        for (y=0;y<feature[0][i].coordinates.length;y++) {
+                            
+                            var out = "";
+                            var coords_template = document.querySelector('#coords_temp');
+                            var clone_coords = coords_template.content.cloneNode(true);
+                            clone_coords = clone_coords.getElementById("coords");
+
+                            // Going over coordinates for the polygon
+                            for (x=0;x<feature[0][i].coordinates[y].length;x++) {
+                                out = out + feature[0][i].coordinates[y][x][0] + " " + feature[0][i].coordinates[y][x][1] + " ";
+                            }
+
+                            // Create map-coordinates element and append it to clone_polygon
+                            clone_coords.innerHTML = out; // append to innerhtml of coords
+
+                            clone_polygon.appendChild(clone_coords);
+                            
+                        }
+                        clone_geometrycollection.appendChild(clone_polygon);
+                    } else {
+                        alert("Geometrycollection not fully drawn!");
+                    }
+                }
+
+                geom.appendChild(clone_geometrycollection);
+                
+            } else if (feature[1] == 3) { // ################ If it is MultiLineString ################
+
+                // Going over each line
+                for (i=0;i<feature[0].length;i++) {
+                    var line_template = document.querySelector('#linestring');
+                    var clone_line = line_template.content.cloneNode(true);
                     out = "";
-                    var polygon_coordindates = clone_polygon.getElementById("coords");
+                    var line_coordindates = clone_line.getElementById("coords");
                 
-                    //console.log(a[0][i].length);
-                    for (y=0;y<a[0][i].length;y++) {
-                        out = out + a[0][i][y][0] + " " + a[0][i][y][1] + " "; 
+                    // Going over coordinates in each seperate line
+                    for (y=0;y<feature[0][i].length;y++) {
+                        out = out + feature[0][i][y][0] + " " + feature[0][i][y][1] + " "; 
                     }
 
-                    polygon_coordindates.innerHTML = out
-                    //console.log(clone_polygon);
-                    geom.appendChild(clone_polygon);
-                    ////////////////////////////////////////////////////
+                    line_coordindates.innerHTML = out
+                    
+                    geom.appendChild(clone_line);
                 }
 
-                var poly = clone.getElementById("poly");
-                poly.parentNode.removeChild(poly);
-
-                //console.log(geom);
-
-
-            } else { // If feature is of any other type
-                console.log("Unsupported Type: " + a[1]);
-                alert("Unsupported Type: " + a[1]);
+            } else { // ################ If feature is of any other type ################
+                console.log("Unsupported Type: " + feature[1]);
+                alert("Unsupported Type: " + feature[1]);
             }
-            //console.log(map_coordindates.innerHTML);
+
+            // removing the previous layer which was displayed on search, if any
+            if (mapp.querySelector('#layer') != null) {
+                mapp.removeChild(mapp.querySelector("#layer"));
+            }
+
             // Add the newly created layer to mapmlviewer
-            //console.log(clone);
             mapp.appendChild(clone);
+            //document.querySelector("#layer").focus();
+            //console.log(document.querySelector('mapml-viewer').shadowRoot.querySelector("g").firstElementChild);
+            
         }
 
         // Display Search Results based on the search key term
-        // display_results: JSON -> None
+        // displayResults: JSON -> None
         // Effects: Populates the results container with search results
-        function display_results(obj) {
+        function displayResults(obj) {
             // Enable display panel
             document.getElementById("results").style.display = "block";
             for (var i=0; i < obj.length; i++) {
-                document.querySelector("#results").innerHTML = document.querySelector("#results").innerHTML + "<div class='result' onclick='map_pane(" + i + ")'>" + obj[i].name + "<div class='result_description'>" + obj[i].concise.code + " (" + obj[i].decision + ")</div></div>"
+                document.querySelector("#results").innerHTML = document.querySelector("#results").innerHTML + "<div class='result' role='button' tabindex='0' onkeypress='handleEnter(event)' onclick='mapPane(" + i + ")'>" + obj[i].name + "<div class='result_description'>" + obj[i].concise.code + " (" + obj[i].decision + ")</div></div>"
             }
         }
 
-        // Update Search Results based on the search Item, initiated when the "Search" button is pressed
+        // update Search Results based on the search Item, initiated when the "Search" button is pressed
         // update: None -> None
-        // Effects: Makes an API Call to update global variable (placeholder) with JSON results, and updates the count of results found
+        // Effects: Makes an API Call to update global variable (search_results) with JSON results, and updates the count of results found
         function update() {
-            // update the extent
-            //<mapml-viewer>.zoom = 3;
-
             // Reset the results
             document.querySelector("#results").innerHTML = ""
 
-            var x = document.getElementById("query").value;
-            //console.log(x)
-            obj = ""
-            fetch('http://geogratis.gc.ca/services/geoname/en/geonames.json?q=' + x)
+            var search_phrase = document.getElementById("query").value;
+
+            fetch('http://geogratis.gc.ca/services/geoname/en/geonames.json?q=' + search_phrase)
                 .then(response => response.json())
                 .then(json => {
-                    document.querySelector("#results_count").innerHTML = json.items.length + " results found." + "<br><br>";
+                    document.querySelector("#results_count").innerHTML = json.items.length + " results found." + "<br>";
 
-                    display_results(json.items);
-                    placeholder = json.items;
-                    //console.log(json);
+                    displayResults(json.items);
+                    search_results = json.items;
                 })
         }
 
