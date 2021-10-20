@@ -415,6 +415,10 @@
             //document.querySelector("#layer").focus();
             //console.log(document.querySelector('mapml-viewer').shadowRoot.querySelector("g").firstElementChild);
             
+            // Focusing on the map after a new layer is added
+            document.getElementById('map').tabIndex = -1;
+            document.getElementById('map').focus();
+            
         }
 
         // Display Search Results based on the search key term
