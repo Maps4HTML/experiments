@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-security-policy" content="
+      default-src 'self';
+      style-src 'self'
+                'unsafe-hashes'
+                'sha256-By15f3A82Q59ebVpTqYOcmdc5jVN4wai/iNm1ZDSCGY='
+                'sha256-gWLDNLsycvRcRqEScFHdCYPrg1OzxzQBXX7qYFP1Ww0='
+                'sha256-Yh21waoKFkXvfiGbkUMgTtK+WLTXPHnfAmHjd5VEOzs='
+                'sha256-nkSWviGEMA7GjEhvFalgIvhPJjztTxRSIg8+OvMVZnE='
+                'sha256-3rDMFlo5l2Wqdmy4qKaKncvyyzyt1OcMx8YhZIMhreY='
+                'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='
+                'sha256-X+XHx4LwsOnum4QirdSF2fh3CJ7Epslfxl4MSSN4UWs=';
+      connect-src 'self'
+                  https://geogratis.gc.ca/mapml/;
+      img-src 'self'
+              data:
+              https://geoappext.nrcan.gc.ca;
+    ">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>CSP evaluation</title>
+    <script type="module" src="../dist/mapml-viewer.js"></script>
+    <link rel="stylesheet" href="self.css">
+  </head>
+  <body>
+    
+    <p>
+    Host-allowlist-based
+    <a href="https://w3c.github.io/webappsec-csp/">Content Security Policy</a>
+    currently required for the (self-hosted) MapML polyfill with a
+    <code>https://geogratis.gc.ca/mapml/en/cbmtile/cbmt/</code>
+    layer source:
+    </p>
+    
+    <pre class="html-example">
+      <code>
+<a href="https://w3c.github.io/webappsec-csp/#directive-default-src">default-src</a>
+  'self';
+<a href="https://w3c.github.io/webappsec-csp/#directive-style-src">style-src</a>
+  'self'
+  'unsafe-hashes'
+  'sha256-By15f3A82Q59ebVpTqYOcmdc5jVN4wai/iNm1ZDSCGY='
+  'sha256-gWLDNLsycvRcRqEScFHdCYPrg1OzxzQBXX7qYFP1Ww0='
+  'sha256-Yh21waoKFkXvfiGbkUMgTtK+WLTXPHnfAmHjd5VEOzs='
+  'sha256-nkSWviGEMA7GjEhvFalgIvhPJjztTxRSIg8+OvMVZnE='
+  'sha256-3rDMFlo5l2Wqdmy4qKaKncvyyzyt1OcMx8YhZIMhreY='
+  'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='
+  'sha256-X+XHx4LwsOnum4QirdSF2fh3CJ7Epslfxl4MSSN4UWs=';
+<a href="https://w3c.github.io/webappsec-csp/#directive-connect-src">connect-src</a>
+  'self'
+  https://geogratis.gc.ca/mapml/;
+<a href="https://w3c.github.io/webappsec-csp/#directive-img-src">img-src</a>
+  'self'
+  data:
+  https://geoappext.nrcan.gc.ca;
+      </code>
+    </pre>
+    
+    <mapml-viewer projection="CBMTILE" zoom="5" lat="58" lon="-90" controls>
+      <layer- label="CBMT" src="https://geogratis.gc.ca/mapml/en/cbmtile/cbmt/" checked></layer->
+    </mapml-viewer>
+    
+    <p>
+    While developers are recommended to deploy a
+    <a href="https://web.dev/strict-csp/#mitigate-cross-site-scripting-(xss)-with-a-strict-content-security-policy-(csp)">Strict CSP</a>
+    (e.g. a <a href="https://html.spec.whatwg.org/multipage/urls-and-fetching.html#attr-nonce"><code>nonce</code></a>-based policy)
+    most developers deploying a CSP
+    <a href="https://almanac.httparchive.org/en/2020/security#preventing-xss-attacks-through-csp">do not use nonces</a>
+    which means they'll need to use either
+    <a href="https://w3c.github.io/webappsec-csp/#ref-for-grammardef-unsafe-inline"><code>'unsafe-inline'</code></a>
+    (<a href="https://w3c.github.io/webappsec-csp/#ref-for-grammardef-unsafe-inline">neither recommended</a>
+    <a href="https://github.com/Leaflet/Leaflet/issues/7511">nor desired</a>)
+    or the
+    <a href="https://w3c.github.io/webappsec-csp/#unsafe-hashes-usage"><code>'unsafe-hashes'</code></a>
+    source expression.
+    The latter is safer but may require an extensive list of hash-sources,
+    as this example illustrates.
+    </p>
+    
+    <p>
+    Improvements can be made to the polyfill,
+    for example, to remove the need for some (in best case all)
+    <code>style-src</code> hash-sources by moving away from inline styles
+    to CSS classes and HTML/SVG presentational attributes
+    (i.e. <code>hidden</code> instead of <code>style="display:none"</code>, or
+    <code>&lt;path stroke="none"&gt;</code> instead of <code>&lt;path style="stroke:none"&gt;</code>).
+    And of course, by not introducing new inline styles or scripts.
+    </p>
+    
+    <p>
+    A standard for Web maps may improve application security
+    and make it easier for developers to deploy fine-grained CSPs in regards to maps:
+    <a href="https://github.com/Maps4HTML/MapML/issues/133">https://github.com/Maps4HTML/MapML/issues/133</a>.
+    </p>
+  </body>
+</html>
