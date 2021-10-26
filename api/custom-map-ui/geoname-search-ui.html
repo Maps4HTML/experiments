@@ -43,7 +43,6 @@
         }
         .results_container {
             overflow: auto;
-            overflow: auto;
             display:none;
             max-height:80%;
         }
@@ -71,7 +70,7 @@
         <h2>GeoName Search</h2>
 
         <input type="search" class="search_input" id="query" placeholder="Locations in Canada" autocomplete="off" name="query" size="20%"/>
-        <button onclick="update()" class="search_button btn btn-primary btn-sm" id="searchBtn">Search</button>
+        <button onclick="updateSearchResults()" class="search_button btn btn-primary btn-sm" id="searchBtn">Search</button>
         
         <br>
         <output id="results_count" for="query"></output>
@@ -83,7 +82,7 @@
     </mapml-viewer>
     
     <script>
-        // Handling pressing Enter on focused search results divs
+        // Handling Enter on focused search results divs
         function handleEnter(e) {
             let keycode = (e.keyCode ? e.keyCode : e.which);
             if (keycode === Number.parseInt("13")) {
@@ -104,7 +103,7 @@
         let mapp = document.querySelector("#map");
 
         // Will store the json search results
-        let search_results = ""; 
+        let searchResults = ""; 
 
         // Computes the zoom extent based on bounding box's decimal degrees
         // getZoomExtent: listof(Num, Num, Num, Num) -> Int(3-16)
@@ -195,11 +194,8 @@
 
             let responseGeom = data.geometry;
 
-            // creating a table based on the geojson properties 
-            let table = properties2Table(data.properties);
-
-            // creating a mapml layer
-            let xmlStringLayer = "<layer- label='Test' checked='' id='layer'><map-meta name='projection' content='OSMTILE'></map-meta><map-feature class='child' zoom='2'><map-featurecaption id='caption'></map-featurecaption><map-geometry id='geom'></map-geometry><map-properties id='properties'></map-properties></map-feature></layer->";
+            // creating an empty mapml layer
+            let xmlStringLayer = "<layer- label='' checked='' id='layer'><map-meta name='projection' content='OSMTILE'></map-meta><map-feature class='child' zoom='2'><map-featurecaption id='caption'></map-featurecaption><map-geometry id='geom'></map-geometry><map-properties id='properties'></map-properties></map-feature></layer->";
             let clone = new DOMParser().parseFromString(xmlStringLayer, "text/html");
 
             // Setting Layer Name
@@ -213,11 +209,13 @@
             // Accessing the geom element to append features to
             let geom = clone.getElementById("geom");
 
+            // creating a table based on the geojson properties 
+            let table = properties2Table(data.properties);
             // Adding the properties 
             let properties = clone.getElementById("properties");
             properties.appendChild(table);
 
-            // Feature Types
+            // Geometry Collection
             let xmlStringGeometrycollection = "<map-geometrycollection id='geometrycollection'></map-geometrycollection>";
             let geometrycollection = new DOMParser().parseFromString(xmlStringGeometrycollection, "text/html");
 
@@ -342,7 +340,7 @@
                 alert("Unsupported Type: " + data.geometry.type);
             }
 
-            // Return the created layer
+            // Return the mapml layer
             return clone.getElementById("layer");
         }
 
@@ -350,15 +348,16 @@
         // mapPane: Int -> None
         // Effects: Changes map's zoom and location. Also creates and adds a new layer to the map
         async function mapPane(id) {
-            let feature_geojson = search_results[id].feature.links.self.href + ".geojson";
-            console.log(feature_geojson);
+            // Getting the geojson link for the selected feature
+            let featureGeojson = searchResults[id].feature.links.self.href + ".geojson";
+            console.log(featureGeojson);
 
             // zooming to location
-            let zoom = getZoomExtent(search_results[id].bbox);
-            mapp.zoomTo(search_results[id].latitude, search_results[id].longitude, zoom);
+            let zoom = getZoomExtent(searchResults[id].bbox);
+            mapp.zoomTo(searchResults[id].latitude, searchResults[id].longitude, zoom);
 
             // converting geojson to a mapml layer
-            let feature = await geoJson2MapMl(feature_geojson);
+            let feature = await geoJson2MapMl(featureGeojson);
 
             // removing the previous layer which was displayed on search, if any
             if (mapp.querySelector('#layer') != null) {
@@ -381,26 +380,26 @@
             // Enable display panel
             document.getElementById("results").style.display = "block";
             for (let i=0; i < obj.length; i++) {
-                document.querySelector("#results").innerHTML = document.querySelector("#results").innerHTML + "<div class='result' role='button' tabindex='0' onkeypress='handleEnter(event)' onclick='mapPane(" + i + ")'>" + obj[i].name + "<div class='result_description'>" + obj[i].concise.code + " (" + obj[i].decision + ")</div></div>"
+                document.querySelector("#results").innerHTML = document.querySelector("#results").innerHTML + "<div class='result' role='button' tabindex='0' onkeypress='handleEnter(event)' onclick='mapPane(" + i + ")'>" + obj[i].name + "<div class='result_description'>" + obj[i].concise.code + " (" + obj[i].decision + ")</div></div>";
             }
         }
 
-        // update Search Results based on the search Item, initiated when the "Search" button is pressed
-        // update: None -> None
-        // Effects: Makes an API Call to update global variable (search_results) with JSON results, and updates the count of results found
-        function update() {
+        // update Search Results based on the search Item, initiated when the "Search" button is pressed, makes an API call to the GeoName Service API
+        // updateSearchResults: None -> None
+        // Effects: Makes an API Call to update global variable (searchResults) with JSON results, and updates the count of results found
+        function updateSearchResults() {
             // Reset the results
-            document.querySelector("#results").innerHTML = ""
+            document.querySelector("#results").innerHTML = "";
 
-            let search_phrase = document.getElementById("query").value;
+            let searchPhrase = document.getElementById("query").value;
 
-            fetch('http://geogratis.gc.ca/services/geoname/en/geonames.json?q=' + search_phrase)
+            fetch('http://geogratis.gc.ca/services/geoname/en/geonames.json?q=' + searchPhrase)
                 .then(response => response.json())
                 .then(json => {
                     document.querySelector("#results_count").innerHTML = json.items.length + " results found." + "<br>";
 
                     displayResults(json.items);
-                    search_results = json.items;
+                    searchResults = json.items;
                 })
         }
 
