@@ -194,9 +194,12 @@
 
             let responseGeom = data.geometry;
 
+            // HTML parser
+            let parser = new DOMParser();
+
             // creating an empty mapml layer
             let xmlStringLayer = "<layer- label='' checked='' id='layer'><map-meta name='projection' content='OSMTILE'></map-meta><map-feature class='child' zoom='2'><map-featurecaption id='caption'></map-featurecaption><map-geometry id='geom'></map-geometry><map-properties id='properties'></map-properties></map-feature></layer->";
-            let clone = new DOMParser().parseFromString(xmlStringLayer, "text/html");
+            let clone = parser.parseFromString(xmlStringLayer, "text/html");
 
             // Setting Layer Name
             let layer = clone.getElementById("layer"); 
@@ -217,21 +220,21 @@
 
             // Geometry Collection
             let xmlStringGeometrycollection = "<map-geometrycollection id='geometrycollection'></map-geometrycollection>";
-            let geometrycollection = new DOMParser().parseFromString(xmlStringGeometrycollection, "text/html");
+            let geometrycollection = parser.parseFromString(xmlStringGeometrycollection, "text/html");
 
             // Templates to add features to geometry
             let xmlStringLinestring = "<map-linestring><map-coordinates id='coords'></map-coordinates></map-linestring>";
-            let linestring = new DOMParser().parseFromString(xmlStringLinestring, "text/html");
+            let linestring = parser.parseFromString(xmlStringLinestring, "text/html");
 
             let xmlStringPolygon = "<map-polygon id='poly'></map-polygon>";
-            let polygon = new DOMParser().parseFromString(xmlStringPolygon, "text/html");
+            let polygon = parser.parseFromString(xmlStringPolygon, "text/html");
 
             let xmlStringPoint = "<map-point id='point'></map-point>";
-            let point = new DOMParser().parseFromString(xmlStringPoint, "text/html");
+            let point = parser.parseFromString(xmlStringPoint, "text/html");
 
             // Template to add coordinates to features
             let xmlStringCoords = "<map-coordinates id='coords'></map-coordinates>";
-            let coords = new DOMParser().parseFromString(xmlStringCoords, "text/html");
+            let coords = parser.parseFromString(xmlStringCoords, "text/html");
 
             // Checking the type of feature
             if (data.geometry.type === "MultiPolygon") {
