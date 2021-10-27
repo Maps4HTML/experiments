@@ -396,7 +396,7 @@
 
             let searchPhrase = document.getElementById("query").value;
 
-            fetch('http://geogratis.gc.ca/services/geoname/en/geonames.json?q=' + searchPhrase)
+            fetch('https://geogratis.gc.ca/services/geoname/en/geonames.json?q=' + searchPhrase)
                 .then(response => response.json())
                 .then(json => {
                     document.querySelector("#results_count").innerHTML = json.items.length + " results found." + "<br>";
