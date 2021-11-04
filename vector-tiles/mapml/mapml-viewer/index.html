@@ -39,13 +39,15 @@
         </layer->
       </mapml-viewer>
       <mapml-viewer projection="OSMTILE" zoom="0" lat="0" lon="0" controls>
-        <layer- label="Countries - GoogleCRS84Quad" checked>
+        <layer- label="OpenStreetMap" src="/experiments/refactoring-temporary/osm.mapml" checked></layer->
+        <layer- label="Countries - WebMercatorQuad" checked>
           <map-link rel="stylesheet" href="../vector-tile.css" >
           <map-extent units="OSMTILE">
-            <map-input  name="zoomLevel" type="zoom" min="0" max="7" value="0"></map-input>
+            <map-input  name="zoomLevel" type="zoom" min="0" max="2" value="0"></map-input>
             <map-input  name="row" type="location" axis="row" units="tilematrix" min="0" max="1"></map-input>
             <map-input  name="col" type="location" axis="column" units="tilematrix" min="0" max="1"></map-input>
-            <map-link rel='tile' type='text/mapml' tref='https://maps.ecere.com/geoapi/collections/NaturalEarth/cultural/ne_10m_admin_0_countries/tiles/GoogleCRS84Quad/{zoomLevel}/{row}/{col}.mapml' >
+            <!-- https://maps.ecere.com/ogcapi/collections/NaturalEarth:cultural:ne_10m_admin_0_countries/tiles/WebMercatorQuad/{zoomLevel}/{row}/{col}.mapml -->
+            <map-link rel='tile' type='text/mapml' tref='../tiles/osmtile/{zoomLevel}/{row}/{col}.mapml' ></map-link>
           </map-extent>
         </layer->
       </mapml-viewer>
