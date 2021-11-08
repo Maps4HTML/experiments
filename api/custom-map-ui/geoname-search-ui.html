@@ -16,24 +16,35 @@
                          height value on the mapml-viewer element. */
         }
         mapml-viewer:defined {
-            width: 75%;
-            height: 90%;
+            width: 100%;
+            height: 100%;
         }
         h2 {
             width: 100%;
             text-align: center;
         }
+        .search {
+            position:absolute;
+            top:2%;
+            left:35%;
+            z-index: 10;
+            width: 30%;
+            max-width: 30%;
+            height:auto;
+            max-height: 15%;
+        }
+
+        /* Inside search div */
         .result {
             width: 100%;
-            background-color: #78bbc0;
-            color: white;
+            background-color: rgba(120, 187, 192, .8);
+            color: rgba(255, 255, 255, .8);
             padding: 0.5em 1em;
             text-decoration: none;
         }
         .result:hover {
             background-color: #555;
         }
-
         .result:active {
             background-color: black;
         }
@@ -42,34 +53,67 @@
             background-color: #ccc;
         }
         .results_container {
-            overflow: auto;
+            overflow: scroll;       
+            overflow-x:hidden;
             display:none;
-            max-height:80%;
+            max-height:20vh;
+            max-width:90%;
+        }
+        #results_count {
+            display:none;
         }
         .result_description {
             font-size: 11px;
         }
-        .search {
-            float:left;
-            width: 20%;
-            max-width: 20%;
-            margin: auto;
-            height:100%;
-        }
         .search_input {
             width:70%;
+            font-size:20px;
         }
         .search_button {
             width:20%;
+            font-size: 16px;
+            padding-top: 1%;
+            margin-bottom: 1%;
         }
+        /* Inside search div */
+
+
+        @media (max-width: 1000px) {
+            .search {
+                width: 40%;
+                max-width: 40%; 
+                left: 30%;
+            }
+            .search_input {
+                font-size:16px;
+            }
+            .search_button {
+                font-size: 12px;
+                padding-top: 1%;
+                margin-bottom: 1%;
+            }
+        }
+        @media (max-width: 500px) {
+            .search {
+                width: 60%;
+                max-width: 60%; 
+                left: 20%;
+            }
+            .search_button {
+                font-size: 11px;
+                padding-top: 2%;
+                margin-bottom: 2%;
+            }
+        }
+        
       </style>
 </head>
 <body>
     
     <div class="search" role="search">
-        <h2>GeoName Search</h2>
+        <!--<h2>GeoName Search</h2>-->
 
-        <input type="search" class="search_input" id="query" placeholder="Locations in Canada" autocomplete="off" name="query" size="20%"/>
+        <input type="search" class="search_input" id="query" placeholder="Locations in Canada" autocomplete="off" name="query" size="20%" oninput="displaySuggestions()"/>
         <button onclick="updateSearchResults()" class="search_button btn btn-primary btn-sm" id="searchBtn">Search</button>
         
         <br>
@@ -351,9 +395,12 @@
         // mapPane: Int -> None
         // Effects: Changes map's zoom and location. Also creates and adds a new layer to the map
         async function mapPane(id) {
+            // Disable search results display panel and results found display
+            document.getElementById("results").style.display = "none";
+            document.getElementById("results_count").style.display = "none";
+
             // Getting the geojson link for the selected feature
             let featureGeojson = searchResults[id].feature.links.self.href + ".geojson";
-            console.log(featureGeojson);
 
             // zooming to location
             let zoom = getZoomExtent(searchResults[id].bbox);
@@ -382,8 +429,36 @@
         function displayResults(obj) {
             // Enable display panel
             document.getElementById("results").style.display = "block";
+
             for (let i=0; i < obj.length; i++) {
                 document.querySelector("#results").innerHTML = document.querySelector("#results").innerHTML + "<div class='result' role='button' tabindex='0' onkeypress='handleEnter(event)' onclick='mapPane(" + i + ")'>" + obj[i].name + "<div class='result_description'>" + obj[i].concise.code + " (" + obj[i].decision + ")</div></div>";
+            }
+        }
+
+        // Display Search Result suggestions based on the search key term
+        // displaySuggestions: None -> None
+        // Effects: Populates the results container with suggestions
+        function displaySuggestions() {
+            
+            // Reset the results
+            document.querySelector("#results").innerHTML = "";
+            document.getElementById("results_count").style.display = "none";
+
+            let searchPhrase = document.getElementById("query").value;
+
+            if (searchPhrase != "") {
+                fetch('https://geogratis.gc.ca/services/geoname/en/geonames.json?q=' + searchPhrase + '&num=3')
+                    .then(response => response.json())
+                    .then(json => {
+                        //document.querySelector("#results_count").innerHTML = json.items.length + " results found." + "<br>";
+                        //document.getElementById("results_count").style.display = "block";
+                        // Enable display panel
+                        document.getElementById("results").style.display = "block";
+                        for (let i=0; i < json.items.length; i++) {
+                            document.querySelector("#results").innerHTML = document.querySelector("#results").innerHTML + "<div class='result' role='button' tabindex='0' onkeypress='handleEnter(event)' onclick='mapPane(" + i + ")'>" + json.items[i].name + "<div class='result_description'>" + json.items[i].concise.code + " (" + json.items[i].decision + ")</div></div>";
+                        }
+                        searchResults = json.items;
+                    })
             }
         }
 
@@ -400,6 +475,7 @@
                 .then(response => response.json())
                 .then(json => {
                     document.querySelector("#results_count").innerHTML = json.items.length + " results found." + "<br>";
+                    document.getElementById("results_count").style.display = "block";
 
                     displayResults(json.items);
                     searchResults = json.items;
