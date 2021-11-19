@@ -113,12 +113,12 @@
     <div class="search" role="search">
         <!--<h2>GeoName Search</h2>-->
 
-        <input type="search" class="search_input" id="query" placeholder="Locations in Canada" autocomplete="off" name="query" size="20%" oninput="displaySuggestions()"/>
+        <input type="search" class="search_input" id="query" placeholder="Locations in Canada" autofocus autocomplete="off" name="query" size="20%" oninput="displaySuggestions()"/>
         <button onclick="updateSearchResults()" class="search_button btn btn-primary btn-sm" id="searchBtn">Search</button>
         
         <br>
-        <output role="description" id="results_count" for="query"></output>
-        <div id="results" class="results_container"></div>
+        <output id="results_count" for="query"></output>
+        <div id="results" role="grid" class="results_container"></div>
     </div>
 
     <mapml-viewer projection="OSMTILE" zoom="4" lat="58.276703" lon="-103.710938" controls controlslist="nofullscreen" id="map">
@@ -126,11 +126,6 @@
     </mapml-viewer>
     
     <script>
-        // Focus on search bar when page is loaded
-        document.addEventListener("DOMContentLoaded", function(event) {
-            document.getElementById("query").focus();
-        });
-        
         // Handling Enter on focused search results divs
         function handleEnter(e) {
             let keycode = (e.keyCode ? e.keyCode : e.which);
@@ -509,7 +504,7 @@
                 .then(response => response.json())
                 .then(json => {
                     document.getElementById("results_count").style.display = "block";
-                    document.querySelector("#results_count").innerHTML = json.items.length + " results found." + "<br>";
+                    document.querySelector("#results_count").innerHTML = json.items.length + " results found.";
 
                     displayResults(json.items);
                     searchResults = json.items;
