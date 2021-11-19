@@ -117,7 +117,7 @@
         <button onclick="updateSearchResults()" class="search_button btn btn-primary btn-sm" id="searchBtn">Search</button>
         
         <br>
-        <output id="results_count" for="query"></output>
+        <output role="description" id="results_count" for="query"></output>
         <div id="results" class="results_container"></div>
     </div>
 
@@ -126,6 +126,11 @@
     </mapml-viewer>
     
     <script>
+        // Focus on search bar when page is loaded
+        document.addEventListener("DOMContentLoaded", function(event) {
+            document.getElementById("query").focus();
+        });
+        
         // Handling Enter on focused search results divs
         function handleEnter(e) {
             let keycode = (e.keyCode ? e.keyCode : e.which);
@@ -462,7 +467,7 @@
             document.getElementById("results").style.display = "block";
 
             for (let i=0; i < obj.length; i++) {
-                document.querySelector("#results").innerHTML = document.querySelector("#results").innerHTML + "<div id = 'item" + i + "' class='result' role='button' tabindex='0' onkeypress='handleEnter(event)' onclick='mapPane(" + i + ")'>" + obj[i].name + "<div class='result_description'>" + obj[i].concise.code + " (" + obj[i].decision + ")</div></div>";
+                document.querySelector("#results").innerHTML = document.querySelector("#results").innerHTML + "<div id = 'item" + i + "' class='result' role='row' tabindex='0' onkeypress='handleEnter(event)' onclick='mapPane(" + i + ")'>" + obj[i].name + "<div class='result_description'>" + obj[i].concise.code + " (" + obj[i].decision + ")</div></div>";
             }
         }
 
@@ -477,9 +482,6 @@
                 fetch('https://geogratis.gc.ca/services/geoname/en/geonames.json?q=' + searchPhrase + '*&num=3')
                     .then(response => response.json())
                     .then(json => {
-                        //document.querySelector("#results_count").innerHTML = json.items.length + " results found." + "<br>";
-                        //document.getElementById("results_count").style.display = "block";
-                        
                         // Reset the results
                         document.querySelector("#results").innerHTML = "";
                         document.getElementById("results_count").style.display = "none";
@@ -487,7 +489,7 @@
                         // Enable display panel
                         document.getElementById("results").style.display = "block";
                         for (let i=0; i < json.items.length; i++) {
-                            document.querySelector("#results").innerHTML = document.querySelector("#results").innerHTML + "<div id = 'item" + i + "' class='result' role='button' tabindex='0' onkeypress='handleEnter(event)' onclick='mapPane(" + i + ")'>" + json.items[i].name + "<div class='result_description'>" + json.items[i].concise.code + " (" + json.items[i].decision + ")</div></div>";
+                            document.querySelector("#results").innerHTML = document.querySelector("#results").innerHTML + "<div id = 'item" + i + "' class='result' role='row' tabindex='0' onkeypress='handleEnter(event)' onclick='mapPane(" + i + ")'>" + json.items[i].name + "<div class='result_description'>" + json.items[i].concise.code + " (" + json.items[i].decision + ")</div></div>";
                         }
                         searchResults = json.items;
                     })
@@ -506,8 +508,8 @@
             fetch('https://geogratis.gc.ca/services/geoname/en/geonames.json?q=' + searchPhrase + "*")
                 .then(response => response.json())
                 .then(json => {
-                    document.querySelector("#results_count").innerHTML = json.items.length + " results found." + "<br>";
                     document.getElementById("results_count").style.display = "block";
+                    document.querySelector("#results_count").innerHTML = json.items.length + " results found." + "<br>";
 
                     displayResults(json.items);
                     searchResults = json.items;
