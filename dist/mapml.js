@@ -697,7 +697,7 @@
         let mapBounds = M.pixelToPCRSBounds(this._map.getPixelBounds(),mapZoom,this._map.options.projection);
         this.isVisible = mapZoom <= this.options.maxZoom && mapZoom >= this.options.minZoom && 
                           this.layerBounds.overlaps(mapBounds);
-        if(!(this.isVisible))return;
+          if(!(this.isVisible))return;
         this._parentOnMoveEnd();
       },
       createTile: function (coords) {
@@ -2507,7 +2507,7 @@
                   var option = document.createElement("option");
                   var optionAttrNames = options[i].getAttributeNames();
 
-                  for (let j = 0; j < optionAttrNames; j++){
+                  for (let j = 0; j < optionAttrNames.length; j++){
                       option.setAttribute(optionAttrNames[j], options[i].getAttribute(optionAttrNames[j]));
                   }
 
@@ -3341,6 +3341,7 @@
         j = 0;
 
       this.addLayer(this._centerVector);
+
       for (let i of id) {
         if (layers[i].layerBounds) {
           let boundsArray = [
@@ -3361,6 +3362,20 @@
           this.addLayer(boundsRect);
           j++;
         }
+      }
+
+      if(map.totalLayerBounds){
+        let totalBoundsArray = [
+          map.totalLayerBounds.min,
+          L.point(map.totalLayerBounds.max.x, map.totalLayerBounds.min.y),
+          map.totalLayerBounds.max,
+          L.point(map.totalLayerBounds.min.x, map.totalLayerBounds.max.y)
+        ];
+
+        let totalBounds = projectedExtent(
+            totalBoundsArray,
+            {color: "#808080", weight: 5, opacity: 0.5, fill: false});
+        this.addLayer(totalBounds);
       }
     },
 
@@ -4617,6 +4632,14 @@
         map.getContainer().focus();
       }
     },
+
+    gcrsToTileMatrix: function (mapEl) {
+      let point = mapEl._map.project(mapEl._map.getCenter());
+      let tileSize = mapEl._map.options.crs.options.crs.tile.bounds.max.y;
+      let column = Math.trunc(point.x / tileSize);
+      let row = Math.trunc(point.y / tileSize);
+      return [column, row];
+    }
   };
 
   var ReloadButton = L.Control.extend({
@@ -4684,6 +4707,170 @@
   var reloadButton = function (options) {
     return new ReloadButton(options);
   };
+
+  var FullscreenButton = L.Control.extend({
+          options: {
+              position: 'topleft',
+              title: {
+                  'false': 'View fullscreen',
+                  'true': 'Exit fullscreen'
+              }
+          },
+
+          onAdd: function (map) {
+              var container = L.DomUtil.create('div', 'leaflet-control-fullscreen leaflet-bar leaflet-control');
+
+              this.link = L.DomUtil.create('a', 'leaflet-control-fullscreen-button leaflet-bar-part', container);
+              this.link.href = '#';
+              this.link.setAttribute('role', 'button');
+
+              this._map = map;
+              this._map.on('fullscreenchange', this._toggleTitle, this);
+              this._toggleTitle();
+
+              L.DomEvent.on(this.link, 'click', this._click, this);
+
+              return container;
+          },
+
+          onRemove: function (map) {
+              map.off('fullscreenchange', this._toggleTitle, this);
+          },
+
+          _click: function (e) {
+              L.DomEvent.stopPropagation(e);
+              L.DomEvent.preventDefault(e);
+              this._map.toggleFullscreen(this.options);
+          },
+
+          _toggleTitle: function() {
+              this.link.title = this.options.title[this._map.isFullscreen()];
+          }
+      });
+
+      L.Map.include({
+          isFullscreen: function () {
+              return this._isFullscreen || false;
+          },
+
+          toggleFullscreen: function (options) {
+              // the <map> element can't contain a shadow root, so we used a child <div>
+              // <mapml-viewer> can contain a shadow root, so return it directly
+              var mapEl = this.getContainer().getRootNode().host,
+                  container = mapEl.nodeName === "DIV" ? mapEl.parentElement : mapEl;
+              if (this.isFullscreen()) {
+                  if (options && options.pseudoFullscreen) {
+                      this._disablePseudoFullscreen(container);
+                  } else if (document.exitFullscreen) {
+                      document.exitFullscreen();
+                  } else if (document.mozCancelFullScreen) {
+                      document.mozCancelFullScreen();
+                  } else if (document.webkitCancelFullScreen) {
+                      document.webkitCancelFullScreen();
+                  } else if (document.msExitFullscreen) {
+                      document.msExitFullscreen();
+                  } else {
+                      this._disablePseudoFullscreen(container);
+                  }
+              } else {
+                  if (options && options.pseudoFullscreen) {
+                      this._enablePseudoFullscreen(container);
+                  } else if (container.requestFullscreen) {
+                      container.requestFullscreen();
+                  } else if (container.mozRequestFullScreen) {
+                      container.mozRequestFullScreen();
+                  } else if (container.webkitRequestFullscreen) {
+                      container.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+                  } else if (container.msRequestFullscreen) {
+                      container.msRequestFullscreen();
+                  } else {
+                      this._enablePseudoFullscreen(container);
+                  }
+              }
+
+          },
+
+          _enablePseudoFullscreen: function (container) {
+              L.DomUtil.addClass(container, 'leaflet-pseudo-fullscreen');
+              this._setFullscreen(true);
+              this.fire('fullscreenchange');
+          },
+
+          _disablePseudoFullscreen: function (container) {
+              L.DomUtil.removeClass(container, 'leaflet-pseudo-fullscreen');
+              this._setFullscreen(false);
+              this.fire('fullscreenchange');
+          },
+
+          _setFullscreen: function(fullscreen) {
+              this._isFullscreen = fullscreen;
+              var container = this.getContainer().getRootNode().host;
+              if (fullscreen) {
+                  L.DomUtil.addClass(container, 'mapml-fullscreen-on');
+              } else {
+                  L.DomUtil.removeClass(container, 'mapml-fullscreen-on');
+              }
+              this.invalidateSize();
+          },
+
+          _onFullscreenChange: function (e) {
+              var fullscreenElement =
+                  document.fullscreenElement ||
+                  document.mozFullScreenElement ||
+                  document.webkitFullscreenElement ||
+                  document.msFullscreenElement,
+                  mapEl = this.getContainer().getRootNode().host,
+                  container = mapEl.nodeName === "DIV" ? mapEl.parentElement : mapEl;
+              
+
+              if (fullscreenElement === container && !this._isFullscreen) {
+                  this._setFullscreen(true);
+                  this.fire('fullscreenchange');
+              } else if (fullscreenElement !== container && this._isFullscreen) {
+                  this._setFullscreen(false);
+                  this.fire('fullscreenchange');
+              }
+          }
+      });
+
+      L.Map.mergeOptions({
+          fullscreenControl: false
+      });
+
+      L.Map.addInitHook(function () {
+          if (this.options.fullscreenControl) {
+              this.fullscreenControl = new FullscreenButton(this.options.fullscreenControl);
+              this.addControl(this.fullscreenControl);
+          }
+
+          var fullscreenchange;
+
+          if ('onfullscreenchange' in document) {
+              fullscreenchange = 'fullscreenchange';
+          } else if ('onmozfullscreenchange' in document) {
+              fullscreenchange = 'mozfullscreenchange';
+          } else if ('onwebkitfullscreenchange' in document) {
+              fullscreenchange = 'webkitfullscreenchange';
+          } else if ('onmsfullscreenchange' in document) {
+              fullscreenchange = 'MSFullscreenChange';
+          }
+
+          if (fullscreenchange) {
+              var onFullscreenChange = L.bind(this._onFullscreenChange, this);
+
+              this.whenReady(function () {
+                  L.DomEvent.on(document, fullscreenchange, onFullscreenChange);
+              });
+
+              this.on('unload', function () {
+                  L.DomEvent.off(document, fullscreenchange, onFullscreenChange);
+              });
+          }
+      });
+
+      var fullscreenButton = function (options) {
+          return new FullscreenButton(options);
+      };
 
   var Crosshair = L.Layer.extend({
     onAdd: function (map) {
@@ -5560,6 +5747,137 @@
     return new FeatureGroup(layers, options);
   };
 
+  var AnnounceMovement = L.Handler.extend({
+      addHooks: function () {
+          this._map.on({
+              layeradd: this.totalBounds,
+              layerremove: this.totalBounds,
+          });
+
+          this._map.options.mapEl.addEventListener('moveend', this.announceBounds);
+          this._map.dragging._draggable.addEventListener('dragstart', this.dragged);
+          this._map.options.mapEl.addEventListener('mapfocused', this.focusAnnouncement);
+      },
+      removeHooks: function () {
+          this._map.off({
+              layeradd: this.totalBounds,
+              layerremove: this.totalBounds,
+          });
+
+          this._map.options.mapEl.removeEventListener('moveend', this.announceBounds);
+          this._map.dragging._draggable.removeEventListener('dragstart', this.dragged);
+          this._map.options.mapEl.removeEventListener('mapfocused', this.focusAnnouncement);
+      },
+
+       focusAnnouncement: function () {
+           let mapEl = this;
+           setTimeout(function (){
+               let el = mapEl.querySelector(".mapml-web-map") ? mapEl.querySelector(".mapml-web-map").shadowRoot.querySelector(".leaflet-container") :
+                   mapEl.shadowRoot.querySelector(".leaflet-container");
+
+               let mapZoom = mapEl._map.getZoom();
+               let location = M.gcrsToTileMatrix(mapEl);
+               let standard = M.options.locale.amZoom + " " + mapZoom + " " + M.options.locale.amColumn + " " + location[0] + " " + M.options.locale.amRow + " " + location[1];
+
+               if(mapZoom === mapEl._map._layersMaxZoom){
+                   standard = M.options.locale.amMaxZoom + " " + standard;
+               }
+               else if(mapZoom === mapEl._map._layersMinZoom){
+                   standard = M.options.locale.amMinZoom + " " + standard;
+               }
+
+               el.setAttribute("aria-roledescription", "region " + standard);
+               setTimeout(function () {
+                   el.removeAttribute("aria-roledescription");
+               }, 2000);
+           }, 0);
+       },
+
+      announceBounds: function () {
+          if(this._traversalCall > 0){
+              return;
+          }
+          let mapZoom = this._map.getZoom();
+          let mapBounds = M.pixelToPCRSBounds(this._map.getPixelBounds(),mapZoom,this._map.options.projection);
+
+          let visible = true;
+          if(this._map.totalLayerBounds){
+              visible = mapZoom <= this._map._layersMaxZoom && mapZoom >= this._map._layersMinZoom &&
+                  this._map.totalLayerBounds.overlaps(mapBounds);
+          }
+
+          let output = this.querySelector(".mapml-web-map") ? this.querySelector(".mapml-web-map").shadowRoot.querySelector(".mapml-screen-reader-output") :
+              this.shadowRoot.querySelector(".mapml-screen-reader-output");
+
+          //GCRS to TileMatrix
+          let location = M.gcrsToTileMatrix(this);
+          let standard = M.options.locale.amZoom + " " + mapZoom + " " + M.options.locale.amColumn + " " + location[0] + " " + M.options.locale.amRow + " " + location[1];
+
+          if(!visible){
+              let outOfBoundsPos = this._history[this._historyIndex];
+              let inBoundsPos = this._history[this._historyIndex - 1];
+              this.back();
+              this._history.pop();
+
+              if(outOfBoundsPos.zoom !== inBoundsPos.zoom){
+                  output.innerText = M.options.locale.amZoomedOut;
+              }
+              else if(this._map.dragging._draggable.wasDragged){
+                  output.innerText = M.options.locale.amDraggedOut;
+              }
+              else if(outOfBoundsPos.x > inBoundsPos.x){
+                  output.innerText = M.options.locale.amEastBound;
+              }
+              else if(outOfBoundsPos.x < inBoundsPos.x){
+                  output.innerText = M.options.locale.amWestBound;
+              }
+              else if(outOfBoundsPos.y < inBoundsPos.y){
+                  output.innerText = M.options.locale.amNorthBound;
+              }
+              else if(outOfBoundsPos.y > inBoundsPos.y){
+                  output.innerText = M.options.locale.amSouthBound;
+              }
+
+          }
+          else {
+              let prevZoom = this._history[this._historyIndex - 1] ? this._history[this._historyIndex - 1].zoom : this._history[this._historyIndex].zoom;
+              if(mapZoom === this._map._layersMaxZoom && mapZoom !== prevZoom){
+                  output.innerText = M.options.locale.amMaxZoom + " " + standard;
+              }
+              else if(mapZoom === this._map._layersMinZoom && mapZoom !== prevZoom){
+                  output.innerText = M.options.locale.amMinZoom + " " + standard;
+              }
+              else {
+                  output.innerText = standard;
+              }
+          }
+          this._map.dragging._draggable.wasDragged = false;
+      },
+
+      totalBounds: function () {
+          let layers = Object.keys(this._layers);
+          let bounds = L.bounds();
+
+          layers.forEach(i => {
+              if(this._layers[i].layerBounds){
+                  if(!bounds){
+                      let point = this._layers[i].layerBounds.getCenter();
+                      bounds = L.bounds(point, point);
+                  }
+                  bounds.extend(this._layers[i].layerBounds.min);
+                  bounds.extend(this._layers[i].layerBounds.max);
+              }
+          });
+
+          this.totalLayerBounds = bounds;
+      },
+
+      dragged: function () {
+          this.wasDragged = true;
+      }
+
+  });
+
   var Options = {
     announceMovement: false,
     locale: {
@@ -5577,7 +5895,18 @@
       lcOpacity: "Opacity",
       btnZoomIn: "Zoom in",
       btnZoomOut: "Zoom out",
-      btnFullScreen: "View fullscreen"
+      btnFullScreen: "View fullscreen",
+      amZoom: "zoom level",
+      amColumn: "column",
+      amRow: "row",
+      amMaxZoom: "At maximum zoom level, zoom in disabled",
+      amMinZoom: "At minimum zoom level, zoom out disabled",
+      amZoomedOut: "Zoomed out of bounds, returning to",
+      amDraggedOut: "Dragged out of bounds, returning to",
+      amEastBound: "Reached east bound, panning east disabled",
+      amWestBound: "Reached west bound, panning west disabled",
+      amNorthBound: "Reached north bound, panning north disabled",
+      amSouthBound: "Reached south bound, panning south disabled"
     }
   };
 
@@ -6214,13 +6543,16 @@
   M.parseStylesheetAsHTML = Util.parseStylesheetAsHTML;
   M.pointToPCRSPoint = Util.pointToPCRSPoint;
   M.pixelToPCRSPoint = Util.pixelToPCRSPoint;
+  M.gcrsToTileMatrix = Util.gcrsToTileMatrix;
 
   M.QueryHandler = QueryHandler;
   M.ContextMenu = ContextMenu;
+  M.AnnounceMovement = AnnounceMovement;
 
   // see https://leafletjs.com/examples/extending/extending-3-controls.html#handlers
   L.Map.addInitHook('addHandler', 'query', M.QueryHandler);
   L.Map.addInitHook('addHandler', 'contextMenu', M.ContextMenu);
+  L.Map.addInitHook('addHandler', 'announceMovement', M.AnnounceMovement);
 
   M.MapMLLayer = MapMLLayer;
   M.mapMLLayer = mapMLLayer;
@@ -6248,6 +6580,9 @@
 
   M.ReloadButton = ReloadButton;
   M.reloadButton = reloadButton;
+
+  M.FullscreenButton = FullscreenButton;
+  M.fullscreenButton = fullscreenButton;
 
   M.MapMLStaticTileLayer = MapMLStaticTileLayer;
   M.mapMLStaticTileLayer = mapMLStaticTileLayer;
