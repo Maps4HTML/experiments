@@ -170,6 +170,7 @@
           this._initLayout();
           this._map.on('validate', this._validateInput, this);
           L.DomEvent.on(this.options.mapEl, "layerchange", this._validateInput, this);
+          L.DomEvent.on(this._container, 'keydown', this._focusFirstLayer, this._container);
           this._update();
           //this._validateExtents();
           if(this._layers.length < 1 && !this._map._showControls){
@@ -181,6 +182,7 @@
       },
       onRemove: function (map) {
           map.off('validate', this._validateInput, this);
+          L.DomEvent.off(this._container, 'keydown', this._focusFirstLayer, this._container);
           // remove layer-registerd event handlers so that if the control is not
           // on the map it does not generate layer events
           for (var i = 0; i < this._layers.length; i++) {
@@ -229,6 +231,15 @@
         }
 
       },
+
+      // focus the first layer in the layer control when enter is pressed
+      _focusFirstLayer: function(e){
+        if(e.key === 'Enter' && this.className != 'leaflet-control-layers leaflet-control leaflet-control-layers-expanded'){
+          var elem = this.children[1].children[2].children[0].children[0].children[0].children[0];
+          if(elem) setTimeout(() => elem.focus(), 0);
+          }
+      },
+      
       _withinZoomBounds: function(zoom, range) {
           return range.min <= zoom && zoom <= range.max;
       },
@@ -252,11 +263,16 @@
 
       //overrides collapse and conditionally collapses the panel
       collapse: function(e){
-        if(e.relatedTarget && e.relatedTarget.parentElement && 
-            (e.relatedTarget.className === "mapml-contextmenu mapml-layer-menu" || 
-            e.relatedTarget.parentElement.className === "mapml-contextmenu mapml-layer-menu") ||
-            (this._map && this._map.contextMenu._layerMenu.style.display === "block"))
-         return this;
+        if (
+          e.target.tagName === "SELECT" ||
+          e.relatedTarget &&
+          e.relatedTarget.parentElement &&
+          (
+            e.relatedTarget.className === "mapml-contextmenu mapml-layer-menu" ||
+            e.relatedTarget.parentElement.className === "mapml-contextmenu mapml-layer-menu"
+          ) ||
+          (this._map && this._map.contextMenu._layerMenu.style.display === "block")
+        ) return this;
 
         L.DomUtil.removeClass(this._container, 'leaflet-control-layers-expanded');
   		  return this;
@@ -692,7 +708,7 @@
         let mapBounds = M.pixelToPCRSBounds(this._map.getPixelBounds(),mapZoom,this._map.options.projection);
         this.isVisible = mapZoom <= this.options.maxZoom && mapZoom >= this.options.minZoom && 
                           this.layerBounds.overlaps(mapBounds);
-        if(!(this.isVisible))return;
+          if(!(this.isVisible))return;
         this._parentOnMoveEnd();
       },
       createTile: function (coords) {
@@ -1413,6 +1429,9 @@
           })
           .catch(function (error) { console.log(error);});
       },
+      redraw: function() {
+          this._onMoveEnd();
+      },
 
       _onMoveEnd: function() {
         let mapZoom = this._map.getZoom();
@@ -1491,23 +1510,28 @@
         this._map.removeLayer(this._features);
       },
       _getfeaturesUrl: function() {
-          var pxBounds = this._map.getPixelBounds(),
-              topLeft = pxBounds.getTopLeft(),
-              topRight = pxBounds.getTopRight(),
-              bottomRight = pxBounds.getBottomRight(),
-              bottomLeft = pxBounds.getBottomLeft(),
-              bounds = this._map.getBounds();
-              bounds.extend(this._map.unproject(bottomLeft))
-                    .extend(this._map.unproject(bottomRight))
-                    .extend(this._map.unproject(topLeft))
-                    .extend(this._map.unproject(topRight));
           var obj = {};
-          // assumes gcrs at this moment
-          obj[this.options.feature.zoom.name] = this._map.getZoom();
-          obj[this.options.feature.bottom.name] = bounds.getSouth();
-          obj[this.options.feature.left.name] = bounds.getWest();
-          obj[this.options.feature.top.name] = bounds.getNorth();
-          obj[this.options.feature.right.name] = bounds.getEast();
+          if (this.options.feature.zoom) {
+            obj[this.options.feature.zoom] = this._map.getZoom();
+          }
+          if (this.options.feature.width) {
+            obj[this.options.feature.width] = this._map.getSize().x;
+          }
+          if (this.options.feature.height) {
+            obj[this.options.feature.height] = this._map.getSize().y;
+          }
+          if (this.options.feature.bottom) {
+            obj[this.options.feature.bottom] = this._TCRSToPCRS(this._map.getPixelBounds().max,this._map.getZoom()).y;
+          }
+          if (this.options.feature.left) {
+            obj[this.options.feature.left] = this._TCRSToPCRS(this._map.getPixelBounds().min, this._map.getZoom()).x;
+          }
+          if (this.options.feature.top) {
+            obj[this.options.feature.top] = this._TCRSToPCRS(this._map.getPixelBounds().min, this._map.getZoom()).y;
+          }
+          if (this.options.feature.right) {
+            obj[this.options.feature.right] = this._TCRSToPCRS(this._map.getPixelBounds().max,this._map.getZoom()).x;
+          }
           // hidden and other variables that may be associated
           for (var v in this.options.feature) {
               if (["width","height","left","right","top","bottom","zoom"].indexOf(v) < 0) {
@@ -1515,6 +1539,13 @@
                 }
           }
           return L.Util.template(this._template.template, obj);
+      },
+      _TCRSToPCRS: function(coords, zoom) {
+        // TCRS pixel point to Projected CRS point (in meters, presumably)
+        var map = this._map,
+            crs = map.options.crs,
+            loc = crs.transformation.untransform(coords,crs.scale(zoom));
+            return loc;
       },
       _setUpFeaturesTemplateVars: function(template) {
         // process the inputs and create an object named "extent"
@@ -1541,12 +1572,12 @@
               value = inputs[i].getAttribute("value"),
               select = (inputs[i].tagName.toLowerCase() === "map-select");
           if (type === "width") {
-                featuresVarNames.feature.width = {name: name};
+                featuresVarNames.feature.width = name;
           } else if ( type === "height") {
-                featuresVarNames.feature.height = {name: name};
+                featuresVarNames.feature.height = name;
           } else if (type === "zoom") {
-                featuresVarNames.feature.zoom = {name: name};
-          } else if (type === "location" && (units === "pcrs" || units ==="gcrs" || units === "tcrs")) {
+                featuresVarNames.feature.zoom = name;
+          } else if (type === "location" && (units === "pcrs" || units ==="gcrs") ) {
             //<input name="..." units="pcrs" type="location" position="top|bottom-left|right" axis="northing|easting">
             switch (axis) {
               case ('x'):
@@ -1554,9 +1585,9 @@
               case ('easting'):
                 if (position) {
                     if (position.match(/.*?-left/i)) {
-                      featuresVarNames.feature.left = { name: name, axis: axis};
+                      featuresVarNames.feature.left = name;
                     } else if (position.match(/.*?-right/i)) {
-                      featuresVarNames.feature.right = { name: name, axis: axis};
+                      featuresVarNames.feature.right = name;
                     }
                 }
                 break;
@@ -1565,9 +1596,9 @@
               case ('northing'):
                 if (position) {
                   if (position.match(/top-.*?/i)) {
-                    featuresVarNames.feature.top = { name: name, axis: axis};
+                    featuresVarNames.feature.top = name;
                   } else if (position.match(/bottom-.*?/i)) {
-                    featuresVarNames.feature.bottom = { name: name, axis: axis};
+                    featuresVarNames.feature.bottom = name;
                   }
                 }
                 break;
@@ -1579,8 +1610,12 @@
                 return parsedselect.value;
             };
            // projection is deprecated, make it hidden
-          } else if (type === "hidden" || type === "projection") {
-              featuresVarNames.feature.hidden.push({name: name, value: value});
+          } else {
+              /*jshint -W104 */
+              const input = inputs[i];
+              featuresVarNames.feature[name] = function() {
+                  return input.getAttribute("value");
+              };
           }
         }
         return featuresVarNames;
@@ -2187,100 +2222,6 @@
           }
         } 
       },
-      _setUpInputVars: function(inputs) {
-        // process the inputs and create an object named "extent"
-        // with member properties as follows:
-        // {width: {name: 'widthvarname'}, // value supplied by map if necessary
-        //  height: {name: 'heightvarname'}, // value supplied by map if necessary
-        //  left: {name: 'leftvarname', axis: 'leftaxisname'}, // axis name drives (coordinate system of) the value supplied by the map
-        //  right: {name: 'rightvarname', axis: 'rightaxisname'}, // axis name (coordinate system of) drives the value supplied by the map
-        //  top: {name: 'topvarname', axis: 'topaxisname'}, // axis name drives (coordinate system of) the value supplied by the map
-        //  bottom: {name: 'bottomvarname', axis: 'bottomaxisname'} // axis name drives (coordinate system of) the value supplied by the map
-        //  zoom: {name: 'zoomvarname'}
-        //  hidden: [{name: name, value: value}]}
-
-        var extentVarNames = {extent:{}};
-        extentVarNames.extent.hidden = [];
-        for (var i=0;i<inputs.length;i++) {
-          // this can be removed when the spec removes the deprecated inputs...
-          this._transformDeprectatedInput(inputs[i]);
-          var type = inputs[i].getAttribute("type"), 
-              units = inputs[i].getAttribute("units"), 
-              axis = inputs[i].getAttribute("axis"), 
-              name = inputs[i].getAttribute("name"), 
-              position = inputs[i].getAttribute("position"),
-              value = inputs[i].getAttribute("value");
-          if (type === "width") {
-                extentVarNames.extent.width = {name: name};
-          } else if ( type === "height") {
-                extentVarNames.extent.height = {name: name};
-          } else if (type === "zoom") {
-                extentVarNames.extent.zoom = {name: name};
-          } else if (type === "location" && (units === "pcrs" || units ==="gcrs" || units === "tcrs")) {
-            //<input name="..." units="pcrs" type="location" position="top|bottom-left|right" axis="northing|easting">
-            switch (axis) {
-              case ('easting'):
-                if (position) {
-                    if (position.match(/.*?-left/i)) {
-                      extentVarNames.extent.left = { name: name, axis: axis};
-                    } else if (position.match(/.*?-right/i)) {
-                      extentVarNames.extent.right = { name: name, axis: axis};
-                    }
-                }
-                break;
-              case ('northing'):
-                if (position) {
-                  if (position.match(/top-.*?/i)) {
-                    extentVarNames.extent.top = { name: name, axis: axis};
-                  } else if (position.match(/bottom-.*?/i)) {
-                    extentVarNames.extent.bottom = { name: name, axis: axis};
-                  }
-                }
-                break;
-              case ('x'):
-                if (position) {
-                    if (position.match(/.*?-left/i)) {
-                      extentVarNames.extent.left = { name: name, axis: axis};
-                    } else if (position.match(/.*?-right/i)) {
-                      extentVarNames.extent.right = { name: name, axis: axis};
-                    }
-                }
-                break;
-              case ('y'):
-                if (position) {
-                  if (position.match(/top-.*?/i)) {
-                    extentVarNames.extent.top = { name: name, axis: axis};
-                  } else if (position.match(/bottom-.*?/i)) {
-                    extentVarNames.extent.bottom = { name: name, axis: axis};
-                  }
-                }
-                break;
-              case ('longitude'):
-                if (position) {
-                    if (position.match(/.*?-left/i)) {
-                      extentVarNames.extent.left = { name: name, axis: axis};
-                    } else if (position.match(/.*?-right/i)) {
-                      extentVarNames.extent.right = { name: name, axis: axis};
-                    }
-                }
-                break;
-              case ('latitude'):
-                if (position) {
-                  if (position.match(/top-.*?/i)) {
-                    extentVarNames.extent.top = { name: name, axis: axis};
-                  } else if (position.match(/bottom-.*?/i)) {
-                    extentVarNames.extent.bottom = { name: name, axis: axis};
-                  }
-                }
-                break;
-            }
-            // projection is deprecated, make it hidden
-          } else if (type === "hidden" || type === "projection") {
-              extentVarNames.extent.hidden.push({name: name, value: value});
-          }
-        }
-        return extentVarNames;
-      },
       // retrieve the (projected, scaled) layer extent for the current map zoom level
       getLayerExtentBounds: function(map) {
           
@@ -2344,7 +2285,7 @@
           layerItemSettings = L.DomUtil.create('div', 'mapml-layer-item-settings', fieldset),
           itemToggleLabel = L.DomUtil.create('label', 'mapml-layer-item-toggle', layerItemProperty),
           layerItemControls = L.DomUtil.create('div', 'mapml-layer-item-controls', layerItemProperty),
-          opacityControl = L.DomUtil.create('details', 'mapml-layer-item-opacity', layerItemSettings),
+          opacityControl = L.DomUtil.create('details', 'mapml-layer-item-opacity mapml-control-layers', layerItemSettings),
           opacity = L.DomUtil.create('input'),
           opacityControlSummary = L.DomUtil.create('summary'),
           svgSettingsControlIcon = L.SVG.create('svg'),
@@ -2374,7 +2315,21 @@
           //L.DomEvent.disableClickPropagation(removeControlButton);
           L.DomEvent.on(removeControlButton, 'click', L.DomEvent.stop);
           L.DomEvent.on(removeControlButton, 'click', (e)=>{
+            let fieldset = 0, elem, root;
+            root = mapEl.tagName === "MAPML-VIEWER" ? mapEl.shadowRoot : mapEl.querySelector(".mapml-web-map").shadowRoot;
+            if(e.target.closest("fieldset").nextElementSibling && !e.target.closest("fieldset").nextElementSibling.disbaled){
+              elem = e.target.closest("fieldset").previousElementSibling;
+              while(elem){
+                fieldset += 2; // find the next layer menu item
+                elem = elem.previousElementSibling;
+              }
+            } else {
+              // focus on the link
+              elem = "link";
+            }
             mapEl.removeChild(e.target.closest("fieldset").querySelector("span").layer._layerEl);
+            elem = elem ? root.querySelector(".leaflet-control-attribution").firstElementChild: elem = root.querySelectorAll('input')[fieldset];
+            elem.focus();
           }, this);
 
           let itemSettingControlButton = L.DomUtil.create('button', 'mapml-layer-item-settings-control', layerItemControls);
@@ -2509,7 +2464,7 @@
                   // don't add it again if it is referenced > once
                   if (mapmlInput.tagName.toLowerCase() === 'map-select' && !frag.querySelector(id)) {
                     // generate a <details><summary></summary><select...></details>
-                    var selectdetails = L.DomUtil.create('details', 'mapml-control-layers', frag),
+                    var selectdetails = L.DomUtil.create('details', 'mapml-layer-item-time mapml-control-layers', frag),
                         selectsummary = L.DomUtil.create('summary'),
                         selectSummaryLabel = L.DomUtil.create('label');
                         selectSummaryLabel.innerText = mapmlInput.getAttribute('name');
@@ -2577,7 +2532,7 @@
                   var option = document.createElement("option");
                   var optionAttrNames = options[i].getAttributeNames();
 
-                  for (let j = 0; j < optionAttrNames; j++){
+                  for (let j = 0; j < optionAttrNames.length; j++){
                       option.setAttribute(optionAttrNames[j], options[i].getAttribute(optionAttrNames[j]));
                   }
 
@@ -2632,25 +2587,31 @@
 
                     extentFallback.zoom = 0;
                     if (metaExtent){
-                      let content = M.metaContentToObject(metaExtent.getAttribute("content")), cs;
+                      // if the extent is not in PCRS or GCRS, the user should supply
+                      // a zoom=n key within the meta content, so that the PCRS bounds
+                      // can be calculated
+                      let content = M.metaContentToObject(metaExtent.getAttribute("content"));
                       
+                      // the extentFallback.zoom is used to calculate the PCRS bounds
                       extentFallback.zoom = content.zoom || extentFallback.zoom;
       
                       let metaKeys = Object.keys(content);
                       for(let i =0;i<metaKeys.length;i++){
                         if(!metaKeys[i].includes("zoom")){
-                          cs = M.axisToCS(metaKeys[i].split("-")[2]);
+                          // deduce the CS from the first recognized axis name, quit
+                          extentFallback.cs = M.axisToCS(metaKeys[i].split("-")[2]);
                           break;
                         }
                       }
-                      let axes = M.csToAxes(cs);
+                      let axes = M.csToAxes(extentFallback.cs);
                       extentFallback.bounds = M.boundsToPCRSBounds(
                         L.bounds(L.point(+content[`top-left-${axes[0]}`],+content[`top-left-${axes[1]}`]),
                         L.point(+content[`bottom-right-${axes[0]}`],+content[`bottom-right-${axes[1]}`])),
-                        extentFallback.zoom, projection, cs);
+                        extentFallback.zoom, projection, extentFallback.cs);
                       
                     } else {
                       extentFallback.bounds = M[projection].options.crs.pcrs.bounds;
+                      extentFallback.cs = "PCRS";
                     }
                       
                     for (var i=0;i< tlist.length;i++) {
@@ -2677,12 +2638,16 @@
                         var varName = v[1],
                             inp = serverExtent.querySelector('map-input[name='+varName+'],map-select[name='+varName+']');
                         if (inp) {
-
+                          // if location input is missing min/max, force set the
+                          // fallback min/max from the extentFallback
                           if ((inp.hasAttribute("type") && inp.getAttribute("type")==="location") && 
                               (!inp.hasAttribute("min" )) && 
                               (inp.hasAttribute("axis") && !["i","j"].includes(inp.getAttribute("axis").toLowerCase()))){
                             zoomInput.setAttribute("value", extentFallback.zoom);
-                            
+                            // set location input min/max axis values based on calculated 
+                            // and potentially converted from PCRS bounds read
+                            // from the <map-meta> element.  This is a fallback, but it only
+                            // works when the file includes location inputs.
                             let axis = inp.getAttribute("axis"), 
                                 axisBounds = M.convertPCRSBounds(extentFallback.bounds, extentFallback.zoom, projection, M.axisToCS(axis));
                             inp.setAttribute("min", axisBounds.min[M.axisToXY(axis)]);
@@ -2748,6 +2713,7 @@
                           type: ttype, 
                           values: inputs, 
                           zoomBounds:zoomBounds, 
+                          extentPCRSFallback: {bounds: extentFallback.bounds}, 
                           projectionMatch: projectionMatch || selectedAlternate,
                           projection:serverExtent.getAttribute("units") || FALLBACK_PROJECTION,
                           tms:tms,
@@ -2794,7 +2760,7 @@
                     };
 
                     for (var j=0;j<styleLinks.length;j++) {
-                      var styleOption = document.createElement('span'),
+                      var styleOption = document.createElement('div'),
                       styleOptionInput = styleOption.appendChild(document.createElement('input'));
                       styleOptionInput.setAttribute("type", "radio");
                       styleOptionInput.setAttribute("id", "rad-"+L.stamp(styleOptionInput));
@@ -2808,7 +2774,7 @@
                         styleOptionInput.checked = true;
                       }
                       stylesControl.appendChild(styleOption);
-                      L.DomUtil.addClass(stylesControl,'mapml-control-layers');
+                      L.DomUtil.addClass(stylesControl,'mapml-layer-item-style mapml-control-layers');
                       L.DomEvent.on(styleOptionInput,'click', changeStyle, layer);
                     }
                     layer._styles = stylesControl;
@@ -3400,6 +3366,7 @@
         j = 0;
 
       this.addLayer(this._centerVector);
+
       for (let i of id) {
         if (layers[i].layerBounds) {
           let boundsArray = [
@@ -3420,6 +3387,20 @@
           this.addLayer(boundsRect);
           j++;
         }
+      }
+
+      if(map.totalLayerBounds){
+        let totalBoundsArray = [
+          map.totalLayerBounds.min,
+          L.point(map.totalLayerBounds.max.x, map.totalLayerBounds.min.y),
+          map.totalLayerBounds.max,
+          L.point(map.totalLayerBounds.min.x, map.totalLayerBounds.max.y)
+        ];
+
+        let totalBounds = projectedExtent(
+            totalBoundsArray,
+            {color: "#808080", weight: 5, opacity: 0.5, fill: false});
+        this.addLayer(totalBounds);
       }
     },
 
@@ -4082,13 +4063,22 @@
         if(!elem.layer.validProjection) return;
         this._layerClicked = elem;
         this._showAtPoint(e.containerPoint, e, this._layerMenu);
-      } else if(elem.classList.contains("leaflet-container") || elem.classList.contains("mapml-debug-extent")) {
+      } else if(elem.classList.contains("leaflet-container") || elem.classList.contains("mapml-debug-extent") ||
+        elem.tagName === "path") {
         this._layerClicked = undefined;
         this._showAtPoint(e.containerPoint, e, this._container);
       }
       if(e.originalEvent.button === 0 || e.originalEvent.button === -1){
         this._keyboardEvent = true;
-        this._container.firstChild.focus();
+        if(this._layerClicked){
+          let activeEl = document.activeElement;
+          this._elementInFocus = activeEl.shadowRoot.activeElement;
+          this._layerMenuTabs = 1;
+          this._layerMenu.firstChild.focus();
+        } else {
+          this._container.firstChild.focus();
+        }
+
       }
     },
 
@@ -4178,6 +4168,19 @@
         return size;
     },
 
+     // once tab is clicked on the layer menu, change the focus back to the layer control
+     _focusOnLayerControl: function(){
+      this._mapMenuVisible = false;
+      delete this._layerMenuTabs;
+      this._layerMenu.style.display = 'none';
+      if(this._elementInFocus){
+        this._elementInFocus.focus();
+      } else {
+        this._layerClicked.parentElement.firstChild.focus();
+      }
+      delete this._elementInFocus;
+    },
+
     _onKeyDown: function (e) {
       if(!this._mapMenuVisible) return;
 
@@ -4186,8 +4189,20 @@
 
       if(key === 13)
         e.preventDefault();
-      if(key !== 16 && key!== 9 && !(!this._layerClicked && key === 67) && path[0].innerText !== (M.options.locale.cmCopyCoords + " (C)"))
+      // keep track of where the focus is on the layer menu and when the layer menu is tabbed out of, focus on layer control
+      if(key === 9 || key === 27){
+        if(e.shiftKey){
+          this._layerMenuTabs -= 1;
+        } else {
+          this._layerMenuTabs += 1;
+        }
+        if(this._layerMenuTabs === 0 || this._layerMenuTabs === 3 || key === 27){
+          L.DomEvent.stop(e);
+          this._focusOnLayerControl();
+        } 
+      } else if(key !== 16 && key!== 9 && !(!this._layerClicked && key === 67) && path[0].innerText !== (M.options.locale.cmCopyCoords + " (C)")){
         this._hide();
+      }
       switch(key){
         case 13:  //ENTER KEY
         case 32:  //SPACE KEY
@@ -4223,9 +4238,6 @@
           break;
         case 86: //V KEY
           this._viewSource(e);
-          break;
-        case 27: //H KEY
-          this._hide();
           break;
         case 90: //Z KEY
           if(this._layerClicked)
@@ -4361,8 +4373,9 @@
       if(!template) return undefined;
 
       //sets variables with their respective fallback values incase content is missing from the template
-      let inputs = template.values, projection = template.projection || FALLBACK_PROJECTION, value = 0, boundsUnit = FALLBACK_CS;
-      let bounds = this[projection].options.crs.tilematrix.bounds(0), nMinZoom = 0, nMaxZoom = this[projection].options.resolutions.length - 1;
+        let inputs = template.values, projection = template.projection || FALLBACK_PROJECTION, value = 0, boundsUnit = FALLBACK_CS;
+        let bounds = this[projection].options.crs.tilematrix.bounds(0), nMinZoom = 0, nMaxZoom = this[projection].options.resolutions.length - 1;
+        let locInputs = false, numberOfAxes = 0;
       if(!template.zoomBounds){
         template.zoomBounds ={};
         template.zoomBounds.min=0;
@@ -4386,6 +4399,7 @@
                 boundsUnit = M.axisToCS(inputs[i].getAttribute("axis").toLowerCase());
                 bounds.min.x = min;
                 bounds.max.x = max;
+                numberOfAxes++;
               break;
               case "y":
               case "latitude":
@@ -4394,10 +4408,14 @@
                 boundsUnit = M.axisToCS(inputs[i].getAttribute("axis").toLowerCase());
                 bounds.min.y = min;
                 bounds.max.y = max;
+                numberOfAxes++;
               break;
             }
           break;
         }
+      }
+      if (numberOfAxes >= 2) {
+        locInputs = true;
       }
       let zoomBoundsFormatted = {
         minZoom:+template.zoomBounds.min,
@@ -4405,9 +4423,16 @@
         minNativeZoom:nMinZoom,
         maxNativeZoom:nMaxZoom
       };
+      if(!locInputs && template.extentPCRSFallback && template.extentPCRSFallback.bounds) {
+        bounds = template.extentPCRSFallback.bounds;
+      } else if (locInputs) {
+        bounds = this.boundsToPCRSBounds(bounds,value,projection,boundsUnit);
+      } else {
+        bounds = this[projection].options.crs.pcrs.bounds;
+      }
       return {
         zoomBounds:zoomBoundsFormatted,
-        bounds:this.boundsToPCRSBounds(bounds,value,projection,boundsUnit)
+        bounds:bounds
       };
     },
 
@@ -4662,6 +4687,14 @@
         map.getContainer().focus();
       }
     },
+
+    gcrsToTileMatrix: function (mapEl) {
+      let point = mapEl._map.project(mapEl._map.getCenter());
+      let tileSize = mapEl._map.options.crs.options.crs.tile.bounds.max.y;
+      let column = Math.trunc(point.x / tileSize);
+      let row = Math.trunc(point.y / tileSize);
+      return [column, row];
+    }
   };
 
   var ReloadButton = L.Control.extend({
@@ -4729,6 +4762,170 @@
   var reloadButton = function (options) {
     return new ReloadButton(options);
   };
+
+  var FullscreenButton = L.Control.extend({
+          options: {
+              position: 'topleft',
+              title: {
+                  'false': 'View fullscreen',
+                  'true': 'Exit fullscreen'
+              }
+          },
+
+          onAdd: function (map) {
+              var container = L.DomUtil.create('div', 'leaflet-control-fullscreen leaflet-bar leaflet-control');
+
+              this.link = L.DomUtil.create('a', 'leaflet-control-fullscreen-button leaflet-bar-part', container);
+              this.link.href = '#';
+              this.link.setAttribute('role', 'button');
+
+              this._map = map;
+              this._map.on('fullscreenchange', this._toggleTitle, this);
+              this._toggleTitle();
+
+              L.DomEvent.on(this.link, 'click', this._click, this);
+
+              return container;
+          },
+
+          onRemove: function (map) {
+              map.off('fullscreenchange', this._toggleTitle, this);
+          },
+
+          _click: function (e) {
+              L.DomEvent.stopPropagation(e);
+              L.DomEvent.preventDefault(e);
+              this._map.toggleFullscreen(this.options);
+          },
+
+          _toggleTitle: function() {
+              this.link.title = this.options.title[this._map.isFullscreen()];
+          }
+      });
+
+      L.Map.include({
+          isFullscreen: function () {
+              return this._isFullscreen || false;
+          },
+
+          toggleFullscreen: function (options) {
+              // the <map> element can't contain a shadow root, so we used a child <div>
+              // <mapml-viewer> can contain a shadow root, so return it directly
+              var mapEl = this.getContainer().getRootNode().host,
+                  container = mapEl.nodeName === "DIV" ? mapEl.parentElement : mapEl;
+              if (this.isFullscreen()) {
+                  if (options && options.pseudoFullscreen) {
+                      this._disablePseudoFullscreen(container);
+                  } else if (document.exitFullscreen) {
+                      document.exitFullscreen();
+                  } else if (document.mozCancelFullScreen) {
+                      document.mozCancelFullScreen();
+                  } else if (document.webkitCancelFullScreen) {
+                      document.webkitCancelFullScreen();
+                  } else if (document.msExitFullscreen) {
+                      document.msExitFullscreen();
+                  } else {
+                      this._disablePseudoFullscreen(container);
+                  }
+              } else {
+                  if (options && options.pseudoFullscreen) {
+                      this._enablePseudoFullscreen(container);
+                  } else if (container.requestFullscreen) {
+                      container.requestFullscreen();
+                  } else if (container.mozRequestFullScreen) {
+                      container.mozRequestFullScreen();
+                  } else if (container.webkitRequestFullscreen) {
+                      container.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+                  } else if (container.msRequestFullscreen) {
+                      container.msRequestFullscreen();
+                  } else {
+                      this._enablePseudoFullscreen(container);
+                  }
+              }
+
+          },
+
+          _enablePseudoFullscreen: function (container) {
+              L.DomUtil.addClass(container, 'leaflet-pseudo-fullscreen');
+              this._setFullscreen(true);
+              this.fire('fullscreenchange');
+          },
+
+          _disablePseudoFullscreen: function (container) {
+              L.DomUtil.removeClass(container, 'leaflet-pseudo-fullscreen');
+              this._setFullscreen(false);
+              this.fire('fullscreenchange');
+          },
+
+          _setFullscreen: function(fullscreen) {
+              this._isFullscreen = fullscreen;
+              var container = this.getContainer().getRootNode().host;
+              if (fullscreen) {
+                  L.DomUtil.addClass(container, 'mapml-fullscreen-on');
+              } else {
+                  L.DomUtil.removeClass(container, 'mapml-fullscreen-on');
+              }
+              this.invalidateSize();
+          },
+
+          _onFullscreenChange: function (e) {
+              var fullscreenElement =
+                  document.fullscreenElement ||
+                  document.mozFullScreenElement ||
+                  document.webkitFullscreenElement ||
+                  document.msFullscreenElement,
+                  mapEl = this.getContainer().getRootNode().host,
+                  container = mapEl.nodeName === "DIV" ? mapEl.parentElement : mapEl;
+              
+
+              if (fullscreenElement === container && !this._isFullscreen) {
+                  this._setFullscreen(true);
+                  this.fire('fullscreenchange');
+              } else if (fullscreenElement !== container && this._isFullscreen) {
+                  this._setFullscreen(false);
+                  this.fire('fullscreenchange');
+              }
+          }
+      });
+
+      L.Map.mergeOptions({
+          fullscreenControl: false
+      });
+
+      L.Map.addInitHook(function () {
+          if (this.options.fullscreenControl) {
+              this.fullscreenControl = new FullscreenButton(this.options.fullscreenControl);
+              this.addControl(this.fullscreenControl);
+          }
+
+          var fullscreenchange;
+
+          if ('onfullscreenchange' in document) {
+              fullscreenchange = 'fullscreenchange';
+          } else if ('onmozfullscreenchange' in document) {
+              fullscreenchange = 'mozfullscreenchange';
+          } else if ('onwebkitfullscreenchange' in document) {
+              fullscreenchange = 'webkitfullscreenchange';
+          } else if ('onmsfullscreenchange' in document) {
+              fullscreenchange = 'MSFullscreenChange';
+          }
+
+          if (fullscreenchange) {
+              var onFullscreenChange = L.bind(this._onFullscreenChange, this);
+
+              this.whenReady(function () {
+                  L.DomEvent.on(document, fullscreenchange, onFullscreenChange);
+              });
+
+              this.on('unload', function () {
+                  L.DomEvent.off(document, fullscreenchange, onFullscreenChange);
+              });
+          }
+      });
+
+      var fullscreenButton = function (options) {
+          return new FullscreenButton(options);
+      };
 
   var Crosshair = L.Layer.extend({
     onAdd: function (map) {
@@ -4905,6 +5102,7 @@
       if (link.visited) elem.classList.add("map-a-visited");
       L.DomEvent.on(elem, 'mousedown', e => dragStart = {x:e.clientX, y:e.clientY}, this);
       L.DomEvent.on(elem, "mouseup", (e) => {
+        if (e.button !== 0) return; // don't trigger when button isn't left click
         let onTop = true, nextLayer = this.options._leafletLayer._layerEl.nextElementSibling;
         while(nextLayer && onTop){
           if(nextLayer.tagName && nextLayer.tagName.toUpperCase() === "LAYER-")
@@ -5604,6 +5802,137 @@
     return new FeatureGroup(layers, options);
   };
 
+  var AnnounceMovement = L.Handler.extend({
+      addHooks: function () {
+          this._map.on({
+              layeradd: this.totalBounds,
+              layerremove: this.totalBounds,
+          });
+
+          this._map.options.mapEl.addEventListener('moveend', this.announceBounds);
+          this._map.dragging._draggable.addEventListener('dragstart', this.dragged);
+          this._map.options.mapEl.addEventListener('mapfocused', this.focusAnnouncement);
+      },
+      removeHooks: function () {
+          this._map.off({
+              layeradd: this.totalBounds,
+              layerremove: this.totalBounds,
+          });
+
+          this._map.options.mapEl.removeEventListener('moveend', this.announceBounds);
+          this._map.dragging._draggable.removeEventListener('dragstart', this.dragged);
+          this._map.options.mapEl.removeEventListener('mapfocused', this.focusAnnouncement);
+      },
+
+       focusAnnouncement: function () {
+           let mapEl = this;
+           setTimeout(function (){
+               let el = mapEl.querySelector(".mapml-web-map") ? mapEl.querySelector(".mapml-web-map").shadowRoot.querySelector(".leaflet-container") :
+                   mapEl.shadowRoot.querySelector(".leaflet-container");
+
+               let mapZoom = mapEl._map.getZoom();
+               let location = M.gcrsToTileMatrix(mapEl);
+               let standard = M.options.locale.amZoom + " " + mapZoom + " " + M.options.locale.amColumn + " " + location[0] + " " + M.options.locale.amRow + " " + location[1];
+
+               if(mapZoom === mapEl._map._layersMaxZoom){
+                   standard = M.options.locale.amMaxZoom + " " + standard;
+               }
+               else if(mapZoom === mapEl._map._layersMinZoom){
+                   standard = M.options.locale.amMinZoom + " " + standard;
+               }
+
+               el.setAttribute("aria-roledescription", "region " + standard);
+               setTimeout(function () {
+                   el.removeAttribute("aria-roledescription");
+               }, 2000);
+           }, 0);
+       },
+
+      announceBounds: function () {
+          if(this._traversalCall > 0){
+              return;
+          }
+          let mapZoom = this._map.getZoom();
+          let mapBounds = M.pixelToPCRSBounds(this._map.getPixelBounds(),mapZoom,this._map.options.projection);
+
+          let visible = true;
+          if(this._map.totalLayerBounds){
+              visible = mapZoom <= this._map._layersMaxZoom && mapZoom >= this._map._layersMinZoom &&
+                  this._map.totalLayerBounds.overlaps(mapBounds);
+          }
+
+          let output = this.querySelector(".mapml-web-map") ? this.querySelector(".mapml-web-map").shadowRoot.querySelector(".mapml-screen-reader-output") :
+              this.shadowRoot.querySelector(".mapml-screen-reader-output");
+
+          //GCRS to TileMatrix
+          let location = M.gcrsToTileMatrix(this);
+          let standard = M.options.locale.amZoom + " " + mapZoom + " " + M.options.locale.amColumn + " " + location[0] + " " + M.options.locale.amRow + " " + location[1];
+
+          if(!visible){
+              let outOfBoundsPos = this._history[this._historyIndex];
+              let inBoundsPos = this._history[this._historyIndex - 1];
+              this.back();
+              this._history.pop();
+
+              if(outOfBoundsPos.zoom !== inBoundsPos.zoom){
+                  output.innerText = M.options.locale.amZoomedOut;
+              }
+              else if(this._map.dragging._draggable.wasDragged){
+                  output.innerText = M.options.locale.amDraggedOut;
+              }
+              else if(outOfBoundsPos.x > inBoundsPos.x){
+                  output.innerText = M.options.locale.amEastBound;
+              }
+              else if(outOfBoundsPos.x < inBoundsPos.x){
+                  output.innerText = M.options.locale.amWestBound;
+              }
+              else if(outOfBoundsPos.y < inBoundsPos.y){
+                  output.innerText = M.options.locale.amNorthBound;
+              }
+              else if(outOfBoundsPos.y > inBoundsPos.y){
+                  output.innerText = M.options.locale.amSouthBound;
+              }
+
+          }
+          else {
+              let prevZoom = this._history[this._historyIndex - 1] ? this._history[this._historyIndex - 1].zoom : this._history[this._historyIndex].zoom;
+              if(mapZoom === this._map._layersMaxZoom && mapZoom !== prevZoom){
+                  output.innerText = M.options.locale.amMaxZoom + " " + standard;
+              }
+              else if(mapZoom === this._map._layersMinZoom && mapZoom !== prevZoom){
+                  output.innerText = M.options.locale.amMinZoom + " " + standard;
+              }
+              else {
+                  output.innerText = standard;
+              }
+          }
+          this._map.dragging._draggable.wasDragged = false;
+      },
+
+      totalBounds: function () {
+          let layers = Object.keys(this._layers);
+          let bounds = L.bounds();
+
+          layers.forEach(i => {
+              if(this._layers[i].layerBounds){
+                  if(!bounds){
+                      let point = this._layers[i].layerBounds.getCenter();
+                      bounds = L.bounds(point, point);
+                  }
+                  bounds.extend(this._layers[i].layerBounds.min);
+                  bounds.extend(this._layers[i].layerBounds.max);
+              }
+          });
+
+          this.totalLayerBounds = bounds;
+      },
+
+      dragged: function () {
+          this.wasDragged = true;
+      }
+
+  });
+
   var Options = {
     announceMovement: false,
     locale: {
@@ -5621,9 +5950,71 @@
       lcOpacity: "Opacity",
       btnZoomIn: "Zoom in",
       btnZoomOut: "Zoom out",
-      btnFullScreen: "View fullscreen"
+      btnFullScreen: "View fullscreen",
+      amZoom: "zoom level",
+      amColumn: "column",
+      amRow: "row",
+      amMaxZoom: "At maximum zoom level, zoom in disabled",
+      amMinZoom: "At minimum zoom level, zoom out disabled",
+      amZoomedOut: "Zoomed out of bounds, returning to",
+      amDraggedOut: "Dragged out of bounds, returning to",
+      amEastBound: "Reached east bound, panning east disabled",
+      amWestBound: "Reached west bound, panning west disabled",
+      amNorthBound: "Reached north bound, panning north disabled",
+      amSouthBound: "Reached south bound, panning south disabled"
     }
   };
+
+  L.Map.Keyboard.include({
+      _onKeyDown: function (e) {
+
+          if (e.altKey || e.ctrlKey || e.metaKey) { return; }
+
+          let zoomIn = {
+              187: 187,
+              107: 107,
+              61: 61,
+              171: 171
+          };
+
+          let zoomOut = {
+              189: 189,
+              109: 109,
+              54: 54,
+              173: 173
+          };
+
+          var key = e.keyCode,
+              map = this._map,
+              offset;
+
+          if (key in this._panKeys) {
+              if (!map._panAnim || !map._panAnim._inProgress) {
+                  offset = this._panKeys[key];
+                  if (e.shiftKey) {
+                      offset = L.point(offset).multiplyBy(3);
+                  }
+
+                  map.panBy(offset);
+
+                  if (map.options.maxBounds) {
+                      map.panInsideBounds(map.options.maxBounds);
+                  }
+              }
+          } else if (key in this._zoomKeys) {
+              if((key in zoomIn && map._layersMaxZoom !== map.getZoom()) || (key in zoomOut && map._layersMinZoom !== map.getZoom()))
+                  map.setZoom(map.getZoom() + (e.shiftKey ? 3 : 1) * this._zoomKeys[key]);
+
+          } else if (key === 27 && map._popup && map._popup.options.closeOnEscapeKey) {
+              map.closePopup();
+
+          } else {
+              return;
+          }
+
+          L.DomEvent.stop(e);
+      }
+  });
 
   /* 
    * Copyright 2015-2016 Canada Centre for Mapping and Earth Observation, 
@@ -6207,13 +6598,16 @@
   M.parseStylesheetAsHTML = Util.parseStylesheetAsHTML;
   M.pointToPCRSPoint = Util.pointToPCRSPoint;
   M.pixelToPCRSPoint = Util.pixelToPCRSPoint;
+  M.gcrsToTileMatrix = Util.gcrsToTileMatrix;
 
   M.QueryHandler = QueryHandler;
   M.ContextMenu = ContextMenu;
+  M.AnnounceMovement = AnnounceMovement;
 
   // see https://leafletjs.com/examples/extending/extending-3-controls.html#handlers
   L.Map.addInitHook('addHandler', 'query', M.QueryHandler);
   L.Map.addInitHook('addHandler', 'contextMenu', M.ContextMenu);
+  L.Map.addInitHook('addHandler', 'announceMovement', M.AnnounceMovement);
 
   M.MapMLLayer = MapMLLayer;
   M.mapMLLayer = mapMLLayer;
@@ -6241,6 +6635,9 @@
 
   M.ReloadButton = ReloadButton;
   M.reloadButton = reloadButton;
+
+  M.FullscreenButton = FullscreenButton;
+  M.fullscreenButton = fullscreenButton;
 
   M.MapMLStaticTileLayer = MapMLStaticTileLayer;
   M.mapMLStaticTileLayer = mapMLStaticTileLayer;

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GeoName Search</title>
-    
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 
@@ -33,7 +33,24 @@
             height:auto;
             max-height: 15%;
         }
-
+        .options {
+            position:absolute;
+            top:2.5%;
+            left:65%;
+            z-index: 10;
+            width: auto;
+            max-width: auto;
+            height:auto;
+            max-height: 15%;
+        }
+        .content-button{
+            border-radius: 12px;
+            background-color: #fff;
+            border: 2px solid #c2ccc7;
+        }
+        .content-button:hover {
+            background-color: #ccc;
+        }
         /* Inside search div */
         .result {
             width: 100%;
@@ -53,7 +70,7 @@
             background-color: #ccc;
         }
         .results_container {
-            overflow: scroll;       
+            overflow: scroll;
             overflow-x:hidden;
             display:none;
             max-height:20vh;
@@ -81,8 +98,11 @@
         @media (max-width: 1000px) {
             .search {
                 width: 40%;
-                max-width: 40%; 
+                max-width: 40%;
                 left: 30%;
+            }
+            .options {
+                left: 70%;
             }
             .search_input {
                 font-size:16px;
@@ -96,8 +116,11 @@
         @media (max-width: 500px) {
             .search {
                 width: 60%;
-                max-width: 60%; 
+                max-width: 60%;
                 left: 20%;
+            }
+            .options {
+                left: 75%;
             }
             .search_button {
                 font-size: 11px;
@@ -105,26 +128,51 @@
                 margin-bottom: 2%;
             }
         }
-        
+
       </style>
 </head>
 <body>
-    
+  <template>
+    <layer- id="restaurant" label="Restaurants" checked>
+      <map-meta name="cs" content="gcrs" ></map-meta>
+      <map-meta name="extent" content="top-left-easting=-8433179, top-left-northing=5689316, bottom-right-easting=-8420968, bottom-right-northing=5683139"></map-meta>
+      <map-extent units="OSMTILE">
+         <map-select id="restaurants" name="cusine">
+            <map-option value="restaurants" selected>All cuisines</map-option>
+            <map-option value="african">African</map-option>
+            <map-option value="asian">Asian</map-option>
+            <map-option value="cajun">Cajun</map-option>
+            <map-option value="indian">Indian</map-option>
+            <map-option value="italian">Italian</map-option>
+            <map-option value="mexican">Mexican</map-option>
+          </map-select>
+          <map-link tref="./restaurants/{cusine}.mapml" rel="features"/>
+        </map-extent>
+    </layer->
+  </template>
+
     <div class="search" role="search">
         <!--<h2>GeoName Search</h2>-->
 
         <input type="search" class="search_input" id="query" placeholder="Locations in Canada" autofocus autocomplete="off" name="query" size="20%" oninput="displaySuggestions()"/>
         <button onclick="updateSearchResults()" class="search_button btn btn-primary btn-sm" id="searchBtn">Search</button>
-        
+
         <br>
         <output id="results_count" for="query"></output>
         <div id="results" role="grid" class="results_container"></div>
     </div>
 
+    <div class="options">
+        <button class="content-button" onclick="displayRestaurants()">
+            <img alt="Restaurants" draggable="false" src="//www.gstatic.com/images/icons/material/system_gm/1x/restaurant_black_18dp.png">
+            Restaurants
+        </button>
+    </div>
+
     <mapml-viewer projection="OSMTILE" zoom="4" lat="58.276703" lon="-103.710938" controls controlslist="nofullscreen" id="map">
         <layer- label="OpenStreetMap" src="https://geogratis.gc.ca/mapml/en/osmtile/osm/" checked></layer->
     </mapml-viewer>
-    
+
     <script>
         // Handling Enter on focused search results divs
         function handleEnter(e) {
@@ -152,13 +200,13 @@
                 if (newfocus === "item-1") {
                     newfocus = "query";
                 }
-                document.getElementById(newfocus).focus(); 
+                document.getElementById(newfocus).focus();
             }
             else if (event.keyCode === 40) {
                 let currentfocus = event.target.id.split('');
                 let newfocus = "item" + (parseInt(currentfocus.slice(4).join('')) + 1);
                 try {
-                    document.getElementById(newfocus).focus(); 
+                    document.getElementById(newfocus).focus();
                 } catch {}
             }
         };
@@ -175,7 +223,15 @@
         let mapp = document.querySelector("#map");
 
         // Will store the json search results
-        let searchResults = ""; 
+        let searchResults = "";
+
+        function displayRestaurants() {
+            let restaurants = document.querySelector('template').content.cloneNode(true)
+            // only add restaurant layer if it does not already exist in the map
+            if (mapp.querySelectorAll("#restaurant").length === 0) {
+                mapp.appendChild(restaurants);
+            }
+        }
 
         // Computes the zoom extent based on bounding box's decimal degrees
         // getZoomExtent: listof(Num, Num, Num, Num) -> Int(3-16)
@@ -217,7 +273,7 @@
                 return 16;
             }
         }
-        
+
         // geoJson2MapMl Creates a mapml layer from a geojson link
         // geoJson2MapMl: Str -> list(listof(list), Int(0-3), HTML Table)
         async function geoJson2MapMl(url) {
@@ -240,7 +296,7 @@
                 th2.setAttribute("scope", "col");
                 row.appendChild(th1);
                 row.appendChild(th2);
-                
+
                 // Creating table body and populating it from the JSON
                 let tbody = table.createTBody();
                 for (let key in json) {
@@ -274,7 +330,7 @@
             let clone = parser.parseFromString(xmlStringLayer, "text/html");
 
             // Setting Layer Name
-            let layer = clone.getElementById("layer"); 
+            let layer = clone.getElementById("layer");
             layer.setAttribute("label", data.properties.label_en);
 
             // Setting feature caption
@@ -284,9 +340,9 @@
             // Accessing the geom element to append features to
             let geom = clone.getElementById("geom");
 
-            // creating a table based on the geojson properties 
+            // creating a table based on the geojson properties
             let table = properties2Table(data.properties);
-            // Adding the properties 
+            // Adding the properties
             let properties = clone.getElementById("properties");
             properties.appendChild(table);
 
@@ -310,7 +366,7 @@
 
             // Checking the type of feature
             if (data.geometry.type === "MultiPolygon") {
-                // Create polygon   
+                // Create polygon
                 let clone_polygon = polygon.cloneNode(true);
                 clone_polygon = clone_polygon.getElementById("poly");
 
@@ -331,7 +387,7 @@
                 geom.appendChild(clone_polygon);
             } else if (data.geometry.type === "MultiPoint") {
                 let out = responseGeom.coordinates[0][0] + " " + responseGeom.coordinates[0][1];
-                
+
                 // Create Point element
                 let clone_point = point.cloneNode(true);
                 clone_point = clone_point.getElementById("point");
@@ -354,7 +410,7 @@
                     if (responseGeom.geometries[i].type === "LineString") {
                         let clone_linestring = linestring.cloneNode(true);
                         let linestring_coordindates = clone_linestring.getElementById("coords");
-                        
+
                         let out = "";
 
                         for (x=0;x<responseGeom.geometries[i].coordinates.length;x++) {
@@ -363,15 +419,15 @@
 
                         linestring_coordindates.innerHTML = out;
                         clone_geometrycollection.appendChild(clone_linestring.querySelector('map-linestring'));
-                        
+
                     } else if (responseGeom.geometries[i].type === "Polygon") {
-                        
+
                         let clone_polygon = polygon.cloneNode(true);
                         clone_polygon = clone_polygon.getElementById("poly");
-                        
+
                         // Going over each coordinates
                         for (y=0;y<responseGeom.geometries[i].coordinates.length;y++) {
-                            
+
                             let out = "";
                             let clone_coords = coords.cloneNode(true);
                             clone_coords = clone_coords.getElementById("coords");
@@ -385,7 +441,7 @@
                             clone_coords.innerHTML = out;
 
                             clone_polygon.appendChild(clone_coords);
-                            
+
                         }
                         clone_geometrycollection.appendChild(clone_polygon);
                     } else {
@@ -399,14 +455,14 @@
                 for (i=0;i<responseGeom.coordinates.length;i++) {
                     let clone_line = linestring.cloneNode(true);
                     let line_coordindates = clone_line.getElementById("coords");
-                    
+
                     let out = "";
-                
+
                     // Going over coordinates in each seperate line
                     for (y=0;y<responseGeom.coordinates[i].length;y++) {
-                        out = out + responseGeom.coordinates[i][y][0] + " " + responseGeom.coordinates[i][y][1] + " "; 
+                        out = out + responseGeom.coordinates[i][y][0] + " " + responseGeom.coordinates[i][y][1] + " ";
                     }
-                
+
                     line_coordindates.innerHTML = out
                     geom.appendChild(clone_line.querySelector('map-linestring'));
                 }
@@ -444,11 +500,11 @@
 
             // Add the newly created layer to mapmlviewer
             mapp.appendChild(feature);
-            
+
             // Focusing on the map after a new layer is added
-            document.getElementById('map').tabIndex = -1;
+            document.getElementById('map').tabIndex = 0;
             document.getElementById('map').focus();
-            
+
         }
 
         // Display Search Results based on the search key term
@@ -457,7 +513,7 @@
         function displayResults(obj) {
             // Reset the results
             document.querySelector("#results").innerHTML = "";
-            
+
             // Enable display panel
             document.getElementById("results").style.display = "block";
 
