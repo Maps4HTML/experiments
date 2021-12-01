@@ -415,6 +415,11 @@
                 alert("Unsupported Type: " + data.geometry.type);
             }
 
+            // Adding Attribution to layer
+            let attributeString = "<map-link rel='license' title='NRCan Geoname Service' href='https://www.nrcan.gc.ca/maps-tools-and-publications/maps/geographical-names-canada/application-programming-interface-api/9249'></map-link>";
+            let attributeElement = parser.parseFromString(attributeString, "text/html");
+            clone.getElementById("layer").appendChild(attributeElement.querySelector('map-link'));
+
             // Return the mapml layer
             return clone.getElementById("layer");
         }
