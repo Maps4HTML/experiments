@@ -279,6 +279,11 @@
             //console.log(clone.getElementById("layer"));
 
             let feature = clone.getElementById("layer");
+            
+            // Adding Attribution to layer
+            let attributeString = "<map-link rel='license' title='NRCan Geolocation Service' href='https://www.nrcan.gc.ca/science-and-data/science-and-research/earth-sciences/geography/topographic-information/web-services/geolocation-service/17304'></map-link>";
+            let attributeElement = parser.parseFromString(attributeString, "text/html");
+            feature.appendChild(attributeElement.querySelector('map-link'));
 
             // removing the previous layer which was displayed on search, if any
             if (mapp.querySelector('#layer') != null) {
