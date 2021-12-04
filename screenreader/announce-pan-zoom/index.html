@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Announce pan and zoom</title>
+  <link rel="stylesheet" href="../../global.css">
+  <script>
+    let options = document.createElement("map-options");
+    options.innerHTML = '{"announceMovement":true}';
+    document.head.appendChild(options);
+  </script>
+  <script type="module" src="../../dist/mapml-viewer.js"></script>
+</head>
+<body>
+  <mapml-viewer projection="OSMTILE" zoom="11" lat="48.8566" lon="2.3522" frameborder="0">
+    <layer- src="https://geogratis.gc.ca/mapml/en/osmtile/osm/" checked></layer->
+  </mapml-viewer>
+</body>
+</html>
+
