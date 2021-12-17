@@ -6,7 +6,7 @@
     <meta name="color-scheme" content="dark light">
     <title>Dark mode</title>
     <script type="module" src="../dist/mapml-viewer.js"></script>
-    <script type="module" src="../dist/web-map.js"></script>
+<!--    <script type="module" src="../dist/web-map.js"></script>-->
     <style>
       body {
         font-family: 'system-ui', sans-serif;
@@ -45,8 +45,8 @@
       <mark>Set the preference for dark mode in your browser/OS settings or dev tools!</mark>
     </p>
     
-    <mapml-viewer projection="CBMTILE" zoom="1" lat="50" lon="-100" controls>
-      <layer- label="CBMT" src="https://geogratis.gc.ca/mapml/en/cbmtile/cbmt/" checked></layer->
+    <mapml-viewer projection="OSMTILE" zoom="1" lat="50" lon="-100" controls>
+      <layer- label="CBMT" src="../refactoring-temporary/osm.mapml" checked></layer->
     </mapml-viewer>
     
     <p><b>References</b></p>
