@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>National Geographic base map</title>
+    <script type="module" src="./dist/mapml-viewer.js"></script>
+    <link rel="stylesheet" href="../global.css">
+  </head>
+  <body>
+    <mapml-viewer zoom="3" lon="0" lat="0" controls projection="OSMTILE">
+      <layer- label="Multiple Extent Elements"  checked>
+        <map-extent label="National Geographic" units="OSMTILE">
+          <map-input name="TileMatrix" type="zoom" value="18" min="0" max="18"></map-input>
+          <map-input name="TileCol" type="location" units="tilematrix" axis="column" min="0" max="262144"></map-input>
+          <map-input name="TileRow" type="location" units="tilematrix" axis="row" min="0" max="262144"></map-input>
+          <map-link rel="tile" tref="https://server.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer/WMTS/tile/1.0.0/NatGeo_World_Map/default/default028mm/{TileMatrix}/{TileRow}/{TileCol}.jpg"></map-link>
+        </map-extent>
+        <map-extent label="Labelled Imagery" units="OSMTILE">
+          <map-input name="TileMatrix" type="zoom" value="18" min="0" max="18"></map-input>
+          <map-input name="TileCol" type="location" units="tilematrix" axis="column" min="0" max="262144"></map-input>
+          <map-input name="TileRow" type="location" units="tilematrix" axis="row" min="0" max="262144"></map-input>
+          <map-link rel="tile" tref="https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/WMTS/tile/1.0.0/World_Imagery/default/default028mm/{TileMatrix}/{TileRow}/{TileCol}.jpg"></map-link>
+          <map-link rel="tile" tref="https://services.arcgisonline.com/arcgis/rest/services/Reference/World_Boundaries_and_Places/MapServer/WMTS/tile/1.0.0/Reference_World_Boundaries_and_Places/default/default028mm/{TileMatrix}/{TileRow}/{TileCol}.png"></map-link>
+        </map-extent>
+        <map-extent label="Imagery" units="OSMTILE">
+          <map-input name="TileMatrix" type="zoom" value="18" min="0" max="18"></map-input>
+          <map-input name="TileCol" type="location" units="tilematrix" axis="column" min="0" max="262144"></map-input>
+          <map-input name="TileRow" type="location" units="tilematrix" axis="row" min="0" max="262144"></map-input>
+          <map-link rel="tile" tref="https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/WMTS/tile/1.0.0/World_Imagery/default/default028mm/{TileMatrix}/{TileRow}/{TileCol}.jpg"></map-link>
+        </map-extent>
+      </layer->
+    </mapml-viewer>
+  </body>
+</html>
