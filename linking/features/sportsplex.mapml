@@ -5,6 +5,7 @@
     <map-meta name="projection" content="CBMTILE"></map-meta>
     <map-meta name="cs" content="pcrs"></map-meta>
     <map-meta content="text/mapml" http-equiv="Content-Type"></map-meta>
+    <map-meta name="extent" content="top-left-easting=1510002.52, top-left-northing=-181063.40, bottom-right-easting=1510280.00, bottom-right-northing=-181199.83"></map-meta>
     <map-link href="https://www.arcgis.com/home/item.html?id=4be6c94b65ee408999d2d4483a30febf" rel="license" title="© Salt Lake County Assessor"/>
   </map-head>
   <map-body>
