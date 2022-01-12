@@ -12,7 +12,22 @@
       <layer- label="CBMT" src="/experiments/refactoring-temporary/cbmtile-cbmt.mapml" checked hidden></layer->-->
     <mapml-viewer projection="OSMTILE" zoom="15" lat="45.409071" lon="-75.703411" controls>
       <layer- label="OpenStreetMap" src="../../refactoring-temporary/osm.mapml" checked hidden></layer->
-      <layer- label="Ottawa Restaurants" src="restaurants.mapml" checked></layer->
+      <layer- id="restaurant" label="Restaurants" checked>
+        <map-meta name="cs" content="gcrs" ></map-meta>
+        <map-meta name="extent" content="top-left-easting=-8433179, top-left-northing=5689316, bottom-right-easting=-8420968, bottom-right-northing=5683139"></map-meta>
+        <map-extent units="OSMTILE">
+           <map-select id="restaurants" name="cusine">
+              <map-option value="restaurants" selected>All cuisines</map-option>
+              <map-option value="african">African</map-option>
+              <map-option value="asian">Asian</map-option>
+              <map-option value="cajun">Cajun</map-option>
+              <map-option value="indian">Indian</map-option>
+              <map-option value="italian">Italian</map-option>
+              <map-option value="mexican">Mexican</map-option>
+            </map-select>
+            <map-link tref="../../shared/restaurants/{cusine}.mapml" rel="features"/>
+          </map-extent>
+      </layer->
     </mapml-viewer>
   </body>
 </html>
