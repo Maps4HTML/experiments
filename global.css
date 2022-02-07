@@ -13,6 +13,11 @@ body {
   line-height: 1.5;
 }
 
+body > mapml-viewer:only-child,
+body > [is="web-map"]:only-child {
+  position: fixed;
+}
+
 
 /*
  * map viewers
