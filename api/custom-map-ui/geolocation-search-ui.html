@@ -242,7 +242,7 @@
              let parser = new DOMParser();
 
             // creating an empty mapml layer
-            let xmlStringLayer = "<layer- label='' checked='' id='layer'><map-meta name='projection' content='OSMTILE'></map-meta><map-feature class='child' zoom='2'><map-featurecaption id='caption'></map-featurecaption><map-geometry id='geom'></map-geometry><map-properties id='properties'></map-properties></map-feature></layer->";
+            let xmlStringLayer = "<layer- label='' checked='' id='layer'><map-meta name='projection' content='OSMTILE'></map-meta><map-meta name='cs' content='gcrs'></map-meta><map-feature class='child' zoom='2'><map-featurecaption id='caption'></map-featurecaption><map-geometry id='geom'></map-geometry><map-properties id='properties'></map-properties></map-feature></layer->";
             let clone = parser.parseFromString(xmlStringLayer, "text/html");
 
             // Setting Layer Name
