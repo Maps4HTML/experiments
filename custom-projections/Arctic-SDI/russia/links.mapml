@@ -11,7 +11,7 @@
     <map-link rel="style" href="../finland/links.mapml" title="Finland"/>
     <map-link rel="style" href="../iceland/links.mapml" title="Iceland"/>
     <map-link rel="style" href="../norway/links.mapml" title="Norway"/>
-    <map-link rel="self style" href="../russia/links.mapml" title="Russia"/>
+<!--    <map-link rel="self style" href="../russia/links.mapml" title="Russia"/>-->
     <map-link rel="style" href="../sweden/links.mapml" title="Sweden"/>
     <map-link rel="style" href="../usa/links.mapml" title="U.S.A."/>
     <map-link rel="style" href="../canada/links.mapml" title="Canada"/>
@@ -21,7 +21,7 @@
       }
     </map-style></map-head>
   <map-body xmlns:html="http://www.w3.org/1999/xhtml"><map-extent units="EPSG3576"><map-input type="zoom" name="TileMatrix" min="0" max="11" value="0"/><map-input type="location" name="TileCol" axis="column" units="tilematrix" min="0" max="1"/><map-input type="location" name="TileRow" axis="row" units="tilematrix" min="0" max="1"/><map-link rel="tile" tref="http://basemap.arctic-sdi.org/mapcache/wmts/1.0.0/arctic_cascading/default/3576/{TileMatrix}/{TileRow}/{TileCol}.png"/></map-extent>
-    <map-feature id="russia" class="asdi-countries">
+<!--    <map-feature id="russia" class="asdi-countries">
       <map-featurecaption>Russia</map-featurecaption>
       <map-geometry>
         <map-multipolygon>
@@ -685,7 +685,7 @@
           </tbody>
         </table>
       </map-properties>
-    </map-feature>
+    </map-feature>-->
     <map-feature id="norway" class="asdi-countries">
       <map-featurecaption>Norway</map-featurecaption>
       <map-geometry><map-a href="norway/links.mapml#4,15.136009,69.955797">

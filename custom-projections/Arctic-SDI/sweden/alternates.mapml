@@ -11,7 +11,7 @@
     <map-link rel="style" href="../finland/alternates.mapml" title="Finland"/>
     <map-link rel="style" href="../iceland/alternates.mapml" title="Iceland"/>
     <map-link rel="style" href="../norway/alternates.mapml" title="Norway"/>
-    <map-link rel="style" href="../russia/alternates.mapml" title="Russia"/>
+<!--    <map-link rel="style" href="../russia/alternates.mapml" title="Russia"/>-->
     <map-link rel="self style" href="../sweden/alternates.mapml" title="Sweden"/>
     <map-link rel="style" href="../usa/alternates.mapml" title="U.S.A."/>
     <map-link rel="style" href="../canada/alternates.mapml" title="Canada"/>
