@@ -243,18 +243,17 @@
 
             searchResults[id].type = "Feature";
             //console.log(searchResults[id]);
-            let ax = geojson2mapml(searchResults[id]);
-            ax.setAttribute("id", "layer");
+            let layer = geojson2mapml(searchResults[id]);
+            layer.setAttribute("id", "layer");
             
             // Adding Attribution to layer
             let parser = new DOMParser();
             let attributeString = "<map-link rel='license' title='NRCan Geolocation Service' href='https://www.nrcan.gc.ca/science-and-data/science-and-research/earth-sciences/geography/topographic-information/web-services/geolocation-service/17304'></map-link>";
             let attributeElement = parser.parseFromString(attributeString, "text/html");
-            ax.appendChild(attributeElement.querySelector('map-link'));
+            layer.appendChild(attributeElement.querySelector('map-link'));
             
             // Adding layer to map
-            mapp.appendChild(ax);
-            //console.log(ax);
+            mapp.appendChild(layer);
             
             // Focusing on the map after a new layer is added
             document.getElementById('map').tabIndex = -1;

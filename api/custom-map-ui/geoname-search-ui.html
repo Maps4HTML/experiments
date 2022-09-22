@@ -244,23 +244,20 @@
 
             let response = await fetch(featureGeojson);
             let data = await response.json();
-            console.log(data);
-            let ax = geojson2mapml(data);
-            ax.querySelector("map-featurecaption").innerHTML = data.properties.label_en;
-            ax.setAttribute("id", "layer");
-            ax.setAttribute("label", data.properties.label_en);
+            
+            let layer = geojson2mapml(data);
+            layer.querySelector("map-featurecaption").innerHTML = data.properties.label_en;
+            layer.setAttribute("id", "layer");
+            layer.setAttribute("label", data.properties.label_en);
 
             // Adding Attribution to layer
             let parser = new DOMParser();
             let attributeString = "<map-link rel='license' title='NRCan Geoname Service' href='https://www.nrcan.gc.ca/maps-tools-and-publications/maps/geographical-names-canada/application-programming-interface-api/9249'></map-link>";
             let attributeElement = parser.parseFromString(attributeString, "text/html");
-            ax.appendChild(attributeElement.querySelector('map-link'));
-            
-            console.log(ax); 
+            layer.appendChild(attributeElement.querySelector('map-link'));
 
             // Add the newly created layer to mapmlviewer
-            //mapp.appendChild(feature);
-            mapp.appendChild(ax);
+            mapp.appendChild(layer);
             
             // Focusing on the map after a new layer is added
             document.getElementById('map').tabIndex = -1;
