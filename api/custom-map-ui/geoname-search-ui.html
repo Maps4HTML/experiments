@@ -245,8 +245,7 @@
             let response = await fetch(featureGeojson);
             let data = await response.json();
             
-            let layer = geojson2mapml(data);
-            layer.querySelector("map-featurecaption").innerHTML = data.properties.label_en;
+            let layer = geojson2mapml(data, {caption:"label_en"});
             layer.setAttribute("id", "layer");
             layer.setAttribute("label", data.properties.label_en);
 
