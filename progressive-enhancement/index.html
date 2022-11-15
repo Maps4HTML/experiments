@@ -22,6 +22,10 @@
       [is="web-map"]:not(:defined) > :not(area):not(.mapml-web-map) {
         display: none;
       }
+      [is="web-map"]:defined {
+        width: 700px;
+        height: 400px;
+      }
       
       /* Ensure inline layer content is hidden if built-in elements isn't supported,
       or if javascript is disabled. This needs to be defined separately
