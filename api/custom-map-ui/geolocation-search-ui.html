@@ -10,6 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 
     <script type="module" src="../../dist/mapml-viewer.js"></script>
+    <script src="../../dist/lib/geojson.js"></script>
     <style>
         html, body {
         height: 100%; /* These styles are required if you wish to use a % based
@@ -225,8 +226,6 @@
             document.getElementById("results").style.display = "none";
             document.getElementById("results_count").style.display = "none";
 
-            //console.log(searchResults[id]);
-
             //// zooming to location
             if (searchResults[id].bbox) { // If bbox is present
                 let zoom = getZoomExtent(searchResults[id].bbox);
@@ -236,62 +235,25 @@
             } else {
                 mapp.zoomTo(searchResults[id].geometry.coordinates[1], searchResults[id].geometry.coordinates[0], 10);
             }
-            
-
-             // HTML parser
-             let parser = new DOMParser();
-
-            // creating an empty mapml layer
-            let xmlStringLayer = "<layer- label='' checked='' id='layer'><map-meta name='projection' content='OSMTILE'></map-meta><map-meta name='cs' content='gcrs'></map-meta><map-feature class='child' zoom='2'><map-featurecaption id='caption'></map-featurecaption><map-geometry id='geom'></map-geometry><map-properties id='properties'></map-properties></map-feature></layer->";
-            let clone = parser.parseFromString(xmlStringLayer, "text/html");
-
-            // Setting Layer Name
-            let layer = clone.getElementById("layer"); 
-            layer.setAttribute("label", searchResults[id].title);
-
-            // Setting feature caption
-            let map_featurecaption = clone.getElementById("caption");
-            map_featurecaption.innerHTML = searchResults[id].title;
-
-            // Accessing the geom element to append features to
-            let geom = clone.getElementById("geom");
-
-            let xmlStringPoint = "<map-point id='point'></map-point>";
-            let point = parser.parseFromString(xmlStringPoint, "text/html");
-
-            // Template to add coordinates to features
-            let xmlStringCoords = "<map-coordinates id='coords'></map-coordinates>";
-            let coords = parser.parseFromString(xmlStringCoords, "text/html");
-
-            // Create Point element
-            let clone_point = point.cloneNode(true);
-            clone_point = clone_point.getElementById("point");
-
-            // Create map-coords to add to the polygon
-            let clone_coords = coords.cloneNode(true);
-            clone_coords = clone_coords.getElementById("coords");
-
-            clone_coords.innerHTML = searchResults[id].geometry.coordinates[0] + " " + searchResults[id].geometry.coordinates[1];
-
-            clone_point.appendChild(clone_coords);
-            geom.appendChild(clone_point);
-
-            //console.log(clone.getElementById("layer"));
-
-            let feature = clone.getElementById("layer");
-            
-            // Adding Attribution to layer
-            let attributeString = "<map-link rel='license' title='NRCan Geolocation Service' href='https://www.nrcan.gc.ca/science-and-data/science-and-research/earth-sciences/geography/topographic-information/web-services/geolocation-service/17304'></map-link>";
-            let attributeElement = parser.parseFromString(attributeString, "text/html");
-            feature.appendChild(attributeElement.querySelector('map-link'));
 
             // removing the previous layer which was displayed on search, if any
             if (mapp.querySelector('#layer') != null) {
                 mapp.removeChild(mapp.querySelector("#layer"));
             }
+
+            searchResults[id].type = "Feature";
+            //console.log(searchResults[id]);
+            let layer = geojson2mapml(searchResults[id]);
+            layer.setAttribute("id", "layer");
             
-            // Add the newly created layer to mapmlviewer
-            mapp.appendChild(feature);
+            // Adding Attribution to layer
+            let parser = new DOMParser();
+            let attributeString = "<map-link rel='license' title='NRCan Geolocation Service' href='https://www.nrcan.gc.ca/science-and-data/science-and-research/earth-sciences/geography/topographic-information/web-services/geolocation-service/17304'></map-link>";
+            let attributeElement = parser.parseFromString(attributeString, "text/html");
+            layer.appendChild(attributeElement.querySelector('map-link'));
+            
+            // Adding layer to map
+            mapp.appendChild(layer);
             
             // Focusing on the map after a new layer is added
             document.getElementById('map').tabIndex = -1;
