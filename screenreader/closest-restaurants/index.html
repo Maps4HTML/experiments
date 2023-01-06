@@ -273,207 +273,6 @@
                 return 16;
             }
         }
-        
-        // geoJson2MapMl Creates a mapml layer from a geojson link
-        // geoJson2MapMl: Str -> list(listof(list), Int(0-3), HTML Table)
-        async function geoJson2MapMl(url) {
-
-            // Takes GeoJSON Properties to return a HTML table
-            // properties2Table: Str -> HTML Table
-            function properties2Table(json) {
-                let table = document.createElement('table');
-
-                // Creating a Table Header
-                let thead = table.createTHead();
-                let row = thead.insertRow();
-                let th1 = document.createElement("th");
-                let th2 = document.createElement("th");
-                th1.appendChild(document.createTextNode("Property name"));
-                th2.appendChild(document.createTextNode("Property value"));
-                th1.setAttribute("role", "columnheader");
-                th2.setAttribute("role", "columnheader");
-                th1.setAttribute("scope", "col");
-                th2.setAttribute("scope", "col");
-                row.appendChild(th1);
-                row.appendChild(th2);
-                
-                // Creating table body and populating it from the JSON
-                let tbody = table.createTBody();
-                for (let key in json) {
-                    if (json.hasOwnProperty(key)) {
-
-                        let row = tbody.insertRow();
-                        let th = document.createElement("th");
-                        let td = document.createElement("td");
-                        th.appendChild(document.createTextNode(key));
-                        td.appendChild(document.createTextNode(json[key]));
-                        th.setAttribute("scope", "row");
-                        td.setAttribute("itemprop", key);
-                        row.appendChild(th);
-                        row.appendChild(td);
-                    }
-                }
-                return table;
-            }
-
-            // Fetching the geojson response
-            let response = await fetch(url);
-            let data = await response.json();
-
-            let responseGeom = data.geometry;
-
-            // HTML parser
-            let parser = new DOMParser();
-
-            // creating an empty mapml layer
-            let xmlStringLayer = "<layer- label='' checked='' id='layer'><map-meta name='projection' content='OSMTILE'></map-meta><map-meta name='cs' content='gcrs'></map-meta><map-feature class='child' zoom='2'><map-featurecaption id='caption'></map-featurecaption><map-geometry id='geom'></map-geometry><map-properties id='properties'></map-properties></map-feature></layer->";
-            let clone = parser.parseFromString(xmlStringLayer, "text/html");
-
-            // Setting Layer Name
-            let layer = clone.getElementById("layer"); 
-            layer.setAttribute("label", data.properties.label_en);
-
-            // Setting feature caption
-            let map_featurecaption = clone.getElementById("caption");
-            map_featurecaption.innerHTML = data.properties.label_en;
-
-            // Accessing the geom element to append features to
-            let geom = clone.getElementById("geom");
-
-            // creating a table based on the geojson properties 
-            let table = properties2Table(data.properties);
-            // Adding the properties 
-            let properties = clone.getElementById("properties");
-            properties.appendChild(table);
-
-            // Geometry Collection
-            let xmlStringGeometrycollection = "<map-geometrycollection id='geometrycollection'></map-geometrycollection>";
-            let geometrycollection = parser.parseFromString(xmlStringGeometrycollection, "text/html");
-
-            // Templates to add features to geometry
-            let xmlStringLinestring = "<map-linestring><map-coordinates id='coords'></map-coordinates></map-linestring>";
-            let linestring = parser.parseFromString(xmlStringLinestring, "text/html");
-
-            let xmlStringPolygon = "<map-polygon id='poly'></map-polygon>";
-            let polygon = parser.parseFromString(xmlStringPolygon, "text/html");
-
-            let xmlStringPoint = "<map-point id='point'></map-point>";
-            let point = parser.parseFromString(xmlStringPoint, "text/html");
-
-            // Template to add coordinates to features
-            let xmlStringCoords = "<map-coordinates id='coords'></map-coordinates>";
-            let coords = parser.parseFromString(xmlStringCoords, "text/html");
-
-            // Checking the type of feature
-            if (data.geometry.type === "MultiPolygon") {
-                // Create polygon   
-                let clone_polygon = polygon.cloneNode(true);
-                clone_polygon = clone_polygon.getElementById("poly");
-
-                for (i=0;i<responseGeom.coordinates[0].length;i++) {
-                    // Create map-coords to add to the polygon
-                    //let coords_template = document.querySelector('#coords_temp');
-                    let clone_coords = coords.cloneNode(true);
-                    clone_coords = clone_coords.getElementById("coords");
-
-                    let c = responseGeom.coordinates[0][i];
-                    let out = ""
-                    for (y = 0; y < c.length; y++) {
-                        out = out + c[y][0] + " " + c[y][1] + " ";
-                    }
-                    clone_coords.innerHTML = out;
-                    clone_polygon.appendChild(clone_coords);
-                }
-                geom.appendChild(clone_polygon);
-            } else if (data.geometry.type === "MultiPoint") {
-                let out = responseGeom.coordinates[0][0] + " " + responseGeom.coordinates[0][1];
-                
-                // Create Point element
-                let clone_point = point.cloneNode(true);
-                clone_point = clone_point.getElementById("point");
-
-                // Create map-coords to add to the polygon
-                let clone_coords = coords.cloneNode(true);
-                clone_coords = clone_coords.getElementById("coords");
-
-                clone_coords.innerHTML = out;
-
-                clone_point.appendChild(clone_coords);
-                geom.appendChild(clone_point);
-            } else if (data.geometry.type === "GeometryCollection") {
-                // Create GeometryCollection
-                let clone_geometrycollection = geometrycollection.cloneNode(true);
-                clone_geometrycollection = clone_geometrycollection.getElementById("geometrycollection");
-
-                //// Going over each feature in the geometrycollection
-                for (i=0;i<responseGeom.geometries.length;i++) {
-                    if (responseGeom.geometries[i].type === "LineString") {
-                        let clone_linestring = linestring.cloneNode(true);
-                        let linestring_coordindates = clone_linestring.getElementById("coords");
-                        
-                        let out = "";
-
-                        for (x=0;x<responseGeom.geometries[i].coordinates.length;x++) {
-                            out = out + responseGeom.geometries[i].coordinates[x][0] + " " + responseGeom.geometries[i].coordinates[x][1] + " ";
-                        }
-
-                        linestring_coordindates.innerHTML = out;
-                        clone_geometrycollection.appendChild(clone_linestring.querySelector('map-linestring'));
-                        
-                    } else if (responseGeom.geometries[i].type === "Polygon") {
-                        
-                        let clone_polygon = polygon.cloneNode(true);
-                        clone_polygon = clone_polygon.getElementById("poly");
-                        
-                        // Going over each coordinates
-                        for (y=0;y<responseGeom.geometries[i].coordinates.length;y++) {
-                            
-                            let out = "";
-                            let clone_coords = coords.cloneNode(true);
-                            clone_coords = clone_coords.getElementById("coords");
-
-                            // Going over coordinates for the polygon
-                            for (x=0;x<responseGeom.geometries[i].coordinates[y].length;x++) {
-                                out = out + responseGeom.geometries[i].coordinates[y][x][0] + " " + responseGeom.geometries[i].coordinates[y][x][1] + " ";
-                            }
-
-                            // Create map-coordinates element and append it to clone_polygon
-                            clone_coords.innerHTML = out;
-
-                            clone_polygon.appendChild(clone_coords);
-                            
-                        }
-                        clone_geometrycollection.appendChild(clone_polygon);
-                    } else {
-                        alert("Geometrycollection not fully drawn!");
-                    }
-                }
-
-                geom.appendChild(clone_geometrycollection);
-            } else if (data.geometry.type === "MultiLineString") {
-                // Going over each line
-                for (i=0;i<responseGeom.coordinates.length;i++) {
-                    let clone_line = linestring.cloneNode(true);
-                    let line_coordindates = clone_line.getElementById("coords");
-                    
-                    let out = "";
-                
-                    // Going over coordinates in each seperate line
-                    for (y=0;y<responseGeom.coordinates[i].length;y++) {
-                        out = out + responseGeom.coordinates[i][y][0] + " " + responseGeom.coordinates[i][y][1] + " "; 
-                    }
-                
-                    line_coordindates.innerHTML = out
-                    geom.appendChild(clone_line.querySelector('map-linestring'));
-                }
-            } else {
-                console.log("Unsupported Type: " + data.geometry.type);
-                alert("Unsupported Type: " + data.geometry.type);
-            }
-
-            // Return the mapml layer
-            return clone.getElementById("layer");
-        }
 
         // Displays a new layer and pans the map to the layer
         // mapPane: Int -> None
@@ -491,15 +290,28 @@
             mapp.zoomTo(searchResults[id].latitude, searchResults[id].longitude, zoom);
 
             // converting geojson to a mapml layer
-            let feature = await geoJson2MapMl(featureGeojson);
+            //let feature = await geoJson2MapMl(featureGeojson);
 
             // removing the previous layer which was displayed on search, if any
             if (mapp.querySelector('#layer') != null) {
                 mapp.removeChild(mapp.querySelector("#layer"));
             }
 
+            let response = await fetch(featureGeojson);
+            let data = await response.json();
+
+            let layer = M.geojson2mapml(data, {caption:"label_en"});
+            layer.setAttribute("id", "layer");
+            layer.setAttribute("label", data.properties.label_en);
+
+            // Adding Attribution to layer
+            let parser = new DOMParser();
+            let attributeString = "<map-link rel='license' title='NRCan Geoname Service' href='https://www.nrcan.gc.ca/maps-tools-and-publications/maps/geographical-names-canada/application-programming-interface-api/9249'></map-link>";
+            let attributeElement = parser.parseFromString(attributeString, "text/html");
+            layer.appendChild(attributeElement.querySelector('map-link'));
+            
             // Add the newly created layer to mapmlviewer
-            mapp.appendChild(feature);
+            mapp.appendChild(layer);
             
             // Focusing on the map after a new layer is added
             document.getElementById('map').tabIndex = 0;
