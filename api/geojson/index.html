@@ -6,7 +6,6 @@
     <title>GeoJSON API Demo</title>
   <script type="module" src="../../dist/mapml-viewer.js"></script>
   <link rel="stylesheet" href="../../global.css">
-    <script  src="../../dist/lib/geojson.js"></script>
       <map-style hidden>
       .a {        
         fill: #800026;
@@ -205,11 +204,11 @@ window.onload = (event) => {
         return g;
       }
     };
-    let provs = geojson2mapml(provData, provOptions);
+    let provs = M.geojson2mapml(provData, provOptions);
     let stateStyle = document.querySelector("map-style").cloneNode(true);
     // I wonder if there shouldn't be a style: <Element> option?
     provs.appendChild(document.querySelector("map-style"));
-    let states = geojson2mapml(statesData, stateOptions);
+    let states = M.geojson2mapml(statesData, stateOptions);
     states.appendChild(stateStyle);
     // add the new layer on top of the map
     document.querySelector('mapml-viewer').appendChild(provs);
@@ -226,8 +225,8 @@ window.onload = (event) => {
 //        return {"name": propertiesElement.querySelector('h4').innerText};
 //      }
     };
-    let sjson = mapml2geojson(states, m2goptions);
-    let pjson = mapml2geojson(provs, m2goptions);
+    let sjson = M.mapml2geojson(states, m2goptions);
+    let pjson = M.mapml2geojson(provs, m2goptions);
     console.log("There are "+sjson.features.length + " states or territories in these United States");
     console.log("There are "+pjson.features.length + " provinces or territories in Canada");
 //    console.log(JSON.stringify(geojson));

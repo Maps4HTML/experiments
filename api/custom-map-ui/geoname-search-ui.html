@@ -10,7 +10,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 
     <script type="module" src="../../dist/mapml-viewer.js"></script>
-    <script src="../../dist/lib/geojson.js"></script>
     <style>
         html, body {
         height: 100%; /* These styles are required if you wish to use a % based
@@ -234,9 +233,6 @@
             let zoom = getZoomExtent(searchResults[id].bbox);
             mapp.zoomTo(searchResults[id].latitude, searchResults[id].longitude, zoom);
 
-            // converting geojson to a mapml layer
-            //let feature = await geoJson2MapMl(featureGeojson);
-
             // removing the previous layer which was displayed on search, if any
             if (mapp.querySelector('#layer') != null) {
                 mapp.removeChild(mapp.querySelector("#layer"));
@@ -245,7 +241,7 @@
             let response = await fetch(featureGeojson);
             let data = await response.json();
             
-            let layer = geojson2mapml(data, {caption:"label_en"});
+            let layer = M.geojson2mapml(data, {caption:"label_en"});
             layer.setAttribute("id", "layer");
             layer.setAttribute("label", data.properties.label_en);
 
