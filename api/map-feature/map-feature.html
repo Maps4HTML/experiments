@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="dark light">
     <title>&lt;map-feature&gt; API</title>
-    <script type="module" src="../../dist/mapml-viewer.js"></script>
-<!--    <script type="module" src="../dist/web-map.js"></script>-->
+    <script type="module" src="dist/mapml-viewer.js"></script>
     <style>
       body {
         font-family: 'system-ui', sans-serif;
@@ -26,32 +25,67 @@
       }
     </style>
     <script>
+//      function addEmptyLayer() {
+//        let layer = document.querySelector('#empty-layer').content.firstElementChild.cloneNode(true);
+//        layer.label = 'Two Hat Man';
+//        layer.checked = 'checked';
+//        let map = document.querySelector('mapml-viewer');
+//        map.appendChild(layer);
+//      }
+//      addEmptyLayer();
       function addMan() {
         let map = document.querySelector('mapml-viewer');
         let man = document.querySelector('#hatman').content.firstElementChild.cloneNode(true);
-        let layer = document.createElement('layer-');
-        let prj = document.querySelector('#projection').content.firstElementChild.cloneNode(true);
-        layer.label = 'Two Hat Man';
-        layer.checked = 'checked';
-        layer.appendChild(prj);
+        let layer = document.querySelector("layer-[label='Empty']");
         layer.appendChild(man);
-        map.appendChild(layer);
-        document.querySelector('#add').disabled = true; 
+        layer.label = "Two Hat Man";
+        toggleDisabled();
+      }
+      function toggleDisabled() {
+        if (document.querySelector('#add').disabled) {
+          document.querySelector('#add').disabled = false;
+          document.querySelector('#focus').disabled = true;
+          document.querySelector('#click').disabled = true;
+          document.querySelector('#blur').disabled = true;
+          document.querySelector('#zoom').disabled = true;
+          document.querySelector('#replace').disabled = true;
+          document.querySelector('#remove').disabled = true;
+        } else {
+          document.querySelector('#add').disabled = true;
+          document.querySelector('#focus').disabled = false;
+          document.querySelector('#click').disabled = false;
+          document.querySelector('#blur').disabled = false;
+          document.querySelector('#zoom').disabled = false;
+          document.querySelector('#replace').disabled = false;
+          document.querySelector('#remove').disabled = false;
+        }
       }
       function focusMan() {
-        let man = document.querySelector('map-feature').focus();
+        document.querySelector('map-feature').focus();
+      }
+      function blurMan() {
+        document.querySelector('map-feature').blur();
       }
       function addCustomClickHandler() {
         let man = document.querySelector('map-feature');
-        man.onclick = function (e) {
-          e.preventDefault();
-          alert('Feature clicked');
+        man.onclick = function () {
+        alert('Feature clicked');
         };
+      }
+      function removeMan() {
+        document.querySelector('map-feature').remove();
+        toggleDisabled();
       }
     </script>
     <template id="projection">
       <map-meta name="projection" content="OSMTILE"></map-meta>
     </template>
+    <template id="empty-layer">
+      <layer- label="Empty" checked>
+        <map-meta name="projection" content="OSMTILE"></map-meta>
+      </layer->
+    </template>
+    
     <template id="hatman">
         <map-feature id="twohats" zoom="15" class="twohats">
           <map-featurecaption>The Man With Two Hats</map-featurecaption>
@@ -82,9 +116,17 @@
 
     
     <mapml-viewer projection="OSMTILE" zoom="1" lat="50" lon="-100" controls>
-      <layer- label="CBMT" src="../../refactoring-temporary/osm.mapml" checked></layer->
+      <layer- label="CBMT" src="https://maps4html.org/experiments/refactoring-temporary/osm.mapml" checked></layer->
+      <layer- label="Empty" checked>
+        <map-meta name="projection" content="OSMTILE"></map-meta>
+      </layer->
     </mapml-viewer>
-  <button id="add" onclick="addMan()">Add feature</button> <button onclick="document.querySelector('map-feature').focus()">Focus feature</button> <button onclick="document.querySelector('map-feature').click()">Click feature</button> <button onclick="document.querySelector('map-feature').zoomTo()">Zoom to feature</button>
-  <button onclick="addCustomClickHandler()">Replace default click handler</button>
+  <button id="add" onclick="addMan()">Add feature</button>
+  <button id="focus" disabled onclick="document.querySelector('map-feature').focus()">Focus feature</button>
+  <button id="blur" disabled  onclick="document.querySelector('map-feature').blur()">Blur feature</button>
+  <button id="click" disabled  onclick="document.querySelector('map-feature').click()">Click feature</button>
+  <button id="zoom" disabled  onclick="document.querySelector('map-feature').zoomTo()">Zoom to feature</button>
+  <button id="replace" disabled  onclick="addCustomClickHandler()">Replace default click handler</button>
+  <button id="remove" disabled onclick="removeMan()">Remove feature</button>
   </body>
 </html>
