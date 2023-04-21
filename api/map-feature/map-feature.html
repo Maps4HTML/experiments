@@ -36,6 +36,7 @@
         layer.appendChild(prj);
         layer.appendChild(man);
         map.appendChild(layer);
+        document.querySelector('#add').disabled = true; 
       }
       function focusMan() {
         let man = document.querySelector('map-feature').focus();
@@ -83,39 +84,7 @@
     <mapml-viewer projection="OSMTILE" zoom="1" lat="50" lon="-100" controls>
       <layer- label="CBMT" src="../../refactoring-temporary/osm.mapml" checked></layer->
     </mapml-viewer>
-  <button onclick="addMan()">Add feature</button> <button onclick="document.querySelector('map-feature').focus()">Focus feature</button> <button onclick="document.querySelector('map-feature').click()">Click feature</button> <button onclick="document.querySelector('map-feature').zoomTo()">Zoom to feature</button>
+  <button id="add" onclick="addMan()">Add feature</button> <button onclick="document.querySelector('map-feature').focus()">Focus feature</button> <button onclick="document.querySelector('map-feature').click()">Click feature</button> <button onclick="document.querySelector('map-feature').zoomTo()">Zoom to feature</button>
   <button onclick="addCustomClickHandler()">Replace default click handler</button>
-    <p><b>References</b></p>
-    <ul>
-      <li>
-        Use case: <a href="https://maps4html.org/HTML-Map-Element-UseCases-Requirements/#use-case-color-scheme">Customize the color scheme (light/dark or high contrast)</a>
-      </li>
-      <li>
-        HTML <code>&lt;meta name="color-scheme"&gt;</code>
-        <ul>
-          <li><a href="https://html.spec.whatwg.org/multipage/semantics.html#meta-color-scheme">https://html.spec.whatwg.org/multipage/semantics.html#meta-color-scheme</a></li>
-          <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name#:~:text=color-scheme">https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name#:~:text=color-scheme</a></li>
-        </ul>
-      </li>
-      <li>
-        CSS <code>color-scheme</code> property
-        <ul>
-          <li><a href="https://drafts.csswg.org/css-color-adjust/#color-scheme-prop">https://drafts.csswg.org/css-color-adjust/#color-scheme-prop</a></li>
-          <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme">https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme</a></li>
-        </ul>
-      </li>
-      <li>CSS <code>prefers-color-scheme</code> media feature
-        <ul>
-          <li><a href="https://drafts.csswg.org/mediaqueries-5/#prefers-color-scheme">https://drafts.csswg.org/mediaqueries-5/#prefers-color-scheme</a></li>
-          <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme">https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme</a></li>
-        </ul>
-      </li>
-      <li>Articles
-        <ul>
-          <li><a href="https://web.dev/color-scheme/">https://web.dev/color-scheme/</a></li>
-          <li><a href="https://web.dev/prefers-color-scheme/">https://web.dev/prefers-color-scheme/</a></li>
-        </ul>
-      </li>
-    </ul>
   </body>
 </html>
