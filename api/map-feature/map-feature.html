@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="dark light">
+    <title>&lt;map-feature&gt; API</title>
+    <script type="module" src="../../dist/mapml-viewer.js"></script>
+<!--    <script type="module" src="../dist/web-map.js"></script>-->
+    <style>
+      body {
+        font-family: 'system-ui', sans-serif;
+        max-width: 50rem;
+        margin: 0 auto;
+        padding: 0 1rem;
+        overflow-wrap: break-word;
+      }
+      mapml-viewer {
+        width: 100%;
+        min-height: 50vh;
+      }
+      @media (prefers-color-scheme: dark) {
+        .user-preference-message {
+          display: none;
+        }
+      }
+    </style>
+    <script>
+      function addMan() {
+        let map = document.querySelector('mapml-viewer');
+        let man = document.querySelector('#hatman').content.firstElementChild.cloneNode(true);
+        let layer = document.createElement('layer-');
+        let prj = document.querySelector('#projection').content.firstElementChild.cloneNode(true);
+        layer.label = 'Two Hat Man';
+        layer.checked = 'checked';
+        layer.appendChild(prj);
+        layer.appendChild(man);
+        map.appendChild(layer);
+      }
+      function focusMan() {
+        let man = document.querySelector('map-feature').focus();
+      }
+      function addCustomClickHandler() {
+        let man = document.querySelector('map-feature');
+        man.onclick = function (e) {
+          e.preventDefault();
+          alert('Feature clicked');
+        };
+      }
+    </script>
+    <template id="projection">
+      <map-meta name="projection" content="OSMTILE"></map-meta>
+    </template>
+    <template id="hatman">
+        <map-feature id="twohats" zoom="15" class="twohats">
+          <map-featurecaption>The Man With Two Hats</map-featurecaption>
+          <map-properties>
+            <table>
+              <tr>
+                <th>image</th>
+                <td><a href="https://www.veterans.gc.ca/eng/remembrance/memorials/national-inventory-canadian-memorials/details/9304">
+                  <img src="https://www.veterans.gc.ca/images/remembrance/memorials/national-inventory-canadian-memorials/mem/35059-173a.jpg" width="60" height="60"/>
+                </a>
+                </td>
+              </tr>
+            </table>
+          </map-properties>
+          <map-geometry cs="gcrs">
+            <map-point>
+              <map-coordinates>-75.705278 45.397778</map-coordinates>
+            </map-point>
+          </map-geometry>
+        </map-feature>
+    </template>
+  </head>
+  <body>
+    <p>
+    This document is to experiment with the event handling methods of the
+    <a href="https://maps4html.org/web-map-doc/docs/api/map-feature-api/">HTMLFeatureElement API</a>.
+    </p>
+
+    
+    <mapml-viewer projection="OSMTILE" zoom="1" lat="50" lon="-100" controls>
+      <layer- label="CBMT" src="../../refactoring-temporary/osm.mapml" checked></layer->
+    </mapml-viewer>
+  <button onclick="addMan()">Add feature</button> <button onclick="document.querySelector('map-feature').focus()">Focus feature</button> <button onclick="document.querySelector('map-feature').click()">Click feature</button> <button onclick="document.querySelector('map-feature').zoomTo()">Zoom to feature</button>
+  <button onclick="addCustomClickHandler()">Replace default click handler</button>
+    <p><b>References</b></p>
+    <ul>
+      <li>
+        Use case: <a href="https://maps4html.org/HTML-Map-Element-UseCases-Requirements/#use-case-color-scheme">Customize the color scheme (light/dark or high contrast)</a>
+      </li>
+      <li>
+        HTML <code>&lt;meta name="color-scheme"&gt;</code>
+        <ul>
+          <li><a href="https://html.spec.whatwg.org/multipage/semantics.html#meta-color-scheme">https://html.spec.whatwg.org/multipage/semantics.html#meta-color-scheme</a></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name#:~:text=color-scheme">https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name#:~:text=color-scheme</a></li>
+        </ul>
+      </li>
+      <li>
+        CSS <code>color-scheme</code> property
+        <ul>
+          <li><a href="https://drafts.csswg.org/css-color-adjust/#color-scheme-prop">https://drafts.csswg.org/css-color-adjust/#color-scheme-prop</a></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme">https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme</a></li>
+        </ul>
+      </li>
+      <li>CSS <code>prefers-color-scheme</code> media feature
+        <ul>
+          <li><a href="https://drafts.csswg.org/mediaqueries-5/#prefers-color-scheme">https://drafts.csswg.org/mediaqueries-5/#prefers-color-scheme</a></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme">https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme</a></li>
+        </ul>
+      </li>
+      <li>Articles
+        <ul>
+          <li><a href="https://web.dev/color-scheme/">https://web.dev/color-scheme/</a></li>
+          <li><a href="https://web.dev/prefers-color-scheme/">https://web.dev/prefers-color-scheme/</a></li>
+        </ul>
+      </li>
+    </ul>
+  </body>
+</html>
