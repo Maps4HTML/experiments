@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="dark light">
     <title>&lt;map-feature&gt; API</title>
-    <script type="module" src="dist/mapml-viewer.js"></script>
+    <script type="module" src="../../dist/mapml-viewer.js"></script>
     <style>
       body {
         font-family: 'system-ui', sans-serif;
@@ -36,9 +36,12 @@
       function addMan() {
         let map = document.querySelector('mapml-viewer');
         let man = document.querySelector('#hatman').content.firstElementChild.cloneNode(true);
-        let layer = document.querySelector("layer-[label='Empty']");
+        let layer = document.querySelector("#target-layer");
         layer.appendChild(man);
         layer.label = "Two Hat Man";
+        // this step should not be necessary
+        layer.remove();
+        map.appendChild(layer);
         toggleDisabled();
       }
       function toggleDisabled() {
@@ -81,7 +84,7 @@
       <map-meta name="projection" content="OSMTILE"></map-meta>
     </template>
     <template id="empty-layer">
-      <layer- label="Empty" checked>
+      <layer-  label="Empty" checked>
         <map-meta name="projection" content="OSMTILE"></map-meta>
       </layer->
     </template>
@@ -117,7 +120,7 @@
     
     <mapml-viewer projection="OSMTILE" zoom="1" lat="50" lon="-100" controls>
       <layer- label="CBMT" src="https://maps4html.org/experiments/refactoring-temporary/osm.mapml" checked></layer->
-      <layer- label="Empty" checked>
+      <layer- id="target-layer" label="Empty" checked>
         <map-meta name="projection" content="OSMTILE"></map-meta>
       </layer->
     </mapml-viewer>
