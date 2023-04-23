@@ -18,6 +18,11 @@
         width: 100%;
         min-height: 50vh;
       }
+      textarea {
+          width: 100%;
+          min-height: 35vh;
+          margin-top: 10px;
+      }
       @media (prefers-color-scheme: dark) {
         .user-preference-message {
           display: none;
@@ -44,6 +49,10 @@
         map.appendChild(layer);
         toggleDisabled();
       }
+      function _doMan(action) {
+        this[action+"Man"]();
+        document.querySelector('#txt').textContent = this[action+"Man"].toString();
+      }
       function toggleDisabled() {
         if (document.querySelector('#add').disabled) {
           document.querySelector('#add').disabled = false;
@@ -69,11 +78,22 @@
       function blurMan() {
         document.querySelector('map-feature').blur();
       }
-      function addCustomClickHandler() {
+      function clickMan() {
+        document.querySelector('map-feature').click();
+      }
+      function addCustomClickHandlerToMan() {
         let man = document.querySelector('map-feature');
+        // onclick works but if you click the feature
+        // with the pointer you still get the default popup
+        // and the alert does not show
+        // I think you should be replacing the default
+        // click handler completely
         man.onclick = function () {
         alert('Feature clicked');
         };
+      }
+      function zoomToMan() {
+        document.querySelector('map-feature').zoomTo();
       }
       function removeMan() {
         document.querySelector('map-feature').remove();
@@ -124,12 +144,13 @@
         <map-meta name="projection" content="OSMTILE"></map-meta>
       </layer->
     </mapml-viewer>
-  <button id="add" onclick="addMan()">Add feature</button>
-  <button id="focus" disabled onclick="document.querySelector('map-feature').focus()">Focus feature</button>
-  <button id="blur" disabled  onclick="document.querySelector('map-feature').blur()">Blur feature</button>
-  <button id="click" disabled  onclick="document.querySelector('map-feature').click()">Click feature</button>
-  <button id="zoom" disabled  onclick="document.querySelector('map-feature').zoomTo()">Zoom to feature</button>
-  <button id="replace" disabled  onclick="addCustomClickHandler()">Replace default click handler</button>
-  <button id="remove" disabled onclick="removeMan()">Remove feature</button>
+  <button id="add" onclick="_doMan('add')">Add feature</button>
+    <button id="focus" disabled onclick="_doMan('focus')">Focus feature</button>
+    <button id="blur" disabled  onclick="_doMan('blur')">Blur feature</button>
+    <button id="click" disabled  onclick="_doMan('click')">Click feature</button>
+    <button id="zoom" disabled  onclick="_doMan('zoomTo')">Zoom to feature</button>
+    <button id="replace" disabled  onclick="_doMan('addCustomClickHandlerTo')">Replace default click handler</button>
+    <button id="remove" disabled onclick="_doMan('remove')">Remove feature</button>
+    <textarea id="txt"></textarea>
   </body>
 </html>
