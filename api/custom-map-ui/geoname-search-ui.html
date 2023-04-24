@@ -81,47 +81,6 @@
         // Will store the json search results
         let searchResults = ""; 
 
-        // Computes the zoom extent based on bounding box's decimal degrees
-        // getZoomExtent: listof(Num, Num, Num, Num) -> Int(3-16)
-        function getZoomExtent (bbox) {
-            let x = [bbox[0], bbox[2]];
-            let y = [bbox[1], bbox[3]];
-            let difference = Math.max(Math.abs(x[0]-x[1]), Math.abs(y[0]-y[1])).toPrecision(2);
-
-            // choosing zoom level, based on the decimal degree extent
-            if (difference >=30) {
-                return 3;
-            } else if (difference >=25) {
-                return 4;
-            } else if (difference >= 10) {
-                return 5;
-            } else if (difference >= 5) {
-                return 6;
-            } else if (difference >= 3) {
-                return 7;
-            } else if (difference >= 2) {
-                return 8;
-            } else if (difference >= 1) {
-                return 9;
-            } else if (difference >= 0.7) {
-                return 10;
-            } else if (difference >= 0.5) {
-                return 11;
-            } else if (difference >= 0.2) {
-                return 12;
-            } else if (difference >= 0.1) {
-                return 13;
-            } else if (difference == 0.04) { // Point feature
-                return 10;
-            } else if (difference >= 0.05) {
-                return 14;
-            } else if (difference >= 0.02){
-                return 15;
-            } else {
-                return 16;
-            }
-        }
-        
         // Displays a new layer and pans the map to the layer
         // mapPane: Int -> None
         // Effects: Changes map's zoom and location. Also creates and adds a new layer to the map
@@ -133,10 +92,6 @@
             // Getting the geojson link for the selected feature
             let featureGeojson = searchResults[id].feature.links.self.href + ".geojson";
 
-            // zooming to location
-            let zoom = getZoomExtent(searchResults[id].bbox);
-            mapp.zoomTo(searchResults[id].latitude, searchResults[id].longitude, zoom);
-
             // removing the previous layer which was displayed on search, if any
             if (mapp.querySelector('#layer') != null) {
                 mapp.removeChild(mapp.querySelector("#layer"));
@@ -144,7 +99,10 @@
 
             let response = await fetch(featureGeojson);
             let data = await response.json();
-            
+            if (searchResults[id].bbox) {
+                data.bbox = searchResults[id].bbox;
+            }
+
             let layer = M.geojson2mapml(data, {caption:"label_en"});
             layer.setAttribute("id", "layer");
             layer.setAttribute("label", data.properties.label_en);
@@ -157,6 +115,13 @@
 
             // Add the newly created layer to mapmlviewer
             mapp.appendChild(layer);
+            
+            // zooming to location
+            layer.zoomTo();
+            // if a point zooms to the max zoom -> zoom out
+            if (mapp.zoom === "24") {
+                mapp.zoomTo(mapp.lat, mapp.lon, 10);
+            }
             
             // Focusing on the map after a new layer is added
             document.getElementById('map').tabIndex = -1;
