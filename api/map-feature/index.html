@@ -30,28 +30,22 @@
       }
     </style>
     <script>
-//      function addEmptyLayer() {
-//        let layer = document.querySelector('#empty-layer').content.firstElementChild.cloneNode(true);
-//        layer.label = 'Two Hat Man';
-//        layer.checked = 'checked';
-//        let map = document.querySelector('mapml-viewer');
-//        map.appendChild(layer);
-//      }
-//      addEmptyLayer();
       function addMan() {
         let map = document.querySelector('mapml-viewer');
         let man = document.querySelector('#hatman').content.firstElementChild.cloneNode(true);
-        let layer = document.querySelector("#target-layer");
+        let layer = document.querySelector('#empty-layer').content.firstElementChild.cloneNode(true);
+        layer.label = 'Two Hat Man';
+        layer.checked = 'checked';
+        map.appendChild(layer);
         layer.appendChild(man);
-        layer.label = "Two Hat Man";
         // this step should not be necessary
         layer.remove();
         map.appendChild(layer);
         toggleDisabled();
       }
       function _doMan(action) {
-        this[action+"Man"]();
         document.querySelector('#txt').textContent = this[action+"Man"].toString();
+        this[action+"Man"]();
       }
       function toggleDisabled() {
         if (document.querySelector('#add').disabled) {
@@ -73,23 +67,28 @@
         }
       }
       function focusMan() {
+        // dispatch focus event at map-feature
         document.querySelector('map-feature').focus();
       }
       function blurMan() {
+        // dispatch blur event at map-feature
         document.querySelector('map-feature').blur();
       }
       function clickMan() {
+        // dispatch click event at map-feature
+        // note that map-feature is not actually displayed, a <g> element is,
+        // so the click method on map-feature should target a click event
+        // to the <g> element first
         document.querySelector('map-feature').click();
       }
       function addCustomClickHandlerToMan() {
         let man = document.querySelector('map-feature');
-        // onclick works but if you click the feature
-        // with the pointer you still get the default popup
+        // onclick works if you programmatically dispatch the click
+        // event, but if you click the feature
+        // with your pointer you still get the default popup
         // and the alert does not show
-        // I think you should be replacing the default
-        // click handler completely
         man.onclick = function () {
-        alert('Feature clicked');
+          alert('Feature clicked');
         };
       }
       function zoomToMan() {
@@ -138,11 +137,11 @@
     </p>
 
     
-    <mapml-viewer projection="OSMTILE" zoom="1" lat="50" lon="-100" controls>
+    <mapml-viewer projection="OSMTILE" zoom="1" lat="0" lon="0" controls>
       <layer- label="CBMT" src="https://maps4html.org/experiments/refactoring-temporary/osm.mapml" checked></layer->
-      <layer- id="target-layer" label="Empty" checked>
+<!--      <layer- id="target-layer" label="Empty" checked>
         <map-meta name="projection" content="OSMTILE"></map-meta>
-      </layer->
+      </layer->-->
     </mapml-viewer>
   <button id="add" onclick="_doMan('add')">Add feature</button>
     <button id="focus" disabled onclick="_doMan('focus')">Focus feature</button>
