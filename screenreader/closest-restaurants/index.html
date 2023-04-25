@@ -10,126 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 
     <script type="module" src="../../dist/mapml-viewer.js"></script>
-    <style>
-        html, body {
-        height: 100%; /* These styles are required if you wish to use a % based
-                         height value on the mapml-viewer element. */
-        }
-        mapml-viewer:defined {
-            width: 100%;
-            height: 100%;
-        }
-        h2 {
-            width: 100%;
-            text-align: center;
-        }
-        .search {
-            position:absolute;
-            top:2%;
-            left:35%;
-            z-index: 10;
-            width: 30%;
-            max-width: 30%;
-            height:auto;
-            max-height: 15%;
-        }
-        .options {
-            position:absolute;
-            top:2.5%;
-            left:65%;
-            z-index: 10;
-            width: auto;
-            max-width: auto;
-            height:auto;
-            max-height: 15%;
-        }
-        .content-button{
-            border-radius: 12px;
-            background-color: #fff;
-            border: 2px solid #c2ccc7;
-        }
-        .content-button:hover {
-            background-color: #ccc;
-        }
-        /* Inside search div */
-        .result {
-            width: 100%;
-            background-color: rgba(120, 187, 192, .8);
-            color: rgba(255, 255, 255, .8);
-            padding: 0.5em 1em;
-            text-decoration: none;
-        }
-        .result:hover {
-            background-color: #555;
-        }
-        .result:active {
-            background-color: black;
-        }
-
-        .result:visited {
-            background-color: #ccc;
-        }
-        .results_container {
-            overflow: scroll;       
-            overflow-x:hidden;
-            display:none;
-            max-height:20vh;
-            max-width:90%;
-        }
-        #results_count {
-            display:none;
-        }
-        .result_description {
-            font-size: 11px;
-        }
-        .search_input {
-            width:70%;
-            font-size:20px;
-        }
-        .search_button {
-            width:20%;
-            font-size: 16px;
-            padding-top: 1%;
-            margin-bottom: 1%;
-        }
-        /* Inside search div */
-
-
-        @media (max-width: 1000px) {
-            .search {
-                width: 40%;
-                max-width: 40%; 
-                left: 30%;
-            }
-            .options {
-                left: 70%;
-            }
-            .search_input {
-                font-size:16px;
-            }
-            .search_button {
-                font-size: 12px;
-                padding-top: 1%;
-                margin-bottom: 1%;
-            }
-        }
-        @media (max-width: 500px) {
-            .search {
-                width: 60%;
-                max-width: 60%; 
-                left: 20%;
-            }
-            .options {
-                left: 75%;
-            }
-            .search_button {
-                font-size: 11px;
-                padding-top: 2%;
-                margin-bottom: 2%;
-            }
-        }
-        
-      </style>
+    <link href="../../shared/css/geo-search.css" rel="stylesheet">
 </head>
 <body>
   <template>
@@ -233,47 +114,6 @@
             }
         }
 
-        // Computes the zoom extent based on bounding box's decimal degrees
-        // getZoomExtent: listof(Num, Num, Num, Num) -> Int(3-16)
-        function getZoomExtent (bbox) {
-            let x = [bbox[0], bbox[2]];
-            let y = [bbox[1], bbox[3]];
-            let difference = Math.max(Math.abs(x[0]-x[1]), Math.abs(y[0]-y[1])).toPrecision(2);
-
-            // choosing zoom level, based on the decimal degree extent
-            if (difference >=30) {
-                return 3;
-            } else if (difference >=25) {
-                return 4;
-            } else if (difference >= 10) {
-                return 5;
-            } else if (difference >= 5) {
-                return 6;
-            } else if (difference >= 3) {
-                return 7;
-            } else if (difference >= 2) {
-                return 8;
-            } else if (difference >= 1) {
-                return 9;
-            } else if (difference >= 0.7) {
-                return 10;
-            } else if (difference >= 0.5) {
-                return 11;
-            } else if (difference >= 0.2) {
-                return 12;
-            } else if (difference >= 0.1) {
-                return 13;
-            } else if (difference == 0.04) { // Point feature
-                return 10;
-            } else if (difference >= 0.05) {
-                return 14;
-            } else if (difference >= 0.02){
-                return 15;
-            } else {
-                return 16;
-            }
-        }
-
         // Displays a new layer and pans the map to the layer
         // mapPane: Int -> None
         // Effects: Changes map's zoom and location. Also creates and adds a new layer to the map
@@ -285,13 +125,6 @@
             // Getting the geojson link for the selected feature
             let featureGeojson = searchResults[id].feature.links.self.href + ".geojson";
 
-            // zooming to location
-            let zoom = getZoomExtent(searchResults[id].bbox);
-            mapp.zoomTo(searchResults[id].latitude, searchResults[id].longitude, zoom);
-
-            // converting geojson to a mapml layer
-            //let feature = await geoJson2MapMl(featureGeojson);
-
             // removing the previous layer which was displayed on search, if any
             if (mapp.querySelector('#layer') != null) {
                 mapp.removeChild(mapp.querySelector("#layer"));
@@ -299,6 +132,9 @@
 
             let response = await fetch(featureGeojson);
             let data = await response.json();
+            if (searchResults[id].bbox) {
+                data.bbox = searchResults[id].bbox;
+            }
 
             let layer = M.geojson2mapml(data, {caption:"label_en"});
             layer.setAttribute("id", "layer");
@@ -312,6 +148,13 @@
             
             // Add the newly created layer to mapmlviewer
             mapp.appendChild(layer);
+
+            // zooming to location
+            layer.zoomTo();
+            // if a point zooms to the max zoom -> zoom out
+            if (mapp.zoom === "24") {
+                mapp.zoomTo(mapp.lat, mapp.lon, 10);
+            }
             
             // Focusing on the map after a new layer is added
             document.getElementById('map').tabIndex = 0;
