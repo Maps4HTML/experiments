@@ -71,8 +71,12 @@
         document.querySelector('map-feature').focus();
       }
       function blurMan() {
-        // dispatch blur event at map-feature
-        document.querySelector('map-feature').blur();
+        // focus feature and then blur after 1 second.
+        document.querySelector('map-feature').focus();
+        setTimeout(() => {
+          // dispatch blur event at map-feature
+          document.querySelector('map-feature').blur();
+        }, "1000");
       }
       function clickMan() {
         // dispatch click event at map-feature
@@ -145,7 +149,7 @@
     </mapml-viewer>
   <button id="add" onclick="_doMan('add')">Add feature</button>
     <button id="focus" disabled onclick="_doMan('focus')">Focus feature</button>
-    <button id="blur" disabled  onclick="_doMan('blur')">Blur feature</button>
+    <button id="blur" disabled  onclick="_doMan('blur')">Focus & Blur feature</button>
     <button id="click" disabled  onclick="_doMan('click')">Click feature</button>
     <button id="zoom" disabled  onclick="_doMan('zoomTo')">Zoom to feature</button>
     <button id="replace" disabled  onclick="_doMan('addCustomClickHandlerTo')">Replace default click handler</button>
