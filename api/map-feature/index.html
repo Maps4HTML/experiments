@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="dark light">
+    <title>&lt;map-feature&gt; API</title>
+    <script type="module" src="../../dist/mapml-viewer.js"></script>
+    <style>
+      body {
+        font-family: 'system-ui', sans-serif;
+        max-width: 50rem;
+        margin: 0 auto;
+        padding: 0 1rem;
+        overflow-wrap: break-word;
+      }
+      mapml-viewer {
+        width: 100%;
+        min-height: 50vh;
+      }
+      textarea {
+          width: 100%;
+          min-height: 35vh;
+          margin-top: 10px;
+      }
+      @media (prefers-color-scheme: dark) {
+        .user-preference-message {
+          display: none;
+        }
+      }
+    </style>
+    <script>
+      function addMan() {
+        let map = document.querySelector('mapml-viewer');
+        let man = document.querySelector('#hatman').content.firstElementChild.cloneNode(true);
+        let layer = document.querySelector('#empty-layer').content.firstElementChild.cloneNode(true);
+        layer.label = 'Two Hat Man';
+        layer.checked = 'checked';
+        map.appendChild(layer);
+        layer.appendChild(man);
+        // this step should not be necessary
+        layer.remove();
+        map.appendChild(layer);
+        toggleDisabled();
+      }
+      function _doMan(action) {
+        document.querySelector('#txt').textContent = this[action+"Man"].toString();
+        this[action+"Man"]();
+      }
+      function toggleDisabled() {
+        if (document.querySelector('#add').disabled) {
+          document.querySelector('#add').disabled = false;
+          document.querySelector('#focus').disabled = true;
+          document.querySelector('#click').disabled = true;
+          document.querySelector('#blur').disabled = true;
+          document.querySelector('#zoom').disabled = true;
+          document.querySelector('#replace').disabled = true;
+          document.querySelector('#remove').disabled = true;
+        } else {
+          document.querySelector('#add').disabled = true;
+          document.querySelector('#focus').disabled = false;
+          document.querySelector('#click').disabled = false;
+          document.querySelector('#blur').disabled = false;
+          document.querySelector('#zoom').disabled = false;
+          document.querySelector('#replace').disabled = false;
+          document.querySelector('#remove').disabled = false;
+        }
+      }
+      function focusMan() {
+        // dispatch focus event at map-feature
+        document.querySelector('map-feature').focus();
+      }
+      function blurMan() {
+        // focus feature and then blur after 1 second.
+        document.querySelector('map-feature').focus();
+        setTimeout(() => {
+          // dispatch blur event at map-feature
+          document.querySelector('map-feature').blur();
+        }, "1000");
+      }
+      function clickMan() {
+        // dispatch click event at map-feature
+        // note that map-feature is not actually displayed, a <g> element is,
+        // so the click method on map-feature should target a click event
+        // to the <g> element first
+        document.querySelector('map-feature').click();
+      }
+      function addCustomClickHandlerToMan() {
+        let man = document.querySelector('map-feature');
+        // onclick works if you programmatically dispatch the click
+        // event, but if you click the feature
+        // with your pointer you still get the default popup
+        // and the alert does not show
+        man.onclick = function () {
+          alert('Feature clicked');
+        };
+      }
+      function zoomToMan() {
+        document.querySelector('map-feature').zoomTo();
+      }
+      function removeMan() {
+        document.querySelector('map-feature').remove();
+        toggleDisabled();
+      }
+    </script>
+    <template id="projection">
+      <map-meta name="projection" content="OSMTILE"></map-meta>
+    </template>
+    <template id="empty-layer">
+      <layer-  label="Empty" checked>
+        <map-meta name="projection" content="OSMTILE"></map-meta>
+      </layer->
+    </template>
+    
+    <template id="hatman">
+        <map-feature id="twohats" zoom="15" class="twohats">
+          <map-featurecaption>The Man With Two Hats</map-featurecaption>
+          <map-properties>
+            <table>
+              <tr>
+                <th>image</th>
+                <td><a href="https://www.veterans.gc.ca/eng/remembrance/memorials/national-inventory-canadian-memorials/details/9304">
+                  <img src="https://www.veterans.gc.ca/images/remembrance/memorials/national-inventory-canadian-memorials/mem/35059-173a.jpg" width="60" height="60"/>
+                </a>
+                </td>
+              </tr>
+            </table>
+          </map-properties>
+          <map-geometry cs="gcrs">
+            <map-point>
+              <map-coordinates>-75.705278 45.397778</map-coordinates>
+            </map-point>
+          </map-geometry>
+        </map-feature>
+    </template>
+  </head>
+  <body>
+    <p>
+    This document is to experiment with the event handling methods of the
+    <a href="https://maps4html.org/web-map-doc/docs/api/map-feature-api/">HTMLFeatureElement API</a>.
+    </p>
+
+    
+    <mapml-viewer projection="OSMTILE" zoom="1" lat="0" lon="0" controls>
+      <layer- label="CBMT" src="https://maps4html.org/experiments/refactoring-temporary/osm.mapml" checked></layer->
+<!--      <layer- id="target-layer" label="Empty" checked>
+        <map-meta name="projection" content="OSMTILE"></map-meta>
+      </layer->-->
+    </mapml-viewer>
+  <button id="add" onclick="_doMan('add')">Add feature</button>
+    <button id="focus" disabled onclick="_doMan('focus')">Focus feature</button>
+    <button id="blur" disabled  onclick="_doMan('blur')">Focus & Blur feature</button>
+    <button id="click" disabled  onclick="_doMan('click')">Click feature</button>
+    <button id="zoom" disabled  onclick="_doMan('zoomTo')">Zoom to feature</button>
+    <button id="replace" disabled  onclick="_doMan('addCustomClickHandlerTo')">Replace default click handler</button>
+    <button id="remove" disabled onclick="_doMan('remove')">Remove feature</button>
+    <textarea id="txt"></textarea>
+  </body>
+</html>
