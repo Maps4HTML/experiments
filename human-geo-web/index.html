@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Story Map</title>
+    <script type="module" src="../dist/mapml-viewer.js"></script>
+    <style>
+      body {
+        padding: 0 1rem;
+        max-width: 50em;
+        font-family: 'system-ui', sans-serif;
+        margin: 0 auto;
+        overflow-wrap: break-word;
+      }
+
+      mapml-viewer {
+        max-width: 100%;
+        width: 100%;
+        height: 480px;
+      }
+    </style>
+  </head>
+  <body>
+    
+    
+    <p>
+      In 1867, the colonies of Canada, Nova Scotia, and New Brunswick are united 
+      in a federal state.  The provinces of Nova Scotia and New Brunswick retain 
+      their established boundaries, and Canada is divided into the provinces of 
+      Ontario and Quebec.
+    </p>
+    <mapml-viewer  projection="CBMTILE" zoom="3" lat="64.8" lon="-83.4" controls>
+      <map-caption>The provinces and territories of Canada, 1867</map-caption>
+      <layer- label="Territorial Evolution 1867" src="https://geogratis.gc.ca/mapml/en/cbmtile/te1867/" checked></layer->
+    </mapml-viewer>
+    
+    <p>In 1880, an Imperial Order in Council transfers to Canada all of the British
+      territories and possessions left in North America (except for the colony 
+      of Newfoundland), and also the islands next to these territories and possessions.
+    </p>
+    <mapml-viewer  projection="CBMTILE" zoom="3" lat="64.8" lon="-83.4" controls>
+      <map-caption>The provinces and territories of Canada, 1880</map-caption>
+      <layer- label="Territorial Evolution 1880" src="https://geogratis.gc.ca/mapml/en/cbmtile/te1880/" checked></layer->
+    </mapml-viewer>
+    
+    <p>In 1901, the boundaries of the Yukon Territory are changed to those of today.</p>
+    <mapml-viewer  projection="CBMTILE" zoom="3" lat="64.8" lon="-83.4" controls>
+      <map-caption>The provinces and territories of Canada, 1901</map-caption>
+      <layer- label="Territorial Evolution 1901" src="https://geogratis.gc.ca/mapml/en/cbmtile/te1901/" checked></layer->
+    </mapml-viewer>
+    
+    <p>
+      With the new Yukon Act, the Yukon Territory becomes Yukon on 1 April, 2003.
+    </p>
+    <mapml-viewer  projection="CBMTILE" zoom="3" lat="64.8" lon="-83.4" controls>
+      <map-caption>The provinces and territories of Canada, 2003</map-caption>
+      <layer- label="Territorial Evolution 2003" src="https://geogratis.gc.ca/mapml/en/cbmtile/te2003/" checked></layer->
+    </mapml-viewer>
+  </body>
+</html>
