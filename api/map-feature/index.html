@@ -55,6 +55,7 @@
           document.querySelector('#blur').disabled = true;
           document.querySelector('#zoom').disabled = true;
           document.querySelector('#replace').disabled = true;
+          document.querySelector('#prevent').disabled = true;
           document.querySelector('#remove').disabled = true;
         } else {
           document.querySelector('#add').disabled = true;
@@ -63,6 +64,7 @@
           document.querySelector('#blur').disabled = false;
           document.querySelector('#zoom').disabled = false;
           document.querySelector('#replace').disabled = false;
+          document.querySelector('#prevent').disabled = false;
           document.querySelector('#remove').disabled = false;
         }
       }
@@ -101,6 +103,15 @@
       function removeMan() {
         document.querySelector('map-feature').remove();
         toggleDisabled();
+      }
+      function addStopPropagation() {
+        let man = document.querySelector('map-feature');
+        man.addEventListener("click", (e) => {
+          // Stops Default click action
+          e.originalEvent.stopPropagation();
+          // handle the click button yourself here
+          // ...
+        });
       }
     </script>
     <template id="projection">
@@ -153,6 +164,7 @@
     <button id="click" disabled  onclick="_doMan('click')">Click feature</button>
     <button id="zoom" disabled  onclick="_doMan('zoomTo')">Zoom to feature</button>
     <button id="replace" disabled  onclick="_doMan('addCustomClickHandlerTo')">Replace default click handler</button>
+    <button id="prevent" disabled  onclick="_doMan('addStopPropagation')">Stop default click action</button>
     <button id="remove" disabled onclick="_doMan('remove')">Remove feature</button>
     <textarea id="txt"></textarea>
   </body>
