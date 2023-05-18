@@ -10,7 +10,7 @@
         <map-meta name="extent" content="top-left-easting=-8433179, top-left-northing=5689316, bottom-right-easting=-8420968, bottom-right-northing=5683139"></map-meta> 
     </map-head>
     <map-body>
-        <map-feature id="restaurant_map-point.2" class="restaurant_map-point">
+        <map-feature zoom="18" id="restaurant_map-point.2" class="restaurant_map-point">
           <map-featurecaption>Big Daddy's</map-featurecaption>
             <map-geometry>
                 <map-point>
