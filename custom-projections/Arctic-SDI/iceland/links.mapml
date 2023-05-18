@@ -6,7 +6,7 @@
     <map-meta name="projection" content="EPSG3574"></map-meta>
     <map-meta name="cs" content="pcrs"></map-meta>
     <map-meta name="extent" content="top-left-easting=-12618539.76,top-left-northing=12618539.76,bottom-right-easting=12618539.76,bottom-right-northing=-12618539.76"></map-meta>
-    <map-link href="http://open.canada.ca/en/open-government-licence-canada" rel="license" title="Open Government License"/>
+    <map-link href="https://open.canada.ca/en/open-government-licence-canada" rel="license" title="Open Government License"/>
     <map-link rel="style" href="../denmark/links.mapml" title="Denmark"/>
     <map-link rel="style" href="../finland/links.mapml" title="Finland"/>
     <map-link rel="self style" href="../iceland/links.mapml" title="Iceland"/>
@@ -26,7 +26,7 @@
       <map-input type="zoom" name="TileMatrix" min="0" max="11" value="0"/>
       <map-input type="location" name="TileCol" axis="column" units="tilematrix" min="0" max="1"/>
       <map-input type="location" name="TileRow" axis="row" units="tilematrix" min="0" max="1"/>
-      <map-link rel="tile" tref="http://basemap.arctic-sdi.org/mapcache/wmts/1.0.0/arctic_cascading/default/3574/{TileMatrix}/{TileRow}/{TileCol}.png"/>
+      <map-link rel="tile" tref="https://basemap.arctic-sdi.org/mapcache/wmts/1.0.0/arctic_cascading/default/3574/{TileMatrix}/{TileRow}/{TileCol}.png"/>
     </map-extent>
 <!--    <map-feature id="russia" class="asdi-countries">
       <map-featurecaption>Russia</map-featurecaption>
