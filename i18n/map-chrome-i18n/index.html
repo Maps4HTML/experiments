@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Internationalization</title>
+    <script type="module" src="../../dist/mapml-viewer.js"></script>
+    <link rel="stylesheet" href="../../global.css">
+  </head>
+  <body>
+  <mapml-viewer zoom="6" lon="31.135254" lat="49.066668" controls projection="OSMTILE">
+    <layer- label="United Nations Web Map Tile Service"  checked>
+      <map-link rel="license" href="https://www.un.org/geospatial/mapsgeo/webservices" title="Produced by United Nations Geospatial"></map-link>
+      <map-extent units="OSMTILE">
+        <map-input name="TileMatrix" type="zoom" value="18" min="0" max="6"></map-input>
+        <map-input name="TileCol" type="location" units="tilematrix" axis="column" min="0" max="262144"></map-input>
+        <map-input name="TileRow" type="location" units="tilematrix" axis="row" min="0" max="262144"></map-input>
+        <map-link rel="tile" tref="https://geoservices.un.org/arcgis/rest/services/ClearMap_WebTopo/MapServer/tile/{TileMatrix}/{TileRow}/{TileCol}"></map-link>
+      </map-extent>
+    </layer->
+</mapml-viewer>
+</body>
+</html>
