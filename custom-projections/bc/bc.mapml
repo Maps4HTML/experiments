@@ -9,7 +9,7 @@
     <map-link rel="zoomout" href="/experiments/linking/features/canada.mapml" />
   </map-head>
   <map-body>
-    <map-extent units="BCTILE">
+    <map-extent units="BCTILE" checked="checked">
       <map-input type="zoom" name="z" min="3" max="11" value="3"/>
       <map-input type="location" name="x" axis="column" units="tilematrix" min="42" max="50"/>
       <map-input type="location" name="y" axis="row" units="tilematrix" min="56" max="64"/>

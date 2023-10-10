@@ -6,7 +6,7 @@
     <map-link rel="license" href="http://open.canada.ca/en/open-government-licence-canada" title="Open Government Licence - Canada"/>
   </map-head>
   <map-body>
-    <map-extent units="CBMTILE" >
+    <map-extent units="CBMTILE"  checked="checked">
       <map-input name="z" type="zoom"  value="19" min="0" max="19"/>
       <map-input name="txmin" type="location" units="tilematrix" position="top-left" axis="easting" min="-7786477.0"  max="7148753.0" />
       <map-input name="tymin" type="location" units="tilematrix" position="bottom-left" axis="northing" min="-927808.0"  max="7928344.0" />
