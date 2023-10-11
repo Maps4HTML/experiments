@@ -8,7 +8,7 @@
   </map-head>
   
   <map-body>
-    <map-extent units="BNG" checked="checked">
+    <map-extent units="BNG" checked="checked" hidden="hidden">
       <map-input name="z" type="zoom" min="6" max="9" />
       <map-input name="xmin" type="location" units="tilematrix" position="top-left" axis="easting" min="240755" max="261199" />
       <map-input name="ymin" type="location" units="tilematrix" position="bottom-left" axis="northing" min="628735" max="658452" />

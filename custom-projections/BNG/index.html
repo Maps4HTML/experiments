@@ -104,7 +104,7 @@
     <mapml-viewer zoom="0" lat="54.41338" lon="-3.19995" controls>
       <layer- label="OS Roads tile map in BNG custom projection" checked>
         <map-meta name="projection" content="BNG"></map-meta>
-        <map-extent units="BNG" checked>
+        <map-extent units="BNG" checked hidden>
           <map-input  name="z" type="zoom" min="0" max="9"></map-input>
           <map-input  name="y" type="location" units="tilematrix" axis="row" ></map-input>
           <map-input  name="x" type="location" units="tilematrix" axis="column"></map-input>
@@ -115,7 +115,7 @@
       <layer- label="BNG Shrink/Swell WMS" >
         <map-meta name="projection" content="BNG"></map-meta>
         <map-meta name="extent" content="top-left-easting=54224.000100,top-left-northing=5192.999900,bottom-right-easting=655627.000000,bottom-right-northing=1220319.000000"></map-meta>
-        <map-extent units="BNG" checked>
+        <map-extent units="BNG" checked hidden>
             <map-input  name="xmin" type="location" rel="map" position="top-left" axis="easting" units="pcrs" min="240755" max="261199" ></map-input>
             <map-input  name="ymin" type="location" rel="map" position="bottom-left" axis="northing" units="pcrs" min="628735" max="658452" ></map-input>
             <map-input  name="xmax" type="location" rel="map" position="top-right" axis="easting" units="pcrs"  min="240755" max="261199"  ></map-input>
