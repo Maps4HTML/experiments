@@ -7,7 +7,7 @@
     <map-link rel="zoomout" href="/experiments/linking/features/canada.mapml" type="text/mapml"/> 
   </map-head>
   <map-body>
-    <map-extent units="CBMTILE"  checked="checked">
+    <map-extent units="CBMTILE"  checked="checked" hidden="hidden">
       <map-input name="z" type="zoom" min="6" max="8"/>
       <map-input name="y" type="location" units="tilematrix" axis="row"/>
       <map-input name="x" type="location" units="tilematrix" axis="column"/>

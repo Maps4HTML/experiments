@@ -9,7 +9,7 @@
     <map-link rel="self style" title="Satellite Imagery" href="imagery.mapml"/>
   </map-head>
   <map-body>
-    <map-extent units="OSMTILE" checked="checked">
+    <map-extent units="OSMTILE" checked="checked" hidden="hidden">
       <map-input name="TileMatrix" type="zoom" value="18" min="0" max="18"/>
       <map-input name="TileCol" type="location" units="tilematrix" axis="column" min="0" max="262144"/>
       <map-input name="TileRow" type="location" units="tilematrix" axis="row" min="0" max="262144"/>

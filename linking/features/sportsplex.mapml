@@ -9,7 +9,7 @@
     <map-link href="https://www.arcgis.com/home/item.html?id=4be6c94b65ee408999d2d4483a30febf" rel="license" title="© Salt Lake County Assessor"/>
   </map-head>
   <map-body>
-    <map-extent units="CBMTILE" checked="checked">
+    <map-extent units="CBMTILE" checked="checked" hidden="hidden">
       <map-input name="z" type="zoom" min="18" max="24"/>
       <map-input name="xmin" type="location" units="pcrs" position="top-left" axis="easting" />
       <map-input name="ymin" type="location" units="pcrs" position="bottom-left" axis="northing" />
