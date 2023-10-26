@@ -87,7 +87,7 @@
         }`;
       let map = document.querySelector("mapml-viewer");
       let cProjection = map.defineCustomProjection(customProjectionDefinition);    
-      map.projection = cProjection;
+//      map.projection = cProjection;
       </script>
      <noscript> 
        <style> 
@@ -101,7 +101,7 @@
   </head>
   <body>
     <!-- when using  -->
-    <mapml-viewer zoom="0" lat="54.41338" lon="-3.19995" controls>
+    <mapml-viewer zoom="0" lat="54.41338" lon="-3.19995" controls projection="BNG">
       <layer- label="OS Roads tile map in BNG custom projection" checked>
         <map-meta name="projection" content="BNG"></map-meta>
         <map-extent units="BNG" checked>
