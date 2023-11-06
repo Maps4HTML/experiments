@@ -16,7 +16,7 @@
       <map-input name="ymax" type="location" units="tilematrix" position="top-left" axis="northing" min="628735" max="658452" />
       <map-link rel="tile" tref="https://map.bgs.ac.uk/arcgis/services/BGS_Detailed_Geology/MapServer/WMSServer?version=1.3.0&amp;request=GetMap&amp;layers=BGS.50k.Superficial.deposits&amp;STYLES=default&amp;format=image/png&amp;crs=epsg:27700&amp;BBOX={xmin},{ymin},{xmax},{ymax}&amp;WIDTH=256&amp;HEIGHT=256&amp;z={z}" />
 
-      <!--      <map-link rel="tile" tref="http://ogc.bgs.ac.uk/cgi-bin/BGS_1GE_Geology/wms?version=1.3.0&amp;request=GetMap&amp;layers=GBR_Kilmarnock_BGS_50k_ShrinkSwell&amp;format=image/png&amp;crs=epsg:27700&amp;BBOX={xmin},{ymin},{xmax},{ymax}&amp;WIDTH=256&amp;HEIGHT=256&amp;z={z}"/>-->
+      <!--      <map-link rel="tile" tref="https://ogc.bgs.ac.uk/cgi-bin/BGS_1GE_Geology/wms?version=1.3.0&amp;request=GetMap&amp;layers=GBR_Kilmarnock_BGS_50k_ShrinkSwell&amp;format=image/png&amp;crs=epsg:27700&amp;BBOX={xmin},{ymin},{xmax},{ymax}&amp;WIDTH=256&amp;HEIGHT=256&amp;z={z}"/>-->
       
       <map-input name="i" type="location" units="map" axis="i"/>
       <map-input name="j" type="location" units="map" axis="j"/>

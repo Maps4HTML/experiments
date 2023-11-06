@@ -31,7 +31,7 @@
           <input type="location" name="TileCol" axis="column" units="tilematrix" min="0" max="1"/>
           <input type="location" name="TileRow" axis="row" units="tilematrix" min="0" max="1"/>
           <link rel="tile">
-            <xsl:attribute name="tref">http://basemap.arctic-sdi.org/mapcache/wmts/1.0.0/arctic_cascading/default/<xsl:value-of select="substring-after(//h:meta[@name='projection']/@content,'EPSG:')"></xsl:value-of>/{TileMatrix}/{TileRow}/{TileCol}.png</xsl:attribute>
+            <xsl:attribute name="tref">https://basemap.arctic-sdi.org/mapcache/wmts/1.0.0/arctic_cascading/default/<xsl:value-of select="substring-after(//h:meta[@name='projection']/@content,'EPSG:')"></xsl:value-of>/{TileMatrix}/{TileRow}/{TileCol}.png</xsl:attribute>
           </link>
         </map-extent>
       <xsl:apply-templates select="node() | @*"/>
