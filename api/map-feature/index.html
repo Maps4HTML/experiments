@@ -34,13 +34,12 @@
         let map = document.querySelector('mapml-viewer');
         let man = document.querySelector('#hatman').content.firstElementChild.cloneNode(true);
         let layer = document.querySelector('#empty-layer').content.firstElementChild.cloneNode(true);
-        layer.label = 'Two Hat Man';
-        layer.checked = 'checked';
         map.appendChild(layer);
         layer.appendChild(man);
-        // this step should not be necessary
-        layer.remove();
-        map.appendChild(layer);
+        // properties can't be set before the layer has been appended to the
+        // DOM via the getter/setter DOM api.
+        layer.label = 'Two Hat Man';
+        layer.checked = 'checked';
         toggleDisabled();
       }
       function _doMan(action) {
@@ -99,7 +98,7 @@
         document.querySelector('map-feature').zoomTo();
       }
       function removeMan() {
-        document.querySelector('map-feature').remove();
+        document.querySelector('layer-[label="Two Hat Man"]').remove();
         toggleDisabled();
       }
     </script>
@@ -142,7 +141,7 @@
 
     
     <mapml-viewer projection="OSMTILE" zoom="1" lat="0" lon="0" controls>
-      <layer- label="CBMT" src="https://maps4html.org/experiments/refactoring-temporary/osm.mapml" checked></layer->
+      <layer- label="OSM" src="../../refactoring-temporary/osm.mapml" checked></layer->
 <!--      <layer- id="target-layer" label="Empty" checked>
         <map-meta name="projection" content="OSMTILE"></map-meta>
       </layer->-->

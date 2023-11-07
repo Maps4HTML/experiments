@@ -8,7 +8,7 @@
     <map-link rel="style" href="msi-94-plus-tiles.mapml" title="Tiled WMS GetMap" />
   </map-head>
   <map-body>
-    <map-extent units="CBMTILE">
+    <map-extent units="CBMTILE" checked="checked">
       <map-input name="z" type="zoom" value="25" min="4" max="25"/>
       <map-input name="xmin" type="location" rel="map" position="top-left" axis="easting" units="pcrs" min="-6105785.728719063" max="6174630.753072981"/>
       <map-input name="ymin" type="location" rel="map" position="bottom-left" axis="northing" units="pcrs" min="-1692155.9568245453" max="4482681.2054050295"/>

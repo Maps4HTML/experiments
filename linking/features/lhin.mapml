@@ -5,10 +5,10 @@
     <map-meta name="cs" content="pcrs"></map-meta>
     <map-meta name="projection" content="CBMTILE"></map-meta>
     <map-meta name="extent" content="top-left-easting=1230415.67, top-left-northing=-70161.76, bottom-right-easting=1656326.24, bottom-right-northing=-293265.51"></map-meta>
-    <map-link href="http://open.canada.ca/en/open-government-licence-canada" rel="license" title="Open Government License"/>
+    <map-link href="https://open.canada.ca/en/open-government-licence-canada" rel="license" title="Open Government License"/>
   </map-head>
   <map-body>
-      <map-extent units="CBMTILE">
+      <map-extent units="CBMTILE" checked="checked" hidden="hidden">
         <map-input name="z" type="zoom" min="0" max="17"/>
         <map-input name="y" type="location" units="tilematrix" axis="row"/>
         <map-input name="x" type="location" units="tilematrix" axis="column"/>

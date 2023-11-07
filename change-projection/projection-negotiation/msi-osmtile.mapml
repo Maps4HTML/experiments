@@ -9,7 +9,7 @@
     <map-link href="msi-cbmtile.mapml" rel="alternate" projection="CBMTILE"/>
   </map-head>
   <map-body>
-    <map-extent units="OSMTILE">
+    <map-extent units="OSMTILE" checked="checked">
       <map-input name="z" type="zoom" value="18" min="0" max="18"/>
       <map-input name="xmin" type="location" rel="map" position="top-left" axis="easting" units="pcrs" min="-1.9736089485420395E7" max="-1110810.8645190855"/>
       <map-input name="ymin" type="location" rel="map" position="bottom-left" axis="northing" units="pcrs" min="4069264.1959450003" max="1.931249599057358E7"/>

@@ -7,7 +7,7 @@
         <map-meta name="cs" content="gcrs" ></map-meta>
         <map-meta name="extent" content="top-left-easting=-3263369,top-left-northing=4046262,bottom-right-easting=3823752,bottom-right-northing=-1554448" ></map-meta>
     
-        <map-link href="http://open.canada.ca/en/open-government-licence-canada" rel="license" title="Open Government License" />
+        <map-link href="https://open.canada.ca/en/open-government-licence-canada" rel="license" title="Open Government License" />
         <map-style> .canada { fill-opacity: 0.7; stroke-width: 1; stroke: white; stroke-opacity: 1; stroke-dasharray: 3; } 
             .bc { fill: #ffdeb2; stroke: #e6c8a1; } .ab { fill: #facad6; stroke: #e8708e; } .sk { fill: #b5ffe4; stroke: #9ad9c2;} .mb { fill: #e6e6fa;  stroke: #cdcdde; } 
             .on { fill: #facad6; stroke: #e8708e; } .qc { fill: #b5ffe4; stroke: #9ad9c2;} .nb { fill: #ffdeb2; } .pei { fill: #e6e6fa; stroke: #cdcdde;} 
@@ -16,7 +16,7 @@
         </map-style>
     </map-head>
     <map-body>
-      <map-extent units="CBMTILE">
+      <map-extent units="CBMTILE" checked="checked" hidden="hidden">
         <map-input name="z" type="zoom" value="17" min="0" max="17"/>
         <map-input name="y" type="location" units="tilematrix" axis="row" min="29750" max="34475"/>
         <map-input name="x" type="location" units="tilematrix" axis="column" min="26484" max="32463"/>
