@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Variable projection layers</title>
+    <!-- the layer in this map should continue to be visible when you change
+    the viewer projection from OSMTILE to CBMTILE.  -->
+    <script type="module" src="../../dist/mapml-viewer.js"></script>
+    <link rel="stylesheet" href="../../global.css">
+  </head>
+  <body>
+  <mapml-viewer zoom="15" lon="-75.703611" lat="45.411105" controls projection="OSMTILE">
+    <layer- label="Projection changer"  checked>
+      <map-extent label="National Geographic" units="OSMTILE" checked >
+        <map-input name="TileMatrix" type="zoom" value="18" min="0" max="18"></map-input>
+        <map-input name="TileCol" type="location" units="tilematrix" axis="column" min="0" max="262144"></map-input>
+        <map-input name="TileRow" type="location" units="tilematrix" axis="row" min="0" max="262144"></map-input>
+        <map-link rel="tile" tref="https://server.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer/WMTS/tile/1.0.0/NatGeo_World_Map/default/default028mm/{TileMatrix}/{TileRow}/{TileCol}.jpg"></map-link>
+      </map-extent>
+      <map-extent label="Canada Base Map - Transportation" units="CBMTILE" checked >
+        <map-input name="z" type="zoom" min="6" max="8"></map-input>
+        <map-input name="y" type="location" units="tilematrix" axis="row"></map-input>
+        <map-input name="x" type="location" units="tilematrix" axis="column"></map-input>
+        <map-link rel="tile" tref="https://geoappext.nrcan.gc.ca/arcgis/rest/services/BaseMaps/CBMT3978/MapServer/tile/{z}/{y}/{x}?m4h=t" ></map-link>
+      </map-extent>    
+    </layer->
+    
+</mapml-viewer>
+</body>
+</html>
