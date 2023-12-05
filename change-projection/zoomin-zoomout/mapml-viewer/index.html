@@ -43,12 +43,12 @@
         }`;
       let map = document.querySelector("mapml-viewer");
       let cProjection = map.defineCustomProjection(customProjectionDefinition);
-      map.projection =  cProjection;
+     // map.projection =  cProjection;
     </script>
   </head>
   <body>
     <mapml-viewer projection="CBMTILE" zoom="8" lat="48.840422" lon="-101.219978" controls>
-      <layer- label="CBMT" src="../cbmt-changeProjection.mapml" checked></layer->
+      <layer- label="CBMT" src="../cbmt-changeProjection.mapml" checked ></layer->
     </mapml-viewer>
   </body>
 </html>
