@@ -4,14 +4,21 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Internationalization</title>
-    <script type="module" src="../../dist/mapml-viewer.js"></script>
     <link rel="stylesheet" href="../../global.css">
+    <template><map-options>{"locale":{"cmBack":"Повернутися назад","cmForward":"Перейти вперед","cmReload":"Перезавантажити","cmToggleControls":"Увімкнути/вимкнути елементи керування","cmCopyCoords":"Копіювати","cmToggleDebug":"Перемкнути на режим діагностики","cmCopyMapML":"Мапа","cmCopyExtent":"Межа екрану","cmCopyLocation":"Місцеположення","cmPasteLayer":"Вставити","cmViewSource":"Переглянути джерело мапи","lmZoomToLayer":"Збільшити до шару","lmCopyLayer":"Копіювати шар","lcOpacity":"Прозорість","btnZoomIn":"Збільшити","btnZoomOut":"Зменшити","btnAttribution":"Авторські права","btnFullScreen":"Повноекранний режим","btnExitFullScreen":"Вихід з повноекранного режиму","btnLocTrackOn":"Показувати моє місцезнаходження - відстеження місцезнаходження увімкнено","btnMyLocTrackOn":"Моє поточне місцезнаходження на карті","btnLocTrackOff":"Показувати моє місцезнаходження - відстеження місцезнаходження вимкнено","btnLocTrackLastKnown":"Показати моє місцезнаходження - показано останнє відоме місцезнаходження","btnMyLastKnownLocTrackOn":"Моє останнє відоме місцезнаходження на карті","amZoom":"рівень масштабування","amColumn":"стовпчик","amRow":"рядок","amMaxZoom":"На максимальному рівні масштабування наближення вимкнено","amMinZoom":"На мінімальному рівні масштабування зменшення масштабу вимкнено","amZoomedOut":"Збільшення за межами, повернутись до","amDraggedOut":"Розширення за межами, повернутись до","amEastBound":"Досягнуто східного напрямку, панорамування на схід вимкнено","amWestBound":"Досягнуто західного напрямку, панорамування на захід вимкнено","amNorthBound":"Досягнуто північного напрямку, панорамування на північ вимкнено","amSouthBound":"Досягнуто південного напрямку, панорамування на південь вимкнено","kbdShortcuts":"Комбінації клавіш","kbdMovement":"Клавіші переміщення","kbdFeature":"Функціональні клавіші навігації","kbdPanUp":"Переміщення вгору","kbdPanDown":"Переміщення вниз","kbdPanLeft":"Переміщення ліворуч","kbdPanRight":"Переміщення праворуч","kbdPanIncrement":"крок переміщення зображення","kbdZoom":"Збільшення/зменшення на 3 рівні","kbdPrevFeature":"Попередній об'єкт","kbdNextFeature":"Наступний об'єкт","dfLayer":"Шар","dfExtent":"Sub-layer","dfPastedLayer":"Вставлений шар","popupZoom":"Наблизити сюди","fIndexNoFeatures":"Об'єктів не знайдено"}}</map-options></template>
+    <script>
+
+    let options = document.querySelector("template").content.firstChild.cloneNode(true);
+    document.head.appendChild(options);
+
+    </script>
+    <script type="module" src="../../dist/mapml-viewer.js"></script>
   </head>
   <body>
   <mapml-viewer zoom="6" lon="31.135254" lat="49.066668" controls projection="OSMTILE">
-    <layer- label="United Nations Web Map Tile Service"  checked>
-      <map-link rel="license" href="https://www.un.org/geospatial/mapsgeo/webservices" title="Produced by United Nations Geospatial"></map-link>
-      <map-extent units="OSMTILE">
+    <layer- label="United Nations Web Map Tile Service"  checked >
+      <map-link rel="license" href="https://www.un.org/geospatial/mapsgeo/webservices" title="Підготовлено Геопросторовою службою Організації Об'єднаних Націй"></map-link>
+      <map-extent units="OSMTILE" checked hidden>
         <map-input name="TileMatrix" type="zoom" value="18" min="0" max="6"></map-input>
         <map-input name="TileCol" type="location" units="tilematrix" axis="column" min="0" max="262144"></map-input>
         <map-input name="TileRow" type="location" units="tilematrix" axis="row" min="0" max="262144"></map-input>
