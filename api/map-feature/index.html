@@ -35,11 +35,13 @@
         let man = document.querySelector('#hatman').content.firstElementChild.cloneNode(true);
         let layer = document.querySelector('#empty-layer').content.firstElementChild.cloneNode(true);
         map.appendChild(layer);
-        layer.appendChild(man);
-        // properties can't be set before the layer has been appended to the
-        // DOM via the getter/setter DOM api.
-        layer.label = 'Two Hat Man';
-        layer.checked = 'checked';
+        layer.addEventListener('loadedmetadata',()=>{
+          layer.appendChild(man);
+          // properties can't be set before the layer has been appended to the
+          // DOM via the getter/setter DOM api.
+          layer.label = 'Two Hat Man';
+          layer.checked = 'checked';
+        });
         toggleDisabled();
       }
       function _doMan(action) {
