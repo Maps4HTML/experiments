@@ -73,8 +73,21 @@
       <layer- id="osm" src="../refactoring-temporary/osm.mapml" label="Open Street Map" checked></layer->
       <!-- the HTML author can create MapML files and serve them as layers if they prefer -->
       <layer- id="marker" label="Marker layer" src="marker.mapml"></layer->
-      <!-- Inline layer content -->
-      <layer- label="Inline MapML">{INLINE CONTENT}</layer->
+      <!-- Inline layer content: how does this behave w/o scripting? -->
+      <layer- label="Inline MapML" checked>
+        <map-feature zoom="17">
+          <map-meta name="projection" content="OSMTILE"></map-meta>
+        <map-featurecaption>Where The Wild Things Are</map-featurecaption>
+        <map-properties>
+            <h2>Where The Wild Things Are, by Maurice Sendak</h2>
+            <div style="text-align:center">-8427535 5684693</div>
+        </map-properties>
+        <map-geometry cs="pcrs">
+          <map-point>
+            <map-coordinates>-8427535 5684693</map-coordinates>
+          </map-point>
+        </map-geometry>
+      </map-feature></layer->
       
       <!-- you could do this more precisely with shape="poly" and appropriate coords, but I was too lazy -->
       <area is="map-area" href="https://example.com/marker/" alt="Marker" coords="255,145,275,190" shape="rect" style="fill: none;stroke: blue;stroke-width: 3px">
