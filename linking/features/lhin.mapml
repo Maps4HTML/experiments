@@ -9,6 +9,7 @@
   </map-head>
   <map-body>
       <map-extent units="CBMTILE" checked="checked" hidden="hidden">
+        <map-meta name="extent" content="top-left-easting=1230415.67, top-left-northing=-70161.76, bottom-right-easting=1656326.24, bottom-right-northing=-293265.51"></map-meta>
         <map-input name="z" type="zoom" min="0" max="17"/>
         <map-input name="y" type="location" units="tilematrix" axis="row"/>
         <map-input name="x" type="location" units="tilematrix" axis="column"/>
