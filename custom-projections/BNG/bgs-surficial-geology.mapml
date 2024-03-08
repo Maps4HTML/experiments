@@ -3,6 +3,7 @@
     <map-meta charset="utf-8"></map-meta>
     <map-title>Surficial Geology - British Geological Survey</map-title>
     <map-meta name="projection" content="BNG"></map-meta>
+    <!-- the service returns opaque solid white images as zoom < 5  PR 2024-02-15 -->
     <map-meta name="zoom" content="min=5,max=12" ></map-meta>
 <!--    <map-meta name="extent" content="top-left-easting=1188042.41,top-left-northing=388313.19,bottom-right-easting=1200891.70,bottom-right-northing=379439.25"></map-meta>-->
   </map-head>
