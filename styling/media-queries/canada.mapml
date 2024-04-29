@@ -1,0 +1,45 @@
+<mapml- xmlns="http://www.w3.org/1999/xhtml">
+    <map-head>
+        <map-title>Canada's Provinces and Territories</map-title>
+        <map-meta charset="UTF-8" />
+        <map-meta content="text/mapml" http-equiv="Content-Type" />
+        <map-meta name="extent"
+            content="top-left-easting=-2465257.29,top-left-northing=3952792.70,bottom-right-easting=3078646.82,bottom-right-northing=-883189.06" />
+        <map-meta name="cs" content="pcrs" />
+        <map-meta name="projection" content="CBMTILE" />
+        <!-- 
+
+      Legal values of prefers-map-content (tentatively) include:
+
+          "no-preference" User expresses no map content preference (default)
+          "image" whole-map images
+          "tiled-image" Mosaiced Tiled images compose the map
+          "feature" Interactive Features (accessible via keyboard, hover, whatnot)
+          "vector-tile" CSS-friendly Vector tiles mosaiced to compose the map
+          "table" One or more tables considered 'equivalent' to the map.  May open in another tab tbd...
+ -->
+        <map-link rel="style" media="prefers-map-content=image" href="cbmt.mapml"
+            title="User Prefers WMS GetMap" />
+        <map-link rel="style" media="prefers-map-content=feature"
+            href="http://localhost:8080/geoserver/nrcan/wms?LAYERS=canada-styled-vectors&amp;BBOX=-2465257.292723763%2C-883189.0600199443%2C3078646.820419571%2C3952792.698494108&amp;HEIGHT=768&amp;WIDTH=669&amp;SRS=MapML%3ACBMTILE&amp;STYLES=provinces-sld-1&amp;FORMAT=text%2Fmapml&amp;format_options=mapml-wms-format%3Aimage%2Fpng&amp;SERVICE=WMS&amp;REQUEST=GetMap&amp;VERSION=1.3.0"
+            title="User Prefers Features" />
+        <map-link rel="style" media="prefers-map-content=vector-tile"
+            href="http://localhost:8080/geoserver/nrcan/wms?LAYERS=provinces&amp;BBOX=-2465257.292723763%2C-883189.0600199443%2C3078646.820419571%2C3952792.698494108&amp;HEIGHT=768&amp;WIDTH=669&amp;SRS=MapML%3ACBMTILE&amp;STYLES=provinces-sld-1&amp;FORMAT=text%2Fmapml&amp;format_options=mapml-wms-format%3Aimage%2Fpng&amp;SERVICE=WMS&amp;REQUEST=GetMap&amp;VERSION=1.3.0"
+            title="User Prefers Vector Tiles" />
+        <map-link rel="self style" media="prefers-map-content=tiled-image" href="canada.mapml" title="Tiled WMS GetMap" />
+    </map-head>
+    <map-body>
+        <map-extent label="CBMT - Lambert" units="CBMTILE" checked="checked">
+            <map-input name="z" type="zoom" min="0" max="18"></map-input>
+            <map-input name="y" type="location" units="tilematrix" axis="row"></map-input>
+            <map-input name="x" type="location" units="tilematrix" axis="column"></map-input>
+            <map-link rel="tile"
+                tref="https://geoappext.nrcan.gc.ca/arcgis/rest/services/BaseMaps/CBMT3978/MapServer/tile/{z}/{y}/{x}?m4h=t"></map-link>
+            <map-input name="i" type="location" axis="i" units="tile" />
+            <map-input name="j" type="location" axis="j" units="tile" />
+            <map-link
+                tref="http://localhost:8080/geoserver/nrcan/gwc/service/wmts?request=GetFeatureInfo&amp;format=image/png&amp;i={i}&amp;j={j}&amp;TileCol={x}&amp;version=1.0.0&amp;layer=nrcan:provinces&amp;tilematrixset=CBMTILE&amp;tilematrix={z}&amp;TileRow={y}&amp;service=WMTS&amp;infoformat=text/mapml&amp;feature_count=50&amp;style=provinces-sld-1"
+                rel="query" />
+        </map-extent>
+    </map-body>
+</mapml->
