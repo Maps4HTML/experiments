@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>mapml-viewer feature table mockup - try 1</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--    <link rel="stylesheet" href="https://mdn.github.io/learning-area/html/tables/assessment-finished/minimal-table.css">-->
+    <style>
+      html {
+        font-family: sans-serif;
+      }
+
+      table {
+        border-collapse: collapse;
+        border: 2px solid rgb(200,200,200);
+        letter-spacing: 1px;
+        font-size: 0.8rem;
+      }
+
+      td, th {
+        border: 1px solid rgb(190,190,190);
+        padding: 10px 20px;
+      }
+
+      th {
+        background-color: rgb(235,235,235);
+      }
+
+      td {
+        text-align: center;
+      }
+
+      tr:nth-child(even) td {
+        background-color: rgb(250,250,250);
+      }
+
+      tr:nth-child(odd) td {
+        background-color: rgb(245,245,245);
+      }
+
+      caption {
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- the following content is based on https://mdn.github.io/learning-area/html/tables/assessment-finished/planets-data.html -->
+<table>
+      <caption>A map of the provinces and territories of Canada, 2024</caption>
+      <!-- the colgroup structures the table  https://developer.mozilla.org/en-US/docs/Web/HTML/Element/colgroup#usage_notes -->
+      <colgroup>
+        <!-- the first column is optionally subdivided into two compartments left and right (?) --> 
+        <col span="2">
+        <!-- the second column has an inline style specifiying the border style --> 
+        <col style="border: 2px solid black">
+        <!-- this groups the remaining 9 columns into one related block of columns -->
+        <!-- column groups can be styled via some css properties, see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/col#usage_notes -->
+        <col span="4">
+      </colgroup>
+      <thead>
+        <tr>
+          <th colspan="2">Layer Name</th>
+          <th scope="col">Feature Name</th><!-- map-featurecaption is the accessible name -->
+          <th scope="col">Feature Properties</th> 
+          <th scope="col">Geometry details</th> <!-- geom. type, any links from the geom to elsewhere are presented as a list here -->
+          <th scope="col">Zoom to here link</th> <!-- set the map extent to the bounds of the feature, regenerate table -->
+          <th scope="col">Rank by least distance from map center</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- one row (tr) for each layer, whether it has features or not -->
+        <tr>
+          <!-- the rowspan attribute value should be set to the count of features from this layer -->
+          <!-- the colspan attribute -->
+          <th rowspan="13" colspan="2" scope="rowgroup">Canada's Provinces and Territories</th>
+          <th scope="row">Manitoba</th>
+          <td>                <table>
+                    <thead>
+                        <tr>
+                            <th role="columnheader" scope="col">Property name</th>
+                            <th role="columnheader" scope="col">Property value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">PRUID</th>
+                            <td itemprop="PRUID">46</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRNAME</th>
+                            <td itemprop="PRNAME">Manitoba</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRENAME</th>
+                            <td itemprop="PRENAME">Manitoba</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRFNAME</th>
+                            <td itemprop="PRFNAME">Manitoba</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PREABBR</th>
+                            <td itemprop="PREABBR">Man.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRFABBR</th>
+                            <td itemprop="PRFABBR">Man.</td>
+                        </tr>
+                    </tbody>
+                </table>
+</td>
+          <td>Details of the geometry: identify its type, and list any links in it</td>
+          <td><a href="Zoom to here link">Filter map contents by bounds</a></td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <th scope="row">Saskatchewan</th>
+          <td>                <table>
+                    <thead>
+                        <tr>
+                            <th role="columnheader" scope="col">Property name</th>
+                            <th role="columnheader" scope="col">Property value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">PRUID</th>
+                            <td itemprop="PRUID">47</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRNAME</th>
+                            <td itemprop="PRNAME">Saskatchewan</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRENAME</th>
+                            <td itemprop="PRENAME">Saskatchewan</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRFNAME</th>
+                            <td itemprop="PRFNAME">Saskatchewan</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PREABBR</th>
+                            <td itemprop="PREABBR">Sask.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRFABBR</th>
+                            <td itemprop="PRFABBR">Sask.</td>
+                        </tr>
+                    </tbody>
+                </table>
+</td>
+          <td>Details of the geometry: identify its type, and list any links in it</td>
+          <td><a href="Zoom to here link">Filter map contents by bounds</a></td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <th scope="row">Nunavut</th>
+          <td>                <table>
+                    <thead>
+                        <tr>
+                            <th role="columnheader" scope="col">Property name</th>
+                            <th role="columnheader" scope="col">Property value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">PRUID</th>
+                            <td itemprop="PRUID">62</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRNAME</th>
+                            <td itemprop="PRNAME">Nunavut</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRENAME</th>
+                            <td itemprop="PRENAME">Nunavut</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRFNAME</th>
+                            <td itemprop="PRFNAME">Nunavut</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PREABBR</th>
+                            <td itemprop="PREABBR">Nvt.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRFABBR</th>
+                            <td itemprop="PRFABBR">Nt</td>
+                        </tr>
+                    </tbody>
+                </table>
+</td>
+          <td>Details of the geometry: identify its type, and list any links in it</td>
+          <td><a href="Zoom to here link">Filter map contents by bounds</a></td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <th scope="row">Alberta</th>
+          <td>                <table>
+                    <thead>
+                        <tr>
+                            <th role="columnheader" scope="col">Property name</th>
+                            <th role="columnheader" scope="col">Property value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">PRUID</th>
+                            <td itemprop="PRUID">48</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRNAME</th>
+                            <td itemprop="PRNAME">Alberta</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRENAME</th>
+                            <td itemprop="PRENAME">Alberta</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRFNAME</th>
+                            <td itemprop="PRFNAME">Alberta</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PREABBR</th>
+                            <td itemprop="PREABBR">Alta.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRFABBR</th>
+                            <td itemprop="PRFABBR">Alb.</td>
+                        </tr>
+                    </tbody>
+                </table>
+</td>
+          <td>Details of the geometry: identify its type, and list any links in it</td>
+          <td><a href="Zoom to here link">Filter map contents by bounds</a></td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <th scope="row">Quebec</th>
+          <td>                <table>
+                    <thead>
+                        <tr>
+                            <th role="columnheader" scope="col">Property name</th>
+                            <th role="columnheader" scope="col">Property value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">PRUID</th>
+                            <td itemprop="PRUID">24</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRNAME</th>
+                            <td itemprop="PRNAME">Quebec / Québec</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRENAME</th>
+                            <td itemprop="PRENAME">Quebec</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRFNAME</th>
+                            <td itemprop="PRFNAME">Québec</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PREABBR</th>
+                            <td itemprop="PREABBR">Que.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRFABBR</th>
+                            <td itemprop="PRFABBR">Qc</td>
+                        </tr>
+                    </tbody>
+                </table>
+</td>
+          <td>Details of the geometry: identify its type, and list any links in it</td>
+          <td><a href="Zoom to here link">Filter map contents by bounds</a></td>
+          <td>5</td>
+        </tr>
+        <tr>
+          <th scope="row">Ontario</th>
+          <td>                <table>
+                    <thead>
+                        <tr>
+                            <th role="columnheader" scope="col">Property name</th>
+                            <th role="columnheader" scope="col">Property value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">PRUID</th>
+                            <td itemprop="PRUID">35</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRNAME</th>
+                            <td itemprop="PRNAME">Ontario</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRENAME</th>
+                            <td itemprop="PRENAME">Ontario</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRFNAME</th>
+                            <td itemprop="PRFNAME">Ontario</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PREABBR</th>
+                            <td itemprop="PREABBR">Ont.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRFABBR</th>
+                            <td itemprop="PRFABBR">Ont.</td>
+                        </tr>
+                    </tbody>
+                </table>
+</td>
+          <td>Details of the geometry: identify its type, and list any links in it</td>
+          <td><a href="Zoom to here link">Filter map contents by bounds</a></td>
+          <td>6</td>
+        </tr>
+        <tr>
+          <th scope="row">Northwest Territories</th>
+          <td>                <table>
+                    <thead>
+                        <tr>
+                            <th role="columnheader" scope="col">Property name</th>
+                            <th role="columnheader" scope="col">Property value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">PRUID</th>
+                            <td itemprop="PRUID">61</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRNAME</th>
+                            <td itemprop="PRNAME">Northwest Territories / Territoires du Nord-Ouest</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRENAME</th>
+                            <td itemprop="PRENAME">Northwest Territories</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRFNAME</th>
+                            <td itemprop="PRFNAME">Territoires du Nord-Ouest</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PREABBR</th>
+                            <td itemprop="PREABBR">N.W.T.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRFABBR</th>
+                            <td itemprop="PRFABBR">T.N.-O.</td>
+                        </tr>
+                    </tbody>
+                </table>
+</td>
+          <td>Details of the geometry: identify its type, and list any links in it</td>
+          <td><a href="Zoom to here link">Filter map contents by bounds</a></td>
+          <td>7</td>
+        </tr>
+        <tr>
+          <th scope="row">Newfoundland and Labrador</th>
+          <td>                <table>
+                    <thead>
+                        <tr>
+                            <th role="columnheader" scope="col">Property name</th>
+                            <th role="columnheader" scope="col">Property value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">PRUID</th>
+                            <td itemprop="PRUID">10</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRNAME</th>
+                            <td itemprop="PRNAME">Newfoundland and Labrador /
+                                Terre-Neuve-et-Labrador</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRENAME</th>
+                            <td itemprop="PRENAME">Newfoundland and Labrador</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRFNAME</th>
+                            <td itemprop="PRFNAME">Terre-Neuve-et-Labrador</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PREABBR</th>
+                            <td itemprop="PREABBR">N.L.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRFABBR</th>
+                            <td itemprop="PRFABBR">T.-N.-L.</td>
+                        </tr>
+                    </tbody>
+                </table>
+</td>
+          <td>Details of the geometry: identify its type, and list any links in it</td>
+          <td><a href="Zoom to here link">Filter map contents by bounds</a></td>
+          <td>8</td>
+        </tr>
+        <tr>
+          <th scope="row">British Columbia</th>
+          <td>                <table>
+                    <thead>
+                        <tr>
+                            <th role="columnheader" scope="col">Property name</th>
+                            <th role="columnheader" scope="col">Property value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">PRUID</th>
+                            <td itemprop="PRUID">59</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRNAME</th>
+                            <td itemprop="PRNAME">British Columbia / Colombie-Britannique</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRENAME</th>
+                            <td itemprop="PRENAME">British Columbia</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRFNAME</th>
+                            <td itemprop="PRFNAME">Colombie-Britannique</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PREABBR</th>
+                            <td itemprop="PREABBR">B.C.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRFABBR</th>
+                            <td itemprop="PRFABBR">C.-B.</td>
+                        </tr>
+                    </tbody>
+                </table>
+</td>
+          <td>Details of the geometry: identify its type, and list any links in it</td>
+          <td><a href="Zoom to here link">Filter map contents by bounds</a></td>
+          <td>9</td>
+        </tr>
+        <tr>
+          <th scope="row">Yukon</th>
+          <td>                <table>
+                    <thead>
+                        <tr>
+                            <th role="columnheader" scope="col">Property name</th>
+                            <th role="columnheader" scope="col">Property value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">PRUID</th>
+                            <td itemprop="PRUID">60</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRNAME</th>
+                            <td itemprop="PRNAME">Yukon</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRENAME</th>
+                            <td itemprop="PRENAME">Yukon</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRFNAME</th>
+                            <td itemprop="PRFNAME">Yukon</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PREABBR</th>
+                            <td itemprop="PREABBR">Y.T.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRFABBR</th>
+                            <td itemprop="PRFABBR">Yn</td>
+                        </tr>
+                    </tbody>
+                </table>
+</td>
+          <td>Details of the geometry: identify its type, and list any links in it</td>
+          <td><a href="Zoom to here link">Filter map contents by bounds</a></td>
+          <td>10</td>
+        </tr>
+        <tr>
+          <th scope="row">New Brunswick</th>
+          <td>                <table>
+                    <thead>
+                        <tr>
+                            <th role="columnheader" scope="col">Property name</th>
+                            <th role="columnheader" scope="col">Property value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">PRUID</th>
+                            <td itemprop="PRUID">13</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRNAME</th>
+                            <td itemprop="PRNAME">New Brunswick / Nouveau-Brunswick</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRENAME</th>
+                            <td itemprop="PRENAME">New Brunswick</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRFNAME</th>
+                            <td itemprop="PRFNAME">Nouveau-Brunswick</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PREABBR</th>
+                            <td itemprop="PREABBR">N.B.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRFABBR</th>
+                            <td itemprop="PRFABBR">N.-B.</td>
+                        </tr>
+                    </tbody>
+                </table>
+</td>
+          <td>Details of the geometry: identify its type, and list any links in it</td>
+          <td><a href="Zoom to here link">Filter map contents by bounds</a></td>
+          <td>11</td>
+        </tr>
+        <tr>
+          <th scope="row">Prince Edward Island</th>
+          <td>                <table>
+                    <thead>
+                        <tr>
+                            <th role="columnheader" scope="col">Property name</th>
+                            <th role="columnheader" scope="col">Property value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">PRUID</th>
+                            <td itemprop="PRUID">11</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRNAME</th>
+                            <td itemprop="PRNAME">Prince Edward Island / Île-du-Prince-Édouard</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRENAME</th>
+                            <td itemprop="PRENAME">Prince Edward Island</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRFNAME</th>
+                            <td itemprop="PRFNAME">Île-du-Prince-Édouard</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PREABBR</th>
+                            <td itemprop="PREABBR">P.E.I.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRFABBR</th>
+                            <td itemprop="PRFABBR">Î.-P.-É.</td>
+                        </tr>
+                    </tbody>
+                </table>
+</td>
+          <td>Details of the geometry: identify its type, and list any links in it</td>
+          <td><a href="Zoom to here link">Filter map contents by bounds</a></td>
+          <td>12</td>
+        </tr>
+        <tr>
+          <th scope="row">Nova Scotia</th>
+          <td>                <table>
+                    <thead>
+                        <tr>
+                            <th role="columnheader" scope="col">Property name</th>
+                            <th role="columnheader" scope="col">Property value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">PRUID</th>
+                            <td itemprop="PRUID">12</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRNAME</th>
+                            <td itemprop="PRNAME">Nova Scotia / Nouvelle-Ã‰cosse</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRENAME</th>
+                            <td itemprop="PRENAME">Nova Scotia</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRFNAME</th>
+                            <td itemprop="PRFNAME">Nouvelle-Ã‰cosse</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PREABBR</th>
+                            <td itemprop="PREABBR">N.S.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">PRFABBR</th>
+                            <td itemprop="PRFABBR">N.-Ã‰.</td>
+                        </tr>
+                    </tbody>
+                </table>
+</td>
+          <td>Details of the geometry: identify its type, and list any links in it</td>
+          <td><a href="Zoom to here link">Filter map contents by bounds</a></td>
+          <td>13</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
