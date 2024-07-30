@@ -41,22 +41,22 @@ pmtilesRules.set(
       PAINT_RULES: [
         {
           dataLayer: 'streams',
-          symbolizer: new M.LineSymbolizer({ color: 'steelblue', width: 2 })
+          symbolizer: new M.protomapsL.LineSymbolizer({ color: 'steelblue', width: 2 })
         },
         {
           dataLayer: 'roads',
-          symbolizer: new M.LineSymbolizer({ color: 'maroon', width: 2 })
+          symbolizer: new M.protomapsL.LineSymbolizer({ color: 'maroon', width: 2 })
         },
         {
           dataLayer: 'restricted',
-          symbolizer: new M.PolygonSymbolizer({
+          symbolizer: new M.protomapsL.PolygonSymbolizer({
             fill: 'red',
             opacity: 0.5
           })
         },
         {
           dataLayer: 'restricted',
-          symbolizer: new M.LineSymbolizer({ color: 'red', width: 2 })
+          symbolizer: new M.protomapsL.LineSymbolizer({ color: 'red', width: 2 })
         },
         {
           dataLayer: 'archsites',
@@ -73,7 +73,20 @@ pmtilesRules.set(
           })
         }
       ],
-      LABEL_RULES: []
+      LABEL_RULES: [
+        {
+          dataLayer: 'archsites',
+          symbolizer: new M.protomapsL.CenteredTextSymbolizer({
+            labelProps: ['str1'],
+            fill:'white',
+            width:2,
+            stroke:'black',
+            font:"500 10px sans-serif"
+          }),
+          // note that filter is a property of a rule, not an option to a symbolizer
+          filter: (z,f) => { return f.props['str1'].trim().toLowerCase() !== 'no name'; }
+        }
+      ]
     }
   }
 );
