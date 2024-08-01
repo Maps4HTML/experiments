@@ -23,11 +23,11 @@ pmtilesRules.set(
   { theme: { theme: 'light' } }
 );
 pmtilesRules.set(
-  'https://data.source.coop/protomaps/openstreetmap/tiles/v3.pmtiles?theme=light',
+  'spearfish.pmtiles?theme=light',
   { theme: { theme: 'light' } }
 );
 pmtilesRules.set(
-  'https://data.source.coop/protomaps/openstreetmap/tiles/v3.pmtiles?theme=dark',
+  'spearfish.pmtiles?theme=dark',
   { theme: { theme: 'dark' } }
 );
 pmtilesRules.set(
