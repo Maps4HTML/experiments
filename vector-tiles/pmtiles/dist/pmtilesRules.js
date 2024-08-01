@@ -23,11 +23,11 @@ pmtilesRules.set(
   { theme: { theme: 'light' } }
 );
 pmtilesRules.set(
-  'spearfish.pmtiles?theme=light',
+  'https://maps4html.org/experiments/vector-tiles/pmtiles/spearfish.pmtiles?theme=light',
   { theme: { theme: 'light' } }
 );
 pmtilesRules.set(
-  'spearfish.pmtiles?theme=dark',
+  'https://maps4html.org/experiments/vector-tiles/pmtiles/spearfish.pmtiles?theme=dark',
   { theme: { theme: 'dark' } }
 );
 pmtilesRules.set(
