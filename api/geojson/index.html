@@ -170,7 +170,7 @@ window.onload = (event) => {
       geometryFunction: function (g, f) {
         if (g.nodeName === "MAP-MULTIPOLYGON") {
           // need to do this because of a bug: 
-          // https://github.com/Maps4HTML/Web-Map-Custom-Element/issues/688
+          // https://github.com/Maps4HTML/MapML.js/issues/688
           let polys = g.querySelectorAll("map-polygon");
           for (let i=0;i < polys.length; i++) {
             polys[i].setAttribute("class", "h");
@@ -193,7 +193,7 @@ window.onload = (event) => {
       geometryFunction: function (g, f) {
         if (g.nodeName === "MAP-MULTIPOLYGON") {
           // need to do this because of a bug: 
-          // https://github.com/Maps4HTML/Web-Map-Custom-Element/issues/688
+          // https://github.com/Maps4HTML/MapML.js/issues/688
           let polys = g.querySelectorAll("map-polygon");
           for (let i=0;i < polys.length; i++) {
             polys[i].setAttribute("class", getStateClass(f.properties.density));
