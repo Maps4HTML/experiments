@@ -25,14 +25,14 @@
     </head>
   <body>
     <template id="negotiable-map-content">
-      <layer- src="msi-tiles-osmtile.mapml" checked></layer->
+      <map-layer src="msi-tiles-osmtile.mapml" checked></map-layer>
     </template>
     <p><a href="msi-tiles-osmtile.mapml" target="_blank">Minimum Snow and Ice Probability (view source in new tab)</a> <button onclick="addToMaps()" >Add to single source to both maps</button></p>
   <mapml-viewer projection="CBMTILE" zoom="4" lat="60" lon="-90" controls>
-    <layer- label="CBMT" src="../../refactoring-temporary/cbmtile-cbmt.mapml" checked hidden></layer->
+    <map-layer label="CBMT" src="../../refactoring-temporary/cbmtile-cbmt.mapml" checked hidden></map-layer>
   </mapml-viewer>
   <mapml-viewer projection="OSMTILE" zoom="4" lat="60" lon="-90" controls>
-    <layer- label="CBMT" src="../../refactoring-temporary/osmtile-cbmt.mapml" checked hidden></layer->
+    <map-layer label="CBMT" src="../../refactoring-temporary/osmtile-cbmt.mapml" checked hidden></map-layer>
   </mapml-viewer>
   </body>
 </html>

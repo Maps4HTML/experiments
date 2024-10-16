@@ -135,7 +135,7 @@ mapml-viewer {
 <label for="loadfile">Load GeoJSON</label>
 </div>
 <mapml-viewer zoom="2" lat="0" lon="0" controls controlslist="geolocation">
-  <layer- label="OpenStreetMap" checked >
+  <map-layer label="OpenStreetMap" checked >
     <map-link rel="license" href="https://www.openstreetmap.org/copyright" title="© OpenStreetMap contributors CC BY-SA"></map-link>
     <map-extent units="OSMTILE" checked>
       <map-input name="z" type="zoom" value="18" min="0" max="18"></map-input>
@@ -143,7 +143,7 @@ mapml-viewer {
       <map-input name="y" type="location" units="tilematrix" axis="row" min="0" max="262144"></map-input>
       <map-link rel="tile" tref="https://tile.openstreetmap.org/{z}/{x}/{y}.png"></map-link>
     </map-extent>
-  </layer->
+  </map-layer>
 </mapml-viewer>
 <a class="credits" href="https://www.flaticon.com/free-icons/parchment" title="parchment icons">Parchment icons created by Freepik - Flaticon</a>
 </div>

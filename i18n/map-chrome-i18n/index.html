@@ -16,7 +16,7 @@
   </head>
   <body>
   <mapml-viewer zoom="6" lon="31.135254" lat="49.066668" controls projection="OSMTILE">
-    <layer- label="United Nations Web Map Tile Service"  checked >
+    <map-layer label="United Nations Web Map Tile Service"  checked >
       <map-link rel="license" href="https://www.un.org/geospatial/mapsgeo/webservices" title="Підготовлено Геопросторовою службою Організації Об'єднаних Націй"></map-link>
       <map-extent units="OSMTILE" checked hidden>
         <map-input name="TileMatrix" type="zoom" value="18" min="0" max="6"></map-input>
@@ -24,7 +24,7 @@
         <map-input name="TileRow" type="location" units="tilematrix" axis="row" min="0" max="262144"></map-input>
         <map-link rel="tile" tref="https://geoservices.un.org/arcgis/rest/services/ClearMap_WebTopo/MapServer/tile/{TileMatrix}/{TileRow}/{TileCol}"></map-link>
       </map-extent>
-    </layer->
+    </map-layer>
 </mapml-viewer>
 </body>
 </html>

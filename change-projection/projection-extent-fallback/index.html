@@ -32,7 +32,7 @@
   </head>
   <body>
     <mapml-viewer zoom="4" lon="-97.288195" lat="56.555669"  controls projection="OSMTILE">
-      <layer- label="Projection changer"  checked>
+      <map-layer label="Projection changer"  checked>
         <map-extent label="CBMT - Mercator" checked units="OSMTILE" >
           <map-input name="z" type="zoom" value="15" min="0" max="15"></map-input>
           <map-input name="y" type="location" units="tilematrix" axis="row" min="0" max="32768"></map-input>
@@ -46,7 +46,7 @@
           <map-input name="x" type="location" units="tilematrix" axis="column"></map-input>
           <map-link rel="tile" tref="https://geoappext.nrcan.gc.ca/arcgis/rest/services/BaseMaps/CBMT3978/MapServer/tile/{z}/{y}/{x}?m4h=t" ></map-link>
         </map-extent>    
-      </layer->
+      </map-layer>
     </mapml-viewer>
     <button name="change" autofocus type="button" onclick="changeProjection()">Change map projection</button>
 </body>

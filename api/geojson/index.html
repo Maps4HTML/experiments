@@ -100,7 +100,7 @@
          vertical-align: middle;
        } 
         
-       /* Pre-style to avoid FOUC of inline layer- and fallback content. */ 
+       /* Pre-style to avoid FOUC of inline map-layer and fallback content. */ 
        mapml-viewer:not(:defined) > * { 
          display: none; 
        } 
@@ -116,7 +116,7 @@
        supported, or if javascript is disabled. This needs to be defined separately 
        from the above, because the `:not(:defined)` selector invalidates the entire 
        declaration in browsers that do not support it. */ 
-       layer- { 
+       map-layer { 
          display: none; 
        } 
      </style> 
@@ -124,7 +124,7 @@
        <style> 
          /* Ensure fallback content (children of the map element) is displayed if 
          custom/built-in elements is supported but javascript is disabled. */ 
-         mapml-viewer:not(:defined) > :not(layer-) { 
+         mapml-viewer:not(:defined) > :not(map-layer) { 
            display: initial; 
          } 
          
@@ -140,14 +140,14 @@
   </head>
   <body>
     <mapml-viewer projection="OSMTILE" zoom="2" lat="45" lon="-90" controls>
-      <layer- label="United States - The National Map" checked>
+      <map-layer label="United States - The National Map" checked>
         <map-extent units="OSMTILE" checked hidden>
           <map-input name="TileMatrix" type="zoom" value="18" min="0" max="16"></map-input>
           <map-input name="TileCol" type="location" units="tilematrix" axis="column" min="0" max="262144"></map-input>
           <map-input name="TileRow" type="location" units="tilematrix" axis="row" min="0" max="262144"></map-input>
           <map-link rel="tile" tref="https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{TileMatrix}/{TileRow}/{TileCol}"></map-link>
         </map-extent>
-      </layer->
+      </map-layer>
     </mapml-viewer>
   <script src="https://leafletjs.com/examples/choropleth/us-states.js"></script>
 <script src="canada.js"></script>
