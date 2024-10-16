@@ -31,7 +31,7 @@
         <li>Support for the <a href="https://wiki.osgeo.org/wiki/Tile_Map_Service_Specification">tms</a> link attribute: &lt;link rel="tile" tms tref="..."&gt;</li>
       </ul>
       <mapml-viewer projection="WGS84" zoom="2" lon="-111.062839" lat="-8.059046" controls controlslist="noscale">
-        <layer- label="Painting" checked>
+        <map-layer label="Painting" checked>
           <map-meta name="zoom" content="min=0,max=7"></map-meta>
           <map-extent units="WGS84" checked hidden>
               <map-input  name="zoomLevel" type="zoom" value="1" min="0" max="4"></map-input>
@@ -39,8 +39,8 @@
               <map-input  name="col" type="location" axis="column" units="tilematrix" min="0" max="2"></map-input>
               <map-link tms rel="tile" tref="https://maps4html.org/TiledArt-Rousseau/TheBanksOfTheBièvreNearBicêtre/{zoomLevel}/{col}/{row}.png"></map-link>
           </map-extent>
-          </layer->
-          <layer- label="People" checked>
+          </map-layer>
+          <map-layer label="People" checked>
             <map-meta name="projection" content="WGS84"></map-meta>
             <map-feature id="girl2" class="child" zoom="2" min="2" max="4">
               <map-featurecaption>Girl - zoom=2</map-featurecaption>
@@ -86,7 +86,7 @@
               </map-geometry>
               <map-properties></map-properties>
             </map-feature>
-        </layer->
+        </map-layer>
       </mapml-viewer>
     </body>
 </html>

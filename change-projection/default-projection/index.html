@@ -23,7 +23,7 @@
   </head>
   <body>
     <mapml-viewer zoom="5" lon="-97.288195" lat="56.555669"  controls>
-    <layer- checked>
+    <map-layer checked>
       <map-meta name="extent" content="top-left-easting=-19959237, top-left-northing=13854059, bottom-right-easting=-1174073, bottom-right-northing=4647371"></map-meta>
       <map-title>Topo base</map-title>
       <map-extent units="OSMTILE" label="Toprama - Mercator" checked>
@@ -41,8 +41,8 @@
           <map-input name="y" type="location" units="tilematrix" axis="row"></map-input>
           <map-input name="x" type="location" units="tilematrix" axis="column"></map-input>
           <map-link rel="tile" tref="https://geoappext.nrcan.gc.ca/arcgis/rest/services/BaseMaps/CBMT3978/MapServer/tile/{z}/{y}/{x}?m4h=t" ></map-link>
-        </map-extent>        </layer->
-      <layer- label="Projection not specified"  checked>
+        </map-extent>        </map-layer>
+      <map-layer label="Projection not specified"  checked>
       <map-feature zoom="14">
         <map-featurecaption>Copied OSMTILE pcrs location</map-featurecaption>
         <map-properties>
@@ -55,7 +55,7 @@
           </map-point>
         </map-geometry>
       </map-feature>
-      </layer->
+      </map-layer>
     </mapml-viewer>
 </body>
 </html>

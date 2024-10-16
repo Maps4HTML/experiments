@@ -20,7 +20,7 @@
     </head>
     <body>
       <map is="web-map" projection="WGS84" zoom="0" lat="0" lon="0" controls>
-        <layer- label="Countries - WorldCRS84Quad" checked>
+        <map-layer label="Countries - WorldCRS84Quad" checked>
           <map-link rel="stylesheet" href="../vector-tile.css" ></map-link>
           <map-extent units="WGS84" checked hidden>
             <map-meta name="zoom" content="min=0,max=5"></map-meta>
@@ -35,11 +35,11 @@
             <map-input  name="col" type="location" axis="column" units="tilematrix" min="0" max="2"></map-input>
             <map-link rel='tile' type='text/mapml' tref='https://maps.ecere.com/geoapi/collections/NaturalEarth/cultural/ne_10m_admin_0_countries/tiles/WorldCRS84Quad/{zoomLevel}/{row}/{col}.mapml' >
           </map-extent>-->
-        </layer->
+        </map-layer>
       </map>
       <map is="web-map" projection="OSMTILE" zoom="0" lat="0" lon="0" controls>
-        <layer- label="OpenStreetMap" src="../../../refactoring-temporary/osm.mapml" checked></layer->
-        <layer- label="Countries - WebMercatorQuad" checked>
+        <map-layer label="OpenStreetMap" src="../../../refactoring-temporary/osm.mapml" checked></map-layer>
+        <map-layer label="Countries - WebMercatorQuad" checked>
           <map-link rel="stylesheet" href="../vector-tile.css" ></map-link>
           <map-extent units="OSMTILE" checked hidden>
             <map-input  name="zoomLevel" type="zoom" min="0" max="2" value="0"></map-input>
@@ -48,7 +48,7 @@
             <!-- https://maps.ecere.com/ogcapi/collections/NaturalEarth:cultural:ne_10m_admin_0_countries/tiles/WebMercatorQuad/{zoomLevel}/{row}/{col}.mapml -->
             <map-link rel='tile' type='text/mapml' tref='../tiles/osmtile/{zoomLevel}/{row}/{col}.mapml' ></map-link>
           </map-extent>
-        </layer->
+        </map-layer>
       </map>
     </body>
 </html>

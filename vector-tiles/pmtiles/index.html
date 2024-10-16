@@ -33,7 +33,7 @@
         vertical-align: middle;
       }
 
-      /* Pre-style to avoid FOUC of inline layer- and fallback content. */
+      /* Pre-style to avoid FOUC of inline map-layer and fallback content. */
       mapml-viewer:not(:defined) > * {
         display: none;
       }
@@ -49,7 +49,7 @@
       supported, or if javascript is disabled. This needs to be defined separately 
       from the above, because the `:not(:defined)` selector invalidates the entire 
       declaration in browsers that do not support it. */
-      layer- {
+      map-layer {
         display: none;
       }
     </style> 
@@ -57,7 +57,7 @@
     <style>
       /* Ensure fallback content (children of the map element) is displayed if 
       custom/built-in elements is supported but javascript is disabled. */
-      mapml-viewer:not(:defined) > :not(layer-) {
+      mapml-viewer:not(:defined) > :not(map-layer) {
         display: initial;
       }
 
@@ -74,7 +74,7 @@
   <body>
 
   <mapml-viewer projection="OSMTILE" zoom="12" lat="44.436108753775116" lon="-103.75024795532228" controls controlslist="geolocation">
-    <layer- label="OpenStreetMap">
+    <map-layer label="OpenStreetMap">
       <map-link rel="license" title="© OpenStreetMap contributors CC BY-SA" href="https://www.openstreetmap.org/copyright"></map-link>
       <map-extent units="OSMTILE" checked="checked">
         <map-input name="z" type="zoom" value="18" min="0" max="18"></map-input>
@@ -82,9 +82,9 @@
         <map-input name="y" type="location" units="tilematrix" axis="row" min="0" max="262144"></map-input>
         <map-link rel="tile" tref="https://tile.openstreetmap.org/{z}/{x}/{y}.png"></map-link>
       </map-extent>
-    </layer->
-    <layer- src="dark.mapml"></layer->
-    <layer- checked>
+    </map-layer>
+    <map-layer src="dark.mapml"></map-layer>
+    <map-layer checked>
       <map-title>Protomaps' {z}/{x}/{y}.mvt API - light theme</map-title>
       <map-link rel="stylesheet" type="application/pmtiles+stylesheet" href="lightTheme.js"></map-link>
       <map-link rel="license" title="© OpenStreetMap contributors CC BY-SA" href="https://www.openstreetmap.org/copyright"></map-link>
@@ -94,9 +94,9 @@
         <map-input name="y" type="location" units="tilematrix" axis="row" min="0" max="262144"></map-input>
         <map-link rel="tile" type="application/vnd.mapbox-vector-tile" tref="https://api.protomaps.com/tiles/v3/{z}/{x}/{y}.mvt?key=41392fb7515533a5"></map-link>
       </map-extent>
-    </layer->
+    </map-layer>
 
-<!--    <layer- label='Custom MVT test'>
+<!--    <map-layer label='Custom MVT test'>
 
       <map-extent units="OSMTILE" label="Spearfish" checked="checked">
         <map-input name="z" type="zoom" value="18" min="0" max="18"></map-input>
@@ -108,7 +108,7 @@
         <map-input name="j" type="location" axis="j" units="tile"></map-input>
         <map-link  rel="query" tref="http://localhost:8080/geoserver/gwc/service/wmts?request=GetFeatureInfo&format=image/jpeg&i={i}&j={j}&TileCol={x}&version=1.0.0&layer=spearfish&tilematrixset=OSMTILE&tilematrix={z}&TileRow={y}&service=WMTS&infoformat=text/mapml&feature_count=50&style="></map-link>
       </map-extent>
-    </layer->-->
+    </map-layer>-->
 
   </mapml-viewer>
 </body>
