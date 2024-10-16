@@ -1,13 +1,13 @@
 CustomUI = {
   initialize: function () {
-    let layers = document.querySelectorAll("layer-");
+    let layers = document.querySelectorAll("map-layer");
     let map = document.querySelector("mapml-viewer");
 
     let mapObserver = new MutationObserver((m) => {
       m.forEach((mut) => {
         if (mut.type === "childList") {
           mut.addedNodes.forEach((l) => {
-            if (l.tagName === "LAYER-") {
+            if (l.tagName === "MAP-LAYER") {
               CustomUI.addLayer(l);
             }
           });
