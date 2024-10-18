@@ -100,7 +100,7 @@
         document.querySelector('map-feature').zoomTo();
       }
       function removeMan() {
-        document.querySelector('layer-[label="Two Hat Man"]').remove();
+        document.querySelector('map-layer[label="Two Hat Man"]').remove();
         toggleDisabled();
       }
     </script>
@@ -108,9 +108,9 @@
       <map-meta name="projection" content="OSMTILE"></map-meta>
     </template>
     <template id="empty-layer">
-      <layer-  label="Empty" checked>
+      <map-layer  label="Empty" checked>
         <map-meta name="projection" content="OSMTILE"></map-meta>
-      </layer->
+      </map-layer>
     </template>
     
     <template id="hatman">
@@ -143,10 +143,10 @@
 
     
     <mapml-viewer projection="OSMTILE" zoom="1" lat="0" lon="0" controls>
-      <layer- label="OSM" src="../../refactoring-temporary/osm.mapml" checked></layer->
-<!--      <layer- id="target-layer" label="Empty" checked>
+      <map-layer label="OSM" src="../../refactoring-temporary/osm.mapml" checked></map-layer>
+<!--      <map-layer id="target-layer" label="Empty" checked>
         <map-meta name="projection" content="OSMTILE"></map-meta>
-      </layer->-->
+      </map-layer>-->
     </mapml-viewer>
   <button id="add" onclick="_doMan('add')">Add feature</button>
     <button id="focus" disabled onclick="_doMan('focus')">Focus feature</button>

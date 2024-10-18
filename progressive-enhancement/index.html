@@ -17,7 +17,7 @@
         contain-intrinsic-size: 304px 154px;
       }
       
-      /* Pre-style to avoid FOUC of inline layer- and fallback content. */
+      /* Pre-style to avoid FOUC of inline map-layer and fallback content. */
       [is="web-map"]:not(:defined) + img[usemap],
       [is="web-map"]:not(:defined) > :not(area):not(.mapml-web-map) {
         display: none;
@@ -31,7 +31,7 @@
       or if javascript is disabled. This needs to be defined separately
       from the above, because the `:not(:defined)` selector invalidates the entire
       declaration in browsers that do not support it. */
-      layer- {
+      map-layer {
        display: none;
       }
     </style>
@@ -70,11 +70,11 @@
   <body>
     
     <map name="dowslake" is="web-map" zoom="17" lat="45.398043" lon="-75.70683" controls>
-      <layer- id="osm" src="../refactoring-temporary/osm.mapml" label="Open Street Map" checked></layer->
+      <map-layer id="osm" src="../refactoring-temporary/osm.mapml" label="Open Street Map" checked></map-layer>
       <!-- the HTML author can create MapML files and serve them as layers if they prefer -->
-      <layer- id="marker" label="Marker layer" src="marker.mapml"></layer->
+      <map-layer id="marker" label="Marker layer" src="marker.mapml"></map-layer>
       <!-- Inline layer content: how does this behave w/o scripting? -->
-      <layer- label="Inline MapML" checked>
+      <map-layer label="Inline MapML" checked>
         <map-feature zoom="17">
           <map-meta name="projection" content="OSMTILE"></map-meta>
         <map-featurecaption>Where The Wild Things Are</map-featurecaption>
@@ -87,7 +87,7 @@
             <map-coordinates>-8427535 5684693</map-coordinates>
           </map-point>
         </map-geometry>
-      </map-feature></layer->
+      </map-feature></map-layer>
       
       <!-- you could do this more precisely with shape="poly" and appropriate coords, but I was too lazy -->
       <area is="map-area" href="https://example.com/marker/" alt="Marker" coords="255,145,275,190" shape="rect" style="fill: none;stroke: blue;stroke-width: 3px">
