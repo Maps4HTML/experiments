@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>matchMedia API</title>
+        <script type="module" src="../../../../dist/mapml.js"></script>
+        <link rel="stylesheet" href="../../../../global.css">
+    </head>
+    <template id="layers">
+      <map-layer id="light" src="light.mapml" checked></map-layer>
+      <map-layer id="dark" src="dark.mapml" checked ></map-layer>
+    </template>
+    <script>
+      document.addEventListener('DOMContentLoaded',(e)=>{
+        let l, map = document.querySelector('mapml-viewer'),
+            prefersDark = map.matchMedia('(prefers-color-scheme: dark)').matches === 'true',
+            t = document.querySelector('template');
+        if (prefersDark) {
+          l = t.content.querySelector('#dark').cloneNode(true);
+        } else {
+          l = t.content.querySelector('#light').cloneNode(true);
+        }
+        map.appendChild(l);
+      });
+    </script>
+  <body>
+  <mapml-viewer projection="OSMTILE" zoom="9" lat="44.630550504861795" lon="-103.86611938476564" controls>
+  </mapml-viewer>
+  </body>
+</html>

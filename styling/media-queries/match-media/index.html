@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>matchMedia API</title>
+        <script type="module" src="../../../dist/mapml.js"></script>
+        <link rel="stylesheet" href="../../../global.css">
+    </head>
+    <template id="layers">
+      <map-layer id="tiles" label="CBMT tiles" src="../../../refactoring-temporary/cbmtile-cbmt.mapml" checked></map-layer>
+      <map-layer id="features" label="Canada's Provinces and Territories" src="../features.mapml" checked ></map-layer>
+      <map-layer id="wms" label="CBMT WMS" checked>
+        <map-extent units="CBMTILE" checked hidden>
+          <map-input name="xmin" type="location" units="pcrs" position="top-left" axis="easting" min="-2.003750834E7"  max="2.003750834E7" ></map-input>
+          <map-input name="ymin" type="location" units="pcrs" position="bottom-left" axis="northing" min="-2.003750834E7"  max="2.003750834E7" ></map-input>
+          <map-input name="xmax" type="location" units="pcrs" position="top-right" axis="easting" min="-2.003750834E7"  max="2.003750834E7" ></map-input>
+          <map-input name="ymax" type="location" units="pcrs" position="top-left" axis="northing" min="-2.003750834E7"  max="2.003750834E7" ></map-input>
+          <map-input name="w" type="width"></map-input>
+          <map-input name="h" type="height"></map-input>
+          <map-link rel="image" tref="https://maps.geogratis.gc.ca/wms/CBMT?service=wms&version=1.3.0&request=GetMap&layers=CBMT&bbox={xmin},{ymin},{xmax},{ymax}&width={w}&height={h}&crs=EPSG:3978&format=image/png"></map-link>
+        </map-extent>
+      </map-layer>
+      <!-- fr version here: https://cartes.geogratis.gc.ca/wms/CBCT?service=wms&version=1.3.0&request=GetCapabilities&layers=CBCT&legend_format=image/png -->
+    </template>
+    <script>
+      document.addEventListener('DOMContentLoaded',(e)=>{
+        let l, map = document.querySelector('mapml-viewer'),
+            prefersImages = map.matchMedia('(prefers-map-content: image) and ( not (prefers-map-content: tile))').matches === 'true',
+            t = document.querySelector('template'),
+            prefersFeaturesOnly = map.matchMedia('(prefers-map-content: feature) and ( not ((prefers-map-content: image) or (prefers-map-content: tile)))').matches === 'true',
+            prefersTiles = map.matchMedia('(prefers-map-content: tile');
+        if (prefersFeaturesOnly) {
+          l = t.content.querySelector('#features').cloneNode(true);
+        } else if (prefersImages) {
+          l = t.content.querySelector('#wms').cloneNode(true);
+        } else if (prefersTiles) {
+          l = t.content.querySelector('#tiles').cloneNode(true);
+        }
+        map.appendChild(l);
+      });
+    </script>
+  <body>
+  <mapml-viewer projection="CBMTILE" zoom="4" lat="60" lon="-90" controls>
+  </mapml-viewer>
+  </body>
+</html>
