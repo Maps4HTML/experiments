@@ -1,16 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width,initial-scale=1">
-        <title>matchMedia API</title>
-        <script type="module" src="../../../../dist/mapml.js"></script>
-        <link rel="stylesheet" href="../../../../global.css">
-    </head>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="dark light">
+    <title>matchMedia API</title>
+    <script type="module" src="../../../../dist/mapml.js"></script>
+    <link rel="stylesheet" href="../../../../global.css">
+    <style>
+      body {
+        display: flex;
+      }
+
+      mapml-viewer {
+        flex: 2;
+        height: 50vh;
+      }
+
+      .description {
+        padding: 20px;
+        flex: 1;
+      }
+
+      @media (max-width: 768px) {
+        .desktop-only {
+          display: none;
+        }
+
+        body {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
     <template id="layers">
       <map-layer id="light" src="light.mapml" checked></map-layer>
-      <map-layer id="dark" src="dark.mapml" checked ></map-layer>
+      <map-layer id="dark" src="dark.mapml" checked></map-layer>
     </template>
+
     <script>
       document.addEventListener('DOMContentLoaded',(e)=>{
         let l, map = document.querySelector('mapml-viewer'),
@@ -24,8 +52,36 @@
         map.appendChild(l);
       });
     </script>
-  <body>
-  <mapml-viewer projection="OSMTILE" zoom="9" lat="44.630550504861795" lon="-103.86611938476564" controls>
-  </mapml-viewer>
+
+    <mapml-viewer projection="OSMTILE" zoom="9" lat="44.630550504861795" lon="-103.86611938476564" controls>
+    </mapml-viewer>
+    <div class="description">
+      <h2>Introduction to Adaptive Color Scheme for <code>mapml-viewer</code></h2>
+      <p>This experiment demonstrates the integration of adaptive color schemes for the <code>mapml-viewer</code> custom element, enabling it to adjust between light and dark modes based on the user’s system preferences. By implementing a color scheme that responds to the OS or browser’s preferred settings, we aim to enhance visual comfort and accessibility across different environments.</p>
+      <p>The page automatically detects and applies the appropriate theme, allowing users to experience the map viewer seamlessly in both light and dark modes. This implementation uses the <code>&lt;meta name="color-scheme" content="dark light"&gt;</code> attribute to signal to the browser the compatibility with both modes, ensuring a responsive and user-friendly experience.</p>
+      <h3 class="desktop-only">How to Emulate OS Preferred Color Scheme in Browsers</h3>
+      <ul class="desktop-only">
+          <li><strong>Google Chrome:</strong>
+              <ul>
+                  <li>Go to <code>chrome://settings/appearance</code> and toggle the "Theme" to "System default" or "Dark."</li>
+                  <li>Alternatively, open DevTools (<code>F12</code> or right-click > Inspect) > click on the "More Tools" menu (three dots) > "Rendering" > "Emulate CSS prefers-color-scheme" > select "light" or "dark."</li>
+              </ul>
+          </li>
+          <li><strong>Mozilla Firefox:</strong>
+              <ul>
+                  <li>Go to <code>about:addons</code>, select "Themes," and set it to "System Theme" for automatic adjustment.</li>
+                  <li>In DevTools, go to the "Settings" icon, scroll to the "Developer Tools" section, and under "Preferences," find "Emulate CSS prefers-color-scheme" to choose light or dark mode.</li>
+              </ul>
+          </li>
+          <li><strong>Microsoft Edge:</strong>
+              <ul>
+                  <li>Open <code>edge://settings/appearance</code> and set the theme to "System default" or "Dark."</li>
+                  <li>In DevTools, go to "More Tools" > "Rendering" and select the preferred color scheme under "Emulate CSS prefers-color-scheme."</li>
+              </ul>
+          </li>
+      </ul>
+      <p>These settings will allow you to see how the <code>mapml-viewer</code> element adapts to different color schemes in real-time, providing an intuitive user experience that aligns with system preferences.</p>
+    </div>
+  
   </body>
 </html>
