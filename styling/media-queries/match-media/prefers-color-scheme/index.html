@@ -42,14 +42,31 @@
     <script>
       document.addEventListener('DOMContentLoaded',(e)=>{
         let l, map = document.querySelector('mapml-viewer'),
-            prefersDark = map.matchMedia('(prefers-color-scheme: dark)').matches === 'true',
-            t = document.querySelector('template');
-        if (prefersDark) {
-          l = t.content.querySelector('#dark').cloneNode(true);
-        } else {
-          l = t.content.querySelector('#light').cloneNode(true);
-        }
-        map.appendChild(l);
+            preferenceMatcher = map.matchMedia('(prefers-color-scheme: dark)'),
+            prefersDark = preferenceMatcher.matches === 'true',
+            t = document.querySelector('template'),
+            light = t.content.querySelector('#light').cloneNode(true),
+            dark = t.content.querySelector('#dark').cloneNode(true);
+            light.removeAttribute('id');
+            dark.removeAttribute('id');
+        
+        const changePreference  = (prefersDark) => {
+          if (prefersDark) {
+            map.appendChild(dark);
+          } else {
+            map.appendChild(light);
+          }
+          if (map.layers.length > 1) {
+            map.querySelector('map-layer').remove();
+          }
+        };
+        changePreference(prefersDark);
+        const changeHandler = (e) => {
+          let prefersDark = preferenceMatcher.matches === 'true';
+          changePreference(prefersDark); 
+        };
+        preferenceMatcher.addEventListener('change', changeHandler);
+        
       });
     </script>
 
