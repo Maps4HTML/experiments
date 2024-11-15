@@ -8,11 +8,8 @@
     <map-meta name="extent" content="top-left-easting=-11625919, top-left-northing=5565456, bottom-right-easting=-11479160, bottom-right-northing=5494446"></map-meta>
   </map-head>
   <map-body>
-    <map-extent label="CBMT - Lambert" units="CBMTILE" checked >
-      <map-input name="z" type="zoom" min="0" max="18"></map-input>
-      <map-input name="y" type="location" units="tilematrix" axis="row"></map-input>
-      <map-input name="x" type="location" units="tilematrix" axis="column"></map-input>
-      <map-link rel="tile" tref="https://geoappext.nrcan.gc.ca/arcgis/rest/services/BaseMaps/CBMT3978/MapServer/tile/{z}/{y}/{x}?m4h=t" ></map-link>
+    <map-extent units="OSMTILE" checked="checked" hidden="hidden">
+      <map-link rel="tile" type="application/pmtiles" tref="https://maps4html.org/experiments/vector-tiles/pmtiles/spearfish.pmtiles?theme=dark"></map-link>
     </map-extent>
   </map-body>
 </mapml->

@@ -1,16 +1,15 @@
 <mapml- xmlns="http://www.w3.org/1999/xhtml">
   <map-head>
-    <map-title>Canada Base Map - Transportation (CBMT)</map-title>
-    <map-meta http-equiv="Content-Type" content="text/mapml;projection=CBMTILE"></map-meta>
-    <map-meta charset="utf-8"></map-meta>
-    <map-link rel="license" href="https://www.nrcan.gc.ca/earth-sciences/geography/topographic-information/free-data-geogratis/licence/17285" map-title="Canada Base Map © Natural Resources Canada"/>
+    <map-title>pmtiles - dark theme</map-title>
+    <map-link rel="stylesheet" type="application/pmtiles+stylesheet" href="darkTheme.js"></map-link>
+    <map-link rel="license" title="© OpenStreetMap contributors CC BY-SA" href="https://www.openstreetmap.org/copyright"></map-link>
+    <map-link rel="self style" title="Dark theme" href="dark.mapml"></map-link>
+    <map-link rel="style" title="Light theme" href="light.mapml"></map-link>
+    <map-meta name="extent" content="top-left-easting=-11625919, top-left-northing=5565456, bottom-right-easting=-11479160, bottom-right-northing=5494446"></map-meta>
   </map-head>
   <map-body>
-    <map-extent units="CBMTILE"  checked="checked" hidden="hidden">
-      <map-input name="z" type="zoom"  value="17" min="0" max="17"></map-input>
-      <map-input name="y" type="location" units="tilematrix" axis="row" min="29750"  max="34475"></map-input>
-      <map-input name="x" type="location" units="tilematrix" axis="column" min="26484"  max="32463"></map-input>
-      <map-link rel="tile" tref="https://geoappext.nrcan.gc.ca/arcgis/rest/services/BaseMaps/CBMT3978/MapServer/tile/{z}/{y}/{x}?m4h=t" />
+    <map-extent units="OSMTILE" checked="checked" hidden="hidden">
+      <map-link rel="tile" type="application/pmtiles" tref="https://maps4html.org/experiments/vector-tiles/pmtiles/spearfish.pmtiles?theme=dark"></map-link>
     </map-extent>
   </map-body>
-</mapml-> 
+</mapml->
