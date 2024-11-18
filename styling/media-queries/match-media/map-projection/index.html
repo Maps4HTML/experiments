@@ -39,6 +39,10 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      const hex = {
+      1: 'ff0000',
+      2: 'ff8b00',
+    }
       const map = document.querySelector('mapml-viewer');
       let projectionMatcher = map.matchMedia('(map-projection: OSMTILE)'),
             osmtile = map.querySelector('#OSMTILE'),
@@ -55,12 +59,12 @@
           }
         });
       };
-      hideLayer(projectionMatcher.matches === 'true');
+      hideLayer(projectionMatcher.matches);
       document.querySelector('.switchOSM').addEventListener('click', () => map.projection='OSMTILE');
       document.querySelector('.switchCBMT').addEventListener('click', () => map.projection='CBMTILE');
               
       const changeHandler = (e) => {
-          let matchesOSMTILE = projectionMatcher.matches === 'true';
+          let matchesOSMTILE = projectionMatcher.matches;
           hideLayer(matchesOSMTILE); 
         };
         projectionMatcher.addEventListener('change', changeHandler);

@@ -43,7 +43,7 @@
       document.addEventListener('DOMContentLoaded',(e)=>{
         let l, map = document.querySelector('mapml-viewer'),
             preferenceMatcher = map.matchMedia('(prefers-color-scheme: dark)'),
-            prefersDark = preferenceMatcher.matches === 'true',
+            prefersDark = preferenceMatcher.matches,
             t = document.querySelector('template'),
             light = t.content.querySelector('#light').cloneNode(true),
             dark = t.content.querySelector('#dark').cloneNode(true);
@@ -62,7 +62,7 @@
         };
         changePreference(prefersDark);
         const changeHandler = (e) => {
-          let prefersDark = preferenceMatcher.matches === 'true';
+          let prefersDark = preferenceMatcher.matches;
           changePreference(prefersDark); 
         };
         preferenceMatcher.addEventListener('change', changeHandler);
