@@ -77,40 +77,63 @@
         //   </map-extent>
         // </map-layer>
         
-        let l, map = document.querySelector('mapml-viewer'),
-            preferenceMatcher = map.matchMedia('(prefers-lang: en)'),
-            prefersEn = preferenceMatcher.matches === 'true',
-            t = document.querySelector('template'),
+        let map = document.querySelector('mapml-viewer'),
+            preferenceMatcher = map.matchMedia('(prefers-lang: en) and (not (map-zoom > 15))'),
+            prefersEn = preferenceMatcher.matches,
             en = map.querySelector('[lang=en]'),
-            fr = map.querySelector('[lang=fr]');
+            fr = map.querySelector('[lang=fr]'),
+            osm = map.querySelector('[data-testid="osm-layer"]');
 
         
-        const setLanguage  = (prefersEn) => {
-          let osm = map.querySelector('[data-testid="osm-layer"]');
+        const setBaseLayer = (prefersEn) => {
           if (prefersEn) {
+            // The behaviour of a <map-layer> when it matches a media query 
+            // (in the media attribute, specifically), should be to add itself to the
+            // layer control (in accord with its hidden attribute state) and to the map
+            // (in accord with its checked attribute state) i.e. it may or may not
+            // actually render in either place, depending on those attributes.
+            // HOWEVER, when a <map-layer> does NOT match a media query, it should 
+            // NOT be present on the map, nor in the layer control, and it should not
+            // fetch stuff or be active in any way.  i.e. it is REALLY disabled
             en.checked = true;
-            en.removeAttribute('hidden');
+            en.hidden = false;
             // this does not work, because the lang attribute is not observed for changes
             map.setAttribute('lang','en');
             // geogratis layers out of date wrt map-extent evolution
             en.shadowRoot.querySelector('map-extent').checked = true;
             osm.checked = false;
             osm.hidden = true;
-          } else if (map.matchMedia('(prefers-lang: fr)').matches === 'true') {
+            fr.checked = false;
+            fr.hidden = true;
+          } else if (map.matchMedia('(prefers-lang: fr) and (not (map-zoom > 15))').matches) {
             // this does not work, because the lang attribute is not observed for changes
             map.setAttribute('lang','fr');
             fr.checked = true;
-            fr.removeAttribute('hidden');
+            fr.hidden = false;
             // geogratis layers out of date wrt map-extent evolution
             fr.shadowRoot.querySelector('map-extent').checked = true;
             osm.checked = false;
             osm.hidden = true;
+            en.checked = false;
+            en.hidden = true;
+            //  else if (map.matchMedia('(not (prefers-lang: fr) and (not (prefers-lang: en)) or (map-zoom > 15)').matches)
           } else {
             osm.checked = true;
+            osm.hidden = false;
+            fr.checked = false;
+            fr.hidden = true;
+            en.checked = false;
+            en.hidden = true;
           }
         };
         // need to wait until all layers are ready, can take a moment...
-        map.whenLayersReady().then(()=>setLanguage(prefersEn));
+        map.whenLayersReady().then(()=>setBaseLayer(prefersEn));
+        
+        const changeHandler = (e) => {
+            let matches = preferenceMatcher.matches;
+            setBaseLayer(matches); 
+          };
+        preferenceMatcher.addEventListener('change', changeHandler);
        
       });
     </script>
@@ -120,7 +143,7 @@
     <mapml-viewer projection="OSMTILE" zoom="4" lat="52.07950600379697" lon="-85.61090083272045"  controls controlslist="geolocation">
       <map-layer lang="en" src="https://geogratis.gc.ca/mapml/en/osmtile/cbmt/" hidden></map-layer>
       <map-layer lang="fr" src="https://geogratis.gc.ca/mapml/fr/osmtile/cbmt/" hidden></map-layer>
-      <map-layer data-testid="osm-layer" label="OpenStreetMap" >
+      <map-layer data-testid="osm-layer" label="OpenStreetMap" hidden>
         <map-link rel="license" title="© OpenStreetMap contributors CC BY-SA" href="https://www.openstreetmap.org/copyright"></map-link>
         <map-extent units="OSMTILE" checked="checked">
           <map-input name="z" type="zoom" value="18" min="0" max="18"></map-input>
@@ -146,7 +169,7 @@
       </map-layer>
     </mapml-viewer>
       <div class="description">
-      <h2>Experiment: <code>HTMLMapmlViewerElement.matchMedia('(prefers-lang: fr)')</code></h2>
+      <h2>Experiment: <code>HTMLMapmlViewerElement.matchMedia('(prefers-lang: xx)')</code></h2>
       <p>This page uses the HTMLMapmlViewerElement.matchMedia function to select map content based on the browser's preferred language setting, in the user's language, ideally.</p>
       <p>If your browser isn't set to prefer english or french, the map should display the OpenStreetMap base layer.  Otherwise, it will display the Canada Base Map layer in english or french, accordingly.</p>
       <h3 class="desktop-only">How to Set or Change Your Browser's Preferred Language (navigator.language)</h3>
@@ -163,12 +186,11 @@
           </li>
           <li><strong>Microsoft Edge:</strong>
               <ul>
-                  <li>Open <code>edge://settings/languages</code> and set first 'preferred' language to a language and locale</li>
-                  <li>In DevTools, go to "More Tools" > "Rendering" and select the preferred color scheme under "Emulate CSS prefers-color-scheme."</li>
+                  <li>Open <code>edge://settings/languages</code> and add languages. Set the first 'preferred' language to any language and locale. Restart the browser for the setting to take effect.</li>
               </ul>
           </li>
       </ul>
-      <p>These settings will allow you to see how the <code>mapml-viewer</code> element adapts to different color schemes in real-time, providing an intuitive user experience that aligns with system preferences.</p>
+      <p>Manipulating these settings will allow you to see how the <code>mapml-viewer</code> element adapts to different language settings used by users.</p>
     </div>
   </body>
 </html>
