@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="dark light">
+    <title>Map Zoom</title>
+    <script type="module" src="../../../../dist/mapml.js"></script>
+    <link rel="stylesheet" href="../../../../global.css">
+    <style media="">
+        body {
+            display: flex;
+        }
+
+        mapml-viewer {
+            flex: 2;
+            height: 50vh;
+        }
+
+        .description {
+            padding: 20px;
+            flex: 1;
+        }
+
+        @media (max-width: 768px) {
+            .desktop-only {
+                display: none;
+            }
+
+            body {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        // so maybe i could do like
+        // a helper function to check all the zoom levels using matchMedia to determine
+        // what the current zoom level is, i.e. for loop?
+        // and then using that and const library to load color of the color for that zoom level
+        // true 😎
+        document.addEventListener('DOMContentLoaded', () => {
+            const map = document.querySelector('mapml-viewer');
+            const zoomColor = {
+                1: "#ff0000",
+                2: "#ff4000",
+                3: "#ff8000",
+                4: "#ffbf00",
+                5: "#ffff00",
+                6: "#80ff00",
+                7: "#00ff00",
+                8: "#00ff80",
+                9: "#00ffff",
+                10: "#0080ff",
+                11: "#0000ff",
+                12: "#4000ff",
+                13: "#8000ff",
+                14: "#bf00ff",
+                15: "#ff00ff",
+                16: "#ff0080",
+                17: "#ff0040",
+                18: "#ff0000"
+            };
+            const findZoom = () => {
+                let zoom;
+                for (zoom = 0; zoom < 19; zoom++) {
+                    let zoomMatches = map.matchMedia(`(map-zoom: ${zoom})`);
+                    if (zoomMatches.matches) {
+                        break;
+                    }
+                }
+                if (zoom) {
+                    const style = document.querySelector('map-style');
+                    style.innerHTML = '';
+                    const text = document.createTextNode(`
+                        .feature {
+                        fill: ${zoomColor[zoom]};
+                        stroke: ${zoomColor[zoom]};
+                    `)
+                    style.appendChild(text);
+                }
+            };
+            
+            map.addEventListener('zoomend', findZoom);
+        });
+    </script>
+
+    <mapml-viewer projection="OSMTILE" zoom="14" lat="45.406314" lon="-75.6883335" controls=""
+        controlslist="geolocation">
+        <map-layer data-testid="osm-layer" label="OpenStreetMap" checked="">
+            <map-link rel="license" title="Â© OpenStreetMap contributors CC BY-SA"
+                href="https://www.openstreetmap.org/copyright"></map-link>
+            <map-extent units="OSMTILE" checked="checked">
+                <map-input name="z" type="zoom" value="18" min="0" max="18"></map-input>
+                <map-input name="x" type="location" units="tilematrix" axis="column" min="0" max="262144"></map-input>
+                <map-input name="y" type="location" units="tilematrix" axis="row" min="0" max="262144"></map-input>
+                <map-link rel="tile" tref="https://tile.openstreetmap.org/{z}/{x}/{y}.png"></map-link>
+            </map-extent>
+        </map-layer>
+        <map-layer label="Feature" checked="">
+            <map-meta name="projection" content="OSMTILE"></map-meta><map-feature zoom="15">
+                <map-featurecaption>location</map-featurecaption>
+                <map-geometry cs="gcrs">
+                    <map-point class="feature">
+                        <map-coordinates>-75.697180 45.415865</map-coordinates>
+                    </map-point>
+                </map-geometry>
+            </map-feature>
+            <map-style>
+            </map-style>
+        </map-layer>
+    </mapml-viewer>
+
+    <div class="description">
+        <h2>Descriptions</h2>
+    </div>
+</body>
+</html>
