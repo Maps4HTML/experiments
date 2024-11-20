@@ -14,7 +14,7 @@
         }
 
         mapml-viewer {
-            flex: 2;
+            flex: 3;
             height: 50vh;
         }
 
@@ -24,10 +24,6 @@
         }
 
         @media (max-width: 768px) {
-            .desktop-only {
-                display: none;
-            }
-
             body {
                 flex-direction: column;
             }
@@ -37,11 +33,6 @@
 
 <body>
     <script>
-        // so maybe i could do like
-        // a helper function to check all the zoom levels using matchMedia to determine
-        // what the current zoom level is, i.e. for loop?
-        // and then using that and const library to load color of the color for that zoom level
-        // true 😎
         document.addEventListener('DOMContentLoaded', () => {
             const map = document.querySelector('mapml-viewer');
             const zoomColor = {
@@ -72,7 +63,7 @@
                         break;
                     }
                 }
-                if (zoom) {
+                if (zoom < 19) {
                     const style = document.querySelector('map-style');
                     style.innerHTML = '';
                     const text = document.createTextNode(`
@@ -83,7 +74,9 @@
                     style.appendChild(text);
                 }
             };
-            
+
+            findZoom();
+
             map.addEventListener('zoomend', findZoom);
         });
     </script>
@@ -115,7 +108,32 @@
     </mapml-viewer>
 
     <div class="description">
-        <h2>Descriptions</h2>
+        <h2>Dynamic Styling Based on Zoom Levels in <code>mapml-viewer</code></h2>
+        <p>This experiment demonstrates the dynamic styling capabilities of the <code>mapml-viewer</code> custom
+            element, where the appearance of map features adapts based on the current zoom level. Using a custom
+            <code>matchMedia</code> API, the zoom level is determined programmatically, simulating the behavior of the
+            CSS <code>@media</code> rule to provide responsive and interactive styling.
+        </p>
+        <p>The custom <code>matchMedia</code> API works similarly to <code>@media</code> in CSS because it evaluates
+            conditions dynamically. Instead of checking device properties like screen width or orientation, it evaluates
+            the zoom level of the map. When a zoom level condition is met, the corresponding styles are applied to map
+            features, creating a responsive and adaptive visualization experience.</p>
+        <p>The implementation uses a predefined color mapping that associates each zoom level (1 to 18) with a specific
+            hex color. Whenever the zoom level changes, the <code>map-style</code> element is dynamically updated with
+            the corresponding styling, ensuring a seamless and visually engaging user experience.</p>
+        <h3>How to Interact with the Map</h3>
+        <ul>
+            <li><strong>Zoom In/Out:</strong>
+                <ul>
+                    <li>Use the zoom controls on the map interface to change the zoom level.</li>
+                    <li>The feature color will dynamically update based on the current zoom level.</li>
+                </ul>
+            </li>
+        </ul>
+        <p>This page showcases how <code>mapml-viewer</code> integrates the custom <code>matchMedia</code> API to
+            dynamically style geospatial features based on zoom-level changes, emulating the responsiveness of CSS
+            <code>@media</code> rules.</p>
     </div>
 </body>
+
 </html>
