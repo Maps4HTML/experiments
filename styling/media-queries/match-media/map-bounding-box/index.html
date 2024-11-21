@@ -55,9 +55,11 @@
                     if (e.target.matches) {
                         layer.checked = true;
                         layer.removeAttribute('hidden');
+                        alert('Feature overlaps the map');
                     } else {
                         layer.checked = false;
                         layer.hidden = true;
+                        alert('Feature exits the map');
                     }
                 };
                 matcher.addEventListener('change', logResults);
@@ -108,22 +110,29 @@
 
     <div class="description">
         <h2>Dynamic Bounding Box Visualization in <code>mapml-viewer</code></h2>
-        <p>This experiment demonstrates the ability of the <code>mapml-viewer</code> custom element to dynamically calculate and visualize the map's bounding box. By leveraging a custom <code>matchMedia</code> API, the script evaluates the map's extent in real time and creates a visual representation as a new <code>map-layer</code>.</p>
-        <p>The custom <code>matchMedia</code> API dynamically checks whether the map's extent overlaps with the bounding box. This ensures that layers appear or disappear in the layer control responsively based on the map's position and zoom level.</p>
-        <p>When triggered, the implementation calculates the current map extent and uses this to define the bounding box. A new <code>map-layer</code> is created to visualize this bounding box as a polygon, which dynamically toggles its visibility depending on whether the map is within its bounds.</p>
+        <p>This experiment demonstrates the <code>matchMedia</code> API ability to query the map by using bounding box,
+            zoom, and other criteria. By leveraging a custom <code>matchMedia</code> API, the script evaluates the map's
+            extent in real time and creates a visual representation as a new <code>map-layer</code>.</p>
+        <p>The custom <code>matchMedia</code> API dynamically checks whether the map's extent overlaps with the bounding
+            box. This ensures that layers appear or disappear in the layer control responsively based on the map's
+            position and zoom level.</p>
+        <p>When triggered, the implementation calculates the current map extent and uses this to define the bounding
+            box. A new <code>map-layer</code> is created to visualize this bounding box as a polygon, which dynamically
+            toggles its visibility depending on whether the bounding box is within the map's bounds.</p>
         <h3>How to Interact with the Map</h3>
         <ul>
             <li><strong>Get Bounding Box:</strong>
                 <ul>
                     <li>Click the "Get Bounding Box" button to calculate the current map extent.</li>
                     <li>A new bounding box layer will be displayed on the map, outlining the visible region.</li>
-                    <li>Pan or zoom the map to see the layer dynamically toggle its visibility based on overlap.</li>
+                    <li>Pan or zoom the map to see the layer is dynamically added or removed on the map and in the layer
+                        control based on overlap.</li>
                 </ul>
             </li>
         </ul>
         <button class="getBoundingBox">Get Bounding Box</button>
     </div>
-    
+
 
 </body>
 
