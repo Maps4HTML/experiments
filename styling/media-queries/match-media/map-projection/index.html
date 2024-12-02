@@ -72,13 +72,21 @@
   </script>
 
   <mapml-viewer projection="OSMTILE" zoom="9" lat="44.630550504861795" lon="-103.86611938476564" controls>
-    <map-layer media="(map-projection: OSMTILE)" id="OSMTILE" src="light.mapml" checked></map-layer>
-    <map-layer media="(map-projection: CBMTILE)" id="CBMTILE" checked>
-      <map-extent label="CBMT - Lambert" units="CBMTILE" checked >
+    <map-layer label="CBMT - Web Mercator" id="OSMTILE" checked>
+      <map-extent units="OSMTILE" checked hidden>
+        <map-input name="z" type="zoom" value="15" min="0" max="15"></map-input>
+        <map-input name="y" type="location" units="tilematrix" axis="row" min="0" max="32768"></map-input>
+        <map-input name="x" type="location" units="tilematrix" axis="column" min="0" max="32768"></map-input>
+        <map-link rel="tile" tref="https://maps-cartes.services.geo.ca/server2_serveur2/rest/services/BaseMaps/CBMT_CBCT_GEOM_3857/MapServer/tile/{z}/{y}/{x}"></map-link>
+        <map-link rel="tile" tref="https://maps-cartes.services.geo.ca/server2_serveur2/rest/services/BaseMaps/CBCT_TXT_3857/MapServer/tile/{z}/{y}/{x}"></map-link>
+      </map-extent>
+    </map-layer>
+    <map-layer label="CBMT - LCC" media="(map-projection: CBMTILE)" id="CBMTILE" checked>
+      <map-extent label="CBMT - Lambert" units="CBMTILE" checked hidden>
         <map-input name="z" type="zoom" min="0" max="18"></map-input>
         <map-input name="y" type="location" units="tilematrix" axis="row"></map-input>
         <map-input name="x" type="location" units="tilematrix" axis="column"></map-input>
-        <map-link rel="tile" tref="https://maps-cartes.services.geo.ca/server2_serveur2/rest/services/BaseMaps/CBMT3978/MapServer/tile/{z}/{y}/{x}?m4h=t" ></map-link>
+        <map-link rel="tile" tref="https://maps-cartes.services.geo.ca/server2_serveur2/rest/services/BaseMaps/CBMT3978/MapServer/tile/{z}/{y}/{x}" ></map-link>
       </map-extent>
     </map-layer>
   </mapml-viewer>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Minimum Snow and Ice</title>
+        <script type="module" src="../../../../dist/mapml.js"></script>
+        <link rel="stylesheet" href="../../../../global.css">
+    </head>
+  <body>
+  <mapml-viewer projection="CBMTILE" zoom="4" lat="60" lon="-90" controls>
+    <map-layer label="CBMT" src="../../refactoring-temporary/cbmtile-cbmt.mapml" checked hidden></map-layer>
+    <map-layer label="Minimum Snow and Ice" src="msi.mapml" checked></map-layer>
+    <map-layer label="Permanent snow and ice (prob. 94% or more) WMS GetMap" src="msi-94-plus.mapml" checked></map-layer>
+  </mapml-viewer>
+  </body>
+</html>

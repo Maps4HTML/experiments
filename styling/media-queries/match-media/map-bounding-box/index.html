@@ -34,7 +34,11 @@
 <body>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const getBoundingBox = () => {
+            const getBoundingBox = (e) => {
+                // remove event listener so that user can't add > 1 query
+                e.target.removeEventListener('click',getBoundingBox);
+                document.querySelector('.getBoundingBox').disabled = true;
+                
                 const map = document.querySelector('mapml-viewer');
 
                 // Retrieve the map extent
@@ -77,7 +81,7 @@
                     .querySelector('map-layer');
                 map.appendChild(layer);
                 return { matcher, logResults };
-            }
+            };
             document.querySelector('.getBoundingBox').addEventListener('click', getBoundingBox);
         });
     </script>
