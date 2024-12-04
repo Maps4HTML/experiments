@@ -68,14 +68,14 @@
 
           if (matches) {
             // Show the layer if it matches
-            layer.removeAttribute('hidden');
-            layer.removeAttribute('disabled');
-            console.log(`showing layer with ${mediaQuery}`)
+            layer.hidden = false;
+            layer.checked = true;
+            console.log(`showing layer with ${mediaQuery}`);
           } else {
             // Hide and disable the layer if it doesn't match
-            layer.setAttribute('hidden', '');
-            layer.setAttribute('disabled', '');
-            console.log(`not showing layer with ${mediaQuery}`)
+            layer.checked = false;
+            layer.hidden = true;
+            console.log(`not showing layer with ${mediaQuery}`);
           }
         });
       }
@@ -107,33 +107,34 @@
           checkLayerVisibility();
         });
       });
-
-      // Initialize the display
-      updatePreferencesDisplay();
-      checkLayerVisibility();
+      map.whenLayersReady().then(()=>{
+        // Initialize the display
+        updatePreferencesDisplay();
+        checkLayerVisibility();
+      });
     });
   </script>
 
   <mapml-viewer projection="CBMTILE" zoom="4" lat="60" lon="-90" controls>
-    <map-layer label="Minimum Snow and Ice" src="msi.mapml" media="(prefers-map-content: images)" checked></map-layer>
+      <map-layer label="Minimum Snow and Ice" src="msi.mapml" media="((prefers-map-content: image) and (not (prefers-map-content: tile))) or (not ((prefers-map-content: tile) or (prefers-map-content: feature) or (prefers-map-content: table) or (prefers-map-content: image)))" checked></map-layer>
     <map-layer label="Permanent snow and ice (prob. 94% or more) WMS GetMap" src="msi-94-plus.mapml"
-      media="(prefers-map-content: images)" checked></map-layer>
-    <map-layer label="Provinces and territories of Canada" src="features.mapml" media="(prefers-map-content: features)"
+      media="((prefers-map-content: image) and (not (prefers-map-content: tile))) or (not ((prefers-map-content: tile) or (prefers-map-content: feature) or (prefers-map-content: table) or (prefers-map-content: image)))" checked></map-layer>
+    <map-layer label="Provinces and territories of Canada" src="features.mapml" media="(prefers-map-content: feature)"
       checked></map-layer>
     <map-layer label="Probability of the annual minimum snow and ice presence - Tiled WMS GetMap"
-      media="(prefers-map-content: tiles) and (prefers-map-content: images)" src="msi-tiles.mapml" checked></map-layer>
+      media="(prefers-map-content: tile)" src="msi-tiles.mapml" checked></map-layer>
     <map-layer label="Permanent snow and ice (prob. 94% or more) WMS GetMap - Tiled WMS GetMap"
-      media="(prefers-map-content: tiles) and (prefers-map-content: images)" src="msi-94-plus-tiles.mapml"
+      media="(prefers-map-content: tile)" src="msi-94-plus-tiles.mapml"
       checked></map-layer>
   </mapml-viewer>
 
   <div class="description">
     <h3>Content Preferences</h3>
     <div>
-      <button class="content-button" data-type="images">Images</button>
-      <button class="content-button" data-type="tiles">Tiles</button>
-      <button class="content-button" data-type="features">Features</button>
-      <button class="content-button" data-type="tables">Tables</button>
+      <button class="content-button" data-type="image">Images</button>
+      <button class="content-button" data-type="tile">Tiles</button>
+      <button class="content-button" data-type="feature">Features</button>
+      <button class="content-button" data-type="table">Tables</button>
     </div>
     <p>Selected Preferences: <span id="selectedPreferences">None</span></p>
   </div>
