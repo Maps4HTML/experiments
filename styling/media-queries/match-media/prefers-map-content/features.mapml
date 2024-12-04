@@ -2,9 +2,6 @@
   <map-head>
     <map-title>Provinces and territories of Canada</map-title>
     <map-meta charset="utf-8"></map-meta>
-    <map-link rel="style" media="prefers-map-content=image"  href="msi.mapml" title="WMS GetMap" />
-    <map-link rel="self style" media="prefers-map-content=feature" href="features.mapml" title="Features" />
-    <map-link rel="style" media="prefers-map-content=tiled-image" href="msi-tiles.mapml" title="Tiled WMS GetMap" />
   </map-head>
   <map-body>
     <map-extent units="CBMTILE" checked="checked">

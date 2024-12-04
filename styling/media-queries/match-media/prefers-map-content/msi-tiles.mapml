@@ -3,11 +3,7 @@
     <map-title>Probability of the annual minimum snow and ice presence - Tiled WMS GetMap</map-title>
     <map-meta charset="utf-8"></map-meta>
     <map-link href="https://datacube.services.geo.ca/ows/msi?SERVICE=WMS&amp;REQUEST=GetCapabilities&amp;VERSION=1.3.0" rel="license" title="Open Government License"/>
-    <map-link rel="legend" href="https://datacube.services.geo.ca/assets/legend/legend_msi_color.png" sizes="150x33" height="33" width="150" title="legend" type="image/png" />
-    <map-link rel="style" media="prefers-map-content=image"  href="msi.mapml" title="WMS GetMap" />
-    <map-link rel="style" media="prefers-map-content=feature" href="features.mapml" title="Features" />
-    <map-link rel="style self" media="prefers-map-content=tiled-image" href="msi-tiles.mapml" title="Tiled WMS GetMap" />
-    
+    <map-link rel="legend" href="https://datacube.services.geo.ca/assets/legend/legend_msi_color.png" sizes="150x33" height="33" width="150" title="legend" type="image/png" />    
   </map-head>
   <map-body>
     <map-extent units="CBMTILE" checked="checked">
