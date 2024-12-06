@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="dark light">
+    <title>Dark mode</title>
+    <script type="module" src="../dist/mapml.js"></script>
+<!--    <script type="module" src="../dist/web-map.js"></script>-->
+    <style>
+      body {
+        font-family: 'system-ui', sans-serif;
+        max-width: 50rem;
+        margin: 0 auto;
+        padding: 0 1rem;
+        overflow-wrap: break-word;
+      }
+      mapml-viewer {
+        width: 100%;
+        min-height: 50vh;
+      }
+      @media (prefers-color-scheme: dark) {
+        .user-preference-message {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+    This document is to experiment with dark mode
+    (<a href="https://github.com/Maps4HTML/MapML.js/issues/551">#551</a>).
+    </p>
+    
+    <p>
+    The author of this document has indicated to UAs it is compatible with
+    dark mode as well as light mode
+    (with a preference for dark mode)
+    using
+    <code>&lt;meta name="color-scheme" content="dark light"&gt;</code>,
+    allowing the UA to render this document with an appropriate color scheme.
+    </p>
+    
+    <p class="user-preference-message">
+      <mark>Set the preference for dark mode in your browser/OS settings or dev tools!</mark>
+    </p>
+    
+    <mapml-viewer projection="OSMTILE" zoom="1" lat="50" lon="-100" controls>
+      <map-layer label="CBMT" src="../refactoring-temporary/osm.mapml" checked></map-layer>
+    </mapml-viewer>
+    
+    <p><b>References</b></p>
+    <ul>
+      <li>
+        Use case: <a href="https://maps4html.org/HTML-Map-Element-UseCases-Requirements/#use-case-color-scheme">Customize the color scheme (light/dark or high contrast)</a>
+      </li>
+      <li>
+        HTML <code>&lt;meta name="color-scheme"&gt;</code>
+        <ul>
+          <li><a href="https://html.spec.whatwg.org/multipage/semantics.html#meta-color-scheme">https://html.spec.whatwg.org/multipage/semantics.html#meta-color-scheme</a></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name#:~:text=color-scheme">https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name#:~:text=color-scheme</a></li>
+        </ul>
+      </li>
+      <li>
+        CSS <code>color-scheme</code> property
+        <ul>
+          <li><a href="https://drafts.csswg.org/css-color-adjust/#color-scheme-prop">https://drafts.csswg.org/css-color-adjust/#color-scheme-prop</a></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme">https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme</a></li>
+        </ul>
+      </li>
+      <li>CSS <code>prefers-color-scheme</code> media feature
+        <ul>
+          <li><a href="https://drafts.csswg.org/mediaqueries-5/#prefers-color-scheme">https://drafts.csswg.org/mediaqueries-5/#prefers-color-scheme</a></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme">https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme</a></li>
+        </ul>
+      </li>
+      <li>Articles
+        <ul>
+          <li><a href="https://web.dev/color-scheme/">https://web.dev/color-scheme/</a></li>
+          <li><a href="https://web.dev/prefers-color-scheme/">https://web.dev/prefers-color-scheme/</a></li>
+        </ul>
+      </li>
+    </ul>
+  </body>
+</html>
