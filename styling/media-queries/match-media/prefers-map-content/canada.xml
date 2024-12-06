@@ -128,20 +128,8 @@
                             <td itemprop="PRNAME">Newfoundland and Labrador / Terre-Neuve-et-Labrador</td>
                         </tr>
                         <tr>
-                            <th scope="row">PRENAME</th>
-                            <td itemprop="PRENAME">Newfoundland and Labrador</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PRFNAME</th>
-                            <td itemprop="PRFNAME">Terre-Neuve-et-Labrador</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PREABBR</th>
-                            <td itemprop="PREABBR">N.L.</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PRFABBR</th>
-                            <td itemprop="PRFABBR">T.-N.-L.</td>
+                            <th scope="row">Description</th>
+                            <td>Low probabilities dominate the island of Newfoundland, with moderate increases along the northern peninsula. Labrador has generally moderate probability, ranging to high in northern North Coast region.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -174,20 +162,8 @@
                             <td itemprop="PRNAME">Prince Edward Island / Île-du-Prince-Édouard</td>
                         </tr>
                         <tr>
-                            <th scope="row">PRENAME</th>
-                            <td itemprop="PRENAME">Prince Edward Island</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PRFNAME</th>
-                            <td itemprop="PRFNAME">Île-du-Prince-Édouard</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PREABBR</th>
-                            <td itemprop="PREABBR">P.E.I.</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PRFABBR</th>
-                            <td itemprop="PRFABBR">Î.-P.-É.</td>
+                            <th scope="row">Description</th>
+                            <td>Moderate probabilities dominate across the province.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -271,20 +247,8 @@
                             <td itemprop="PRNAME">Nova Scotia / Nouvelle-Écosse</td>
                         </tr>
                         <tr>
-                            <th scope="row">PRENAME</th>
-                            <td itemprop="PRENAME">Nova Scotia</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PRFNAME</th>
-                            <td itemprop="PRFNAME">Nouvelle-Écosse</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PREABBR</th>
-                            <td itemprop="PREABBR">N.S.</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PRFABBR</th>
-                            <td itemprop="PRFABBR">N.-É.</td>
+                            <th scope="row">Description</th>
+                           <td>Low probabilities dominate, with slight increases in the Cape Breton highlands.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -335,20 +299,8 @@
                             <td itemprop="PRNAME">New Brunswick / Nouveau-Brunswick</td>
                         </tr>
                         <tr>
-                            <th scope="row">PRENAME</th>
-                            <td itemprop="PRENAME">New Brunswick</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PRFNAME</th>
-                            <td itemprop="PRFNAME">Nouveau-Brunswick</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PREABBR</th>
-                            <td itemprop="PREABBR">N.B.</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PRFABBR</th>
-                            <td itemprop="PRFABBR">N.-B.</td>
+                            <th scope="row">Description</th>
+                            <td>Low to moderate probabilities dominate across the province, with moderate values in the central and northwest towards the Gaspé.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -459,20 +411,8 @@
                             <td itemprop="PRNAME">Quebec / Québec</td>
                         </tr>
                         <tr>
-                            <th scope="row">PRENAME</th>
-                            <td itemprop="PRENAME">Quebec</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PRFNAME</th>
-                            <td itemprop="PRFNAME">Québec</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PREABBR</th>
-                            <td itemprop="PREABBR">Que.</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PRFABBR</th>
-                            <td itemprop="PRFABBR">Qc</td>
+                            <th scope="row">Description</th>
+                           <td>Northern Quebec shows higher probabilities, with moderate to low values in central and southern regions.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -572,20 +512,8 @@
                             <td itemprop="PRNAME">Ontario</td>
                         </tr>
                         <tr>
-                            <th scope="row">PRENAME</th>
-                            <td itemprop="PRENAME">Ontario</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PRFNAME</th>
-                            <td itemprop="PRFNAME">Ontario</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PREABBR</th>
-                            <td itemprop="PREABBR">Ont.</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PRFABBR</th>
-                            <td itemprop="PRFABBR">Ont.</td>
+                            <th scope="row">Description</th>
+                            <td>Northern regions exhibit moderate probabilities, transitioning to generally low in southern areas, with some moderate increase north of Lake Superior.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -618,20 +546,8 @@
                             <td itemprop="PRNAME">Manitoba</td>
                         </tr>
                         <tr>
-                            <th scope="row">PRENAME</th>
-                            <td itemprop="PRENAME">Manitoba</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PRFNAME</th>
-                            <td itemprop="PRFNAME">Manitoba</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PREABBR</th>
-                            <td itemprop="PREABBR">Man.</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PRFABBR</th>
-                            <td itemprop="PRFABBR">Man.</td>
+                            <th scope="row">Description</th>
+                            <td>Low probabilities dominate the province, with moderate to increases in northwestern regions.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -664,20 +580,8 @@
                             <td itemprop="PRNAME">Saskatchewan</td>
                         </tr>
                         <tr>
-                            <th scope="row">PRENAME</th>
-                            <td itemprop="PRENAME">Saskatchewan</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PRFNAME</th>
-                            <td itemprop="PRFNAME">Saskatchewan</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PREABBR</th>
-                            <td itemprop="PREABBR">Sask.</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PRFABBR</th>
-                            <td itemprop="PRFABBR">Sask.</td>
+                            <th scope="row">Description</th>
+                            <td>Low probabilities dominate in southern and central regions, with moderate values in the northeast.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -710,20 +614,8 @@
                             <td itemprop="PRNAME">Alberta</td>
                         </tr>
                         <tr>
-                            <th scope="row">PRENAME</th>
-                            <td itemprop="PRENAME">Alberta</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PRFNAME</th>
-                            <td itemprop="PRFNAME">Alberta</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PREABBR</th>
-                            <td itemprop="PREABBR">Alta.</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PRFABBR</th>
-                            <td itemprop="PRFABBR">Alb.</td>
+                            <th scope="row">Description</th>
+                            <td>Low probabilities dominate, with moderate values near the southwestern mountain region.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -1047,20 +939,8 @@
                             <td itemprop="PRNAME">British Columbia / Colombie-Britannique</td>
                         </tr>
                         <tr>
-                            <th scope="row">PRENAME</th>
-                            <td itemprop="PRENAME">British Columbia</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PRFNAME</th>
-                            <td itemprop="PRFNAME">Colombie-Britannique</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PREABBR</th>
-                            <td itemprop="PREABBR">B.C.</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PRFABBR</th>
-                            <td itemprop="PRFABBR">C.-B.</td>
+                            <th scope="row">Description</th>
+                            <td>Moderate to high probabilities dominate the coastal and  mountainous regions, with lower values in the interior.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -1110,20 +990,8 @@
                             <td itemprop="PRNAME">Yukon</td>
                         </tr>
                         <tr>
-                            <th scope="row">PRENAME</th>
-                            <td itemprop="PRENAME">Yukon</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PRFNAME</th>
-                            <td itemprop="PRFNAME">Yukon</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PREABBR</th>
-                            <td itemprop="PREABBR">Y.T.</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PRFABBR</th>
-                            <td itemprop="PRFABBR">Yn</td>
+                            <th scope="row">Description</th>
+                            <td>Low probabilities are found the interior, with moderate to high probabilities in mountainous and coastal regions.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -1266,20 +1134,8 @@
                             <td itemprop="PRNAME">Northwest Territories / Territoires du Nord-Ouest</td>
                         </tr>
                         <tr>
-                            <th scope="row">PRENAME</th>
-                            <td itemprop="PRENAME">Northwest Territories</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PRFNAME</th>
-                            <td itemprop="PRFNAME">Territoires du Nord-Ouest</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PREABBR</th>
-                            <td itemprop="PREABBR">N.W.T.</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PRFABBR</th>
-                            <td itemprop="PRFABBR">T.N.-O.</td>
+                            <th scope="row">Description</th>
+                            <td>Very low probabilities dominate in the south, with moderate to high probability in the great lakes and coastal regions.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -2012,20 +1868,8 @@
                             <td itemprop="PRNAME">Nunavut</td>
                         </tr>
                         <tr>
-                            <th scope="row">PRENAME</th>
-                            <td itemprop="PRENAME">Nunavut</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PRFNAME</th>
-                            <td itemprop="PRFNAME">Nunavut</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PREABBR</th>
-                            <td itemprop="PREABBR">Nvt.</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">PRFABBR</th>
-                            <td itemprop="PRFABBR">Nt</td>
+                            <th scope="row">Description</th>
+                            <td>Moderate probabilities towards the southern borders, with high values in Hudson's Bay, the Arctic archipelago and most coastal regions. Permanent snow and ice can be found in the northern islands.</td>
                         </tr>
                     </tbody>
                 </table>
