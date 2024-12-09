@@ -4,8 +4,6 @@
     <map-meta charset="utf-8"></map-meta>
     <map-link href="https://datacube.services.geo.ca/ows/msi?SERVICE=WMS&amp;REQUEST=GetCapabilities&amp;VERSION=1.3.0" rel="license" title="Open Government License"/>
     <map-link rel="legend" href="https://datacube.services.geo.ca/assets/legend/legend_msi_binary.png" sizes="150x33" height="33" width="150" title="legend" type="image/png" />
-    <map-link rel="style"   media="prefers-map-content=image" href="msi-94-plus.mapml" title="WMS GetMap" />
-    <map-link rel="self style" media="prefers-map-content=tiled-image" href="msi-94-plus-tiles.mapml" title="Tiled WMS GetMap" />
   </map-head>
   <map-body>
     <map-extent units="CBMTILE" checked="checked">
