@@ -1,0 +1,29 @@
+body {
+    display: flex;
+    flex-direction: row;
+}
+
+mapml-viewer {
+    display: none;
+    flex: 3;
+}
+
+table {
+    flex: 3;
+}
+
+.content-button.selected {
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+}
+
+.content-button {
+    margin: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.description {
+    flex: 1;
+}
