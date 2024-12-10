@@ -12,7 +12,7 @@
       <map-input name="ymax" type="location" rel="map" position="top-left" axis="northing" units="pcrs" min="-1692155.9568245453" max="4482681.2054050295"/>
       <map-input name="w" type="width" min="0" max="10000"/>
       <map-input name="h" type="height" min="0" max="10000"/>
-      <map-link tref="canada.xml?zoom={z}" rel="features"/>
+      <map-link tref="../canada.xml?zoom={z}" rel="features"/>
     </map-extent>
   </map-body>
 </mapml->
