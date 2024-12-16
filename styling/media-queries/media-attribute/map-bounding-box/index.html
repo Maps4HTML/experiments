@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="dark light">
+    <title>Map Bounding Box</title>
+    <script type="module" src="../../../../dist/mapml.js"></script>
+    <link rel="stylesheet" href="../../../../global.css">
+    <style>
+        body {
+            display: flex;
+        }
+
+        mapml-viewer {
+            flex: 3;
+            height: 50vh;
+        }
+
+        .description {
+            padding: 20px;
+            flex: 1;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const getBoundingBox = (e) => {
+                document.querySelector('.getBoundingBox').disabled = true;
+                
+                const map = document.querySelector('mapml-viewer');
+
+                // Retrieve the map extent
+                const extent = map.extent;
+
+                // Extract the PCRS values for the bounding box
+                const topLeftEasting = Math.trunc(extent.topLeft.pcrs.horizontal);
+                const topLeftNorthing = Math.trunc(extent.topLeft.pcrs.vertical);
+                const bottomRightEasting = Math.trunc(extent.bottomRight.pcrs.horizontal);
+                const bottomRightNorthing = Math.trunc(extent.bottomRight.pcrs.vertical);
+
+                // Format the media query string to detect overlap:
+                // (xminm < xmaxq) and (xmaxm > xminq) and (yminm < ymaxq) and (ymaxm > yminq)
+                const query = `(map-projection: OSMTILE) and (map-zoom < 14) and (map-top-left-easting < ${bottomRightEasting}) and (map-bottom-right-easting > ${topLeftEasting}) and (map-bottom-right-northing < ${topLeftNorthing}) and (map-top-left-northing > ${bottomRightNorthing})`;
+
+
+                // create a layer to visually represent the query as the map moves
+                let f = `<map-layer checked label="test media query"><map-meta name="projection" content="OSMTILE"></map-meta>
+                    <map-meta name="cs" content="pcrs"></map-meta><map-feature><map-properties>${query}</map-properties>
+                    <map-geometry><map-polygon><map-coordinates>${topLeftEasting} ${topLeftNorthing}
+                    ${bottomRightEasting} ${topLeftNorthing} ${bottomRightEasting} ${bottomRightNorthing} ${topLeftEasting} ${bottomRightNorthing}
+                    ${topLeftEasting} ${topLeftNorthing}</map-coordinates</map-polygon></map-geometry></map-feature></map-layer>`;
+
+                const parser = new DOMParser();
+                const layer = parser
+                    .parseFromString(f, 'text/html')
+                    .querySelector('map-layer');
+                map.appendChild(layer);
+            };
+            document.querySelector('.getBoundingBox').addEventListener('click', getBoundingBox);
+        });
+    </script>
+
+    <mapml-viewer projection="OSMTILE" zoom="14" lat="45.406314" lon="-75.6883335" controls=""
+        controlslist="geolocation">
+        <map-layer data-testid="osm-layer" label="OpenStreetMap" checked="">
+            <map-link rel="license" title="© OpenStreetMap contributors CC BY-SA"
+                href="https://www.openstreetmap.org/copyright"></map-link>
+            <map-extent units="OSMTILE" checked="checked">
+                <map-input name="z" type="zoom" value="18" min="0" max="18"></map-input>
+                <map-input name="x" type="location" units="tilematrix" axis="column" min="0" max="262144"></map-input>
+                <map-input name="y" type="location" units="tilematrix" axis="row" min="0" max="262144"></map-input>
+                <map-link rel="tile" tref="https://tile.openstreetmap.org/{z}/{x}/{y}.png"></map-link>
+            </map-extent>
+        </map-layer>
+        <map-layer label="Feature" checked="">
+            <map-meta name="projection" content="OSMTILE"></map-meta><map-feature zoom="15">
+                <map-featurecaption>location</map-featurecaption>
+                <map-geometry cs="gcrs">
+                    <map-point class="feature">
+                        <map-coordinates>-75.697180 45.415865</map-coordinates>
+                    </map-point>
+                </map-geometry>
+            </map-feature>
+            <map-style>
+            </map-style>
+        </map-layer>
+    </mapml-viewer>
+
+    <div class="description">
+        <h2>Dynamic Bounding Box Visualization in <code>mapml-viewer</code></h2>
+        <p>This experiment demonstrates the <code>matchMedia</code> API ability to query the map by using bounding box,
+            zoom, and other criteria. By leveraging a custom <code>matchMedia</code> API, the script evaluates the map's
+            extent in real time and creates a visual representation as a new <code>map-layer</code>.</p>
+        <p>The custom <code>matchMedia</code> API dynamically checks whether the map's extent overlaps with the bounding
+            box. This ensures that layers appear or disappear in the layer control responsively based on the map's
+            position and zoom level.</p>
+        <p>When triggered, the implementation calculates the current map extent and uses this to define the bounding
+            box. A new <code>map-layer</code> is created to visualize this bounding box as a polygon, which dynamically
+            toggles its visibility depending on whether the bounding box is within the map's bounds.</p>
+        <h3>How to Interact with the Map</h3>
+        <ul>
+            <li><strong>Get Bounding Box:</strong>
+                <ul>
+                    <li>Click the "Get Bounding Box" button to calculate the current map extent.</li>
+                    <li>A new bounding box layer will be displayed on the map, outlining the visible region.</li>
+                    <li>Pan or zoom the map to see the layer is dynamically added or removed on the map and in the layer
+                        control based on overlap.</li>
+                </ul>
+            </li>
+        </ul>
+        <button class="getBoundingBox">Get Bounding Box</button>
+    </div>
+
+
+</body>
+
+</html>
