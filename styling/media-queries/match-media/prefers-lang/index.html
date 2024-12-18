@@ -65,9 +65,9 @@
       document.addEventListener('DOMContentLoaded',(e) => {
         // this experiment is meant to be the procedural equivalent of:
         // 
-        // <map-layer lang=en media="(prefers-lang: en)" src="https://geogratis.gc.ca/mapml/en/osmtile/cbmt/" checked></map-layer>
-        // <map-layer lang=fr media="(prefers-lang: fr)" src="https://geogratis.gc.ca/mapml/fr/osmtile/cbmt/" checked></map-layer>
-        // <map-layer         media="not (prefers-lang: en) and not (prefers-lang: fr)"data-testid="osm-layer" label="OpenStreetMap" checked>
+        // <map-layer lang=en data-media="(prefers-lang: en)" src="https://geogratis.gc.ca/mapml/en/osmtile/cbmt/" checked></map-layer>
+        // <map-layer lang=fr data-media="(prefers-lang: fr)" src="https://geogratis.gc.ca/mapml/fr/osmtile/cbmt/" checked></map-layer>
+        // <map-layer         data-media="not (prefers-lang: en) and not (prefers-lang: fr)"data-testid="osm-layer" label="OpenStreetMap" checked>
         //   <map-link rel="license" title="© OpenStreetMap contributors CC BY-SA" href="https://www.openstreetmap.org/copyright"></map-link>
         //   <map-extent units="OSMTILE" checked="checked">
         //     <map-input name="z" type="zoom" value="18" min="0" max="18">  </map-input>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="dark light">
+    <title>Map Zoom</title>
+    <script type="module" src="../../../../dist/mapml.js"></script>
+    <link rel="stylesheet" href="../../../../global.css">
+    <style media="">
+        body {
+            display: flex;
+        }
+
+        mapml-viewer {
+            flex: 3;
+            height: 50vh;
+        }
+
+        .description {
+            padding: 20px;
+            flex: 1;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const map = document.querySelector('mapml-viewer');
+            const zoomColor = {
+                1: "#ff0000",
+                2: "#ff4000",
+                3: "#ff8000",
+                4: "#ffbf00",
+                5: "#ffff00",
+                6: "#80ff00",
+                7: "#00ff00",
+                8: "#00ff80",
+                9: "#00ffff",
+                10: "#0080ff",
+                11: "#0000ff",
+                12: "#4000ff",
+                13: "#8000ff",
+                14: "#bf00ff",
+                15: "#ff00ff",
+                16: "#ff0080",
+                17: "#ff0040",
+                18: "#ff0000"
+            };
+            const findZoom = () => {
+                let zoom;
+                for (zoom = 0; zoom < 19; zoom++) {
+                    let zoomMatches = map.matchMedia(`(map-zoom: ${zoom})`);
+                    if (zoomMatches.matches) {
+                        break;
+                    }
+                }
+                if (zoom < 19) {
+                    const style = document.querySelector('map-style');
+                    style.innerHTML = '';
+                    const text = document.createTextNode(`
+                        .feature {
+                        fill: ${zoomColor[zoom]};
+                        stroke: ${zoomColor[zoom]};
+                    }`);
+                    style.appendChild(text);
+                }
+            };
+
+            findZoom();
+
+            map.addEventListener('zoomend', findZoom);
+        });
+    </script>
+
+    <mapml-viewer projection="OSMTILE" zoom="14" lat="45.406314" lon="-75.6883335" controls=""
+        controlslist="geolocation">
+        <map-layer data-testid="osm-layer" label="OpenStreetMap" checked="">
+            <map-link rel="license" title="Â© OpenStreetMap contributors CC BY-SA"
+                href="https://www.openstreetmap.org/copyright"></map-link>
+            <map-extent units="OSMTILE" checked="checked">
+                <map-input name="z" type="zoom" value="18" min="0" max="18"></map-input>
+                <map-input name="x" type="location" units="tilematrix" axis="column" min="0" max="262144"></map-input>
+                <map-input name="y" type="location" units="tilematrix" axis="row" min="0" max="262144"></map-input>
+                <map-link rel="tile" tref="https://tile.openstreetmap.org/{z}/{x}/{y}.png"></map-link>
+            </map-extent>
+        </map-layer>
+        <map-layer label="Feature" checked="">
+            <map-meta name="projection" content="OSMTILE"></map-meta><map-feature zoom="15">
+                <map-featurecaption>location</map-featurecaption>
+                <map-geometry cs="gcrs">
+                    <map-point class="feature">
+                        <map-coordinates>-75.697180 45.415865</map-coordinates>
+                    </map-point>
+                </map-geometry>
+            </map-feature>
+            <map-style>
+            </map-style>
+        </map-layer>
+    </mapml-viewer>
+
+    <div class="description">
+        <h2>Dynamic Styling Based on Zoom Levels in <code>mapml-viewer</code></h2>
+        <p>This experiment demonstrates the dynamic styling capabilities of the <code>mapml-viewer</code> custom
+            element, where the appearance of map features adapts based on the current zoom level. Using a custom
+            <code>matchMedia</code> API, the zoom level is determined programmatically, simulating the behavior of the
+            CSS <code>@media</code> rule to provide responsive and interactive styling.
+        </p>
+        <p>The custom <code>matchMedia</code> API works similarly to <code>@media</code> in CSS because it evaluates
+            conditions dynamically. Instead of checking device properties like screen width or orientation, it evaluates
+            the zoom level of the map. When a zoom level condition is met, the corresponding styles are applied to map
+            features, creating a responsive and adaptive visualization experience.</p>
+        <p>The implementation uses a predefined color mapping that associates each zoom level (1 to 18) with a specific
+            hex color. Whenever the zoom level changes, the <code>map-style</code> element is dynamically updated with
+            the corresponding styling, ensuring a seamless and visually engaging user experience.</p>
+        <h3>How to Interact with the Map</h3>
+        <ul>
+            <li><strong>Zoom In/Out:</strong>
+                <ul>
+                    <li>Use the zoom controls on the map interface to change the zoom level.</li>
+                    <li>The feature color will dynamically update based on the current zoom level.</li>
+                </ul>
+            </li>
+        </ul>
+        <p>This page showcases how <code>mapml-viewer</code> integrates the custom <code>matchMedia</code> API to
+            dynamically style geospatial features based on zoom-level changes, emulating the responsiveness of CSS
+            <code>@media</code> rules.</p>
+    </div>
+</body>
+
+</html>

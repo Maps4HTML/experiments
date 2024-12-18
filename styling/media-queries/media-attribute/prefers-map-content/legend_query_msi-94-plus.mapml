@@ -1,0 +1,26 @@
+<mapml- xmlns="http://www.w3.org/1999/xhtml">
+  <map-head>
+    <map-title>Legend</map-title>
+    <map-meta charset="utf-8" ></map-meta>
+    <map-meta name="projection" content="CBMTILE"></map-meta>
+  </map-head>
+  <map-body>
+    <map-feature>
+      <map-featurecaption>Legend</map-featurecaption>
+      <map-properties>
+        <table>
+          <th>Meaning</th><th>Symbol</th>
+          <tr>
+            <td>Probability of the annual minimum snow and ice presence</td>
+            <td><img src="https://datacube.services.geo.ca/assets/legend/legend_msi_color.png"/></td>
+          </tr>
+          <tr>
+            <td>Snow or ice (&gt; 94% probability)</td>
+            <td><img src="https://datacube.services.geo.ca/assets/legend/legend_msi_binary.png"/></td>
+          </tr>
+        </table>
+      </map-properties>
+    </map-feature>
+  </map-body>
+</mapml->
+

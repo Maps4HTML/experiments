@@ -31,35 +31,17 @@
         selectedPreferencesDisplay.textContent = preferences.length
           ? preferences.join(', ')
           : 'None';
+          // force the map to update, since the media query updates on
+          // map moveend
+          map.zoomTo(map.lat+.0001,map.lon,map.zoom);
       }
 
       // Function to check layer visibility
-      function checkLayerVisibility() {
-        layers.forEach((layer) => {
-          const mediaQuery = layer.getAttribute('data-media');
-          if (!mediaQuery) return; // Skip layers without a media attribute
-
-          // Use matchMedia to evaluate the media query
-          const matches = map.matchMedia(mediaQuery).matches;
-
-          if (matches) {
-            // Show the layer if it matches
-            layer.hidden = false;
-            layer.checked = true;
-            console.log(`showing layer with ${mediaQuery}`);
-          } else {
-            // Hide and disable the layer if it doesn't match
-            layer.checked = false;
-            layer.hidden = true;
-            console.log(`not showing layer with ${mediaQuery}`);
-          }
-        });
-      }
 
       // Add click event listeners to each button
       buttons.forEach((button) => {
         button.addEventListener('click', () => {
-          console.log('button clicked');
+
           const contentType = button.getAttribute('data-type');
 
           // Check if the type is already selected
@@ -80,7 +62,7 @@
 
           // Update the display and check layer visibility
           updatePreferencesDisplay();
-          checkLayerVisibility();
+
         });
       });
 
@@ -94,26 +76,24 @@
         }
       });
 
-      map.whenLayersReady().then(() => {
-        // Initialize the display
+
         updatePreferencesDisplay();
-        checkLayerVisibility();
-      });
+
     });
   </script>
 
   <mapml-viewer projection="CBMTILE" zoom="4" lat="60" lon="-90" controls>
-    <map-layer label="Minimum Snow and Ice" src="msi.mapml"
-      data-media="((prefers-map-content: image) and (not (prefers-map-content: tile))) or (not ((prefers-map-content: tile) or (prefers-map-content: feature) or (prefers-map-content: table) or (prefers-map-content: image)))"
+    <map-layer label="Minimum Snow and Ice - WMS GetMap" src="msi.mapml"
+      media="((prefers-map-content: image) and (not (prefers-map-content: tile))) or (not ((prefers-map-content: tile) or (prefers-map-content: feature) or (prefers-map-content: table) or (prefers-map-content: image)))"
       checked></map-layer>
     <map-layer label="Permanent snow and ice (prob. 94% or more) WMS GetMap" src="msi-94-plus.mapml"
-      data-media="((prefers-map-content: image) and (not (prefers-map-content: tile))) or (not ((prefers-map-content: tile) or (prefers-map-content: feature) or (prefers-map-content: table) or (prefers-map-content: image)))"
+      media="((prefers-map-content: image) and (not (prefers-map-content: tile))) or (not ((prefers-map-content: tile) or (prefers-map-content: feature) or (prefers-map-content: table) or (prefers-map-content: image)))"
       checked></map-layer>
     <map-layer label="Probability of the annual minimum snow and ice presence - Tiled WMS GetMap"
-      data-media="(prefers-map-content: tile)" src="msi-tiles.mapml" checked></map-layer>
+      media="(prefers-map-content: tile)" src="msi-tiles.mapml" checked></map-layer>
     <map-layer label="Permanent snow and ice (prob. 94% or more) WMS GetMap - Tiled WMS GetMap"
-      data-media="(prefers-map-content: tile)" src="msi-94-plus-tiles.mapml" checked></map-layer>
-    <map-layer label="Provinces and territories of Canada" src="features.mapml" data-media="(prefers-map-content: feature)"
+      media="(prefers-map-content: tile)" src="msi-94-plus-tiles.mapml" checked></map-layer>
+    <map-layer label="Provinces and territories of Canada" src="features.mapml" media="(prefers-map-content: feature)"
       checked></map-layer>
   </mapml-viewer>
 
