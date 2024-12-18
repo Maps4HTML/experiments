@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>Map Projection Toggle</title>
+  <script type="module" src="../../../../../dist/mapml.js"></script>
+  <link rel="stylesheet" href="../../../../../global.css">
+  <style>
+    body {
+      display: flex;
+    }
+
+    mapml-viewer {
+      flex: 2;
+      height: 50vh;
+    }
+
+    .description {
+      padding: 20px;
+      flex: 1;
+    }
+
+    @media (max-width: 768px) {
+      .desktop-only {
+        display: none;
+      }
+
+      body {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <mapml-viewer projection="OSMTILE" zoom="7" lat="50.1766337303461" lon="-97.19386326354089" controls>
+    <map-layer media="(map-projection: OSMTILE)" label="CBMT - Web Mercator" checked>
+      <map-extent units="OSMTILE" checked hidden>
+        <map-input name="z" type="zoom" value="15" min="0" max="15"></map-input>
+        <map-input name="y" type="location" units="tilematrix" axis="row" min="0" max="32768"></map-input>
+        <map-input name="x" type="location" units="tilematrix" axis="column" min="0" max="32768"></map-input>
+        <map-link rel="tile" tref="https://maps-cartes.services.geo.ca/server2_serveur2/rest/services/BaseMaps/CBMT_CBCT_GEOM_3857/MapServer/tile/{z}/{y}/{x}"></map-link>
+        <map-link rel="tile" tref="https://maps-cartes.services.geo.ca/server2_serveur2/rest/services/BaseMaps/CBCT_TXT_3857/MapServer/tile/{z}/{y}/{x}"></map-link>
+      </map-extent>
+    </map-layer>
+    <map-layer  media="(map-projection: CBMTILE)" label="CBMT - LCC" media="(map-projection: CBMTILE)" checked>
+      <map-extent label="CBMT - Lambert" units="CBMTILE" checked hidden>
+        <map-input name="z" type="zoom" min="0" max="18"></map-input>
+        <map-input name="y" type="location" units="tilematrix" axis="row"></map-input>
+        <map-input name="x" type="location" units="tilematrix" axis="column"></map-input>
+        <map-link rel="tile" tref="https://maps-cartes.services.geo.ca/server2_serveur2/rest/services/BaseMaps/CBMT3978/MapServer/tile/{z}/{y}/{x}" ></map-link>
+      </map-extent>
+    </map-layer>
+  </mapml-viewer>
+
+  <div class="description">
+    <button onclick="document.querySelector('mapml-viewer').projection='OSMTILE'">Web Mercator</button>
+    <button onclick="document.querySelector('mapml-viewer').projection='CBMTILE'">Lambert Conformal Conic</button>
+      <h2>Map projection media queries</h2>
+      
+      <p>Maps come in many <a href="https://en.wikipedia.org/wiki/Map_projection">projections</a> that serve different purposes. Web maps have the ability to <i>change</i> projection based on criteria established by the map author.  For example, some maps change projection as you zoom out, to give you the impression of altitude from the curved surface of the globe.  In other cases, changing projections is not an aesthetic consideration but a scientific or technical one, because any transformation of the surface of the globe to a plane imposes distortion on the depicted features. The nature of the distortion can be chosen by choosing a projection with different or appropriate qualities.</p>
+      
+      <p>Changing projection can be technically challenging for web maps, because not all data sources are created in all the projections that might be needed for a complete web mapping application. </p>
+      
+      <p>The buttons above set the <code>&lt;mapml-viewer&gt;</code>'s projection (attribute) to "Web Mercator" (OSMTILE) or Lambert Conformal Conic (CBMTILE).  Normally, if a child <code>&lt;map-layer&gt;</code> is not capable of presenting in a different projection, it will become disabled in the layer control and not rendered on the map. In this experiment, instead of allowing the map to become inert when the projection changes, the author has registered a map <a href="https://maps4html.org/web-map-doc/docs/api/mapml-viewer-api#matchmediamediaquerystring">media query</a> on the map's projection, and each time it changes, an event handler is notified by the registered query, and the handler procedurally changes the map's data source (<code>&lt;map-layer&gt;</code>), because the server-based image tile collections for the two projections typically have different URL values and indeed, quite different structures.</p>
+      
+      <p>Making projection and data source changes available through a button in this example is contrived to demonstrate this capability. However, a similar approach could be taken in real-life applications, in response to user-induced changes in map state (<a href="../map-bounding-box/">panning</a> or <a href="../map-zoom/">zooming</a> or linking), changing projection and data sources in cascading responses to queried map state changes.</p>
+      
+  </div>
+</body>
+
+</html>

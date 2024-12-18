@@ -54,7 +54,9 @@
 
 
                 // create a layer to visually represent the query as the map moves
-                let f = `<map-layer checked label="test media query"><map-meta name="projection" content="OSMTILE"></map-meta>
+                let f = `<map-layer checked label="test media query" 
+                    media="(map-projection: OSMTILE) and (map-zoom < 14) and (map-top-left-easting < ${bottomRightEasting}) and (map-bottom-right-easting > ${topLeftEasting}) and (map-bottom-right-northing < ${topLeftNorthing}) and (map-top-left-northing > ${bottomRightNorthing})">
+                    <map-meta name="projection" content="OSMTILE"></map-meta>
                     <map-meta name="cs" content="pcrs"></map-meta><map-feature><map-properties>${query}</map-properties>
                     <map-geometry><map-polygon><map-coordinates>${topLeftEasting} ${topLeftNorthing}
                     ${bottomRightEasting} ${topLeftNorthing} ${bottomRightEasting} ${bottomRightNorthing} ${topLeftEasting} ${bottomRightNorthing}

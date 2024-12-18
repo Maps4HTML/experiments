@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="dark light">
     <title>Map Zoom</title>
-    <script type="module" src="../../../../dist/mapml.js"></script>
-    <link rel="stylesheet" href="../../../../global.css">
-    <style media="">
+    <script type="module" src="../../../../../dist/mapml.js"></script>
+    <link rel="stylesheet" href="../../../../../global.css">
+    <style>
         body {
             display: flex;
         }
@@ -32,59 +32,10 @@
 </head>
 
 <body>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const map = document.querySelector('mapml-viewer');
-            const zoomColor = {
-                1: "#ff0000",
-                2: "#ff4000",
-                3: "#ff8000",
-                4: "#ffbf00",
-                5: "#ffff00",
-                6: "#80ff00",
-                7: "#00ff00",
-                8: "#00ff80",
-                9: "#00ffff",
-                10: "#0080ff",
-                11: "#0000ff",
-                12: "#4000ff",
-                13: "#8000ff",
-                14: "#bf00ff",
-                15: "#ff00ff",
-                16: "#ff0080",
-                17: "#ff0040",
-                18: "#ff0000"
-            };
-            const findZoom = () => {
-                let zoom;
-                for (zoom = 0; zoom < 19; zoom++) {
-                    let zoomMatches = map.matchMedia(`(map-zoom: ${zoom})`);
-                    if (zoomMatches.matches) {
-                        break;
-                    }
-                }
-                if (zoom < 19) {
-                    const style = document.querySelector('map-style');
-                    style.innerHTML = '';
-                    const text = document.createTextNode(`
-                        .feature {
-                        fill: ${zoomColor[zoom]};
-                        stroke: ${zoomColor[zoom]};
-                    }`);
-                    style.appendChild(text);
-                }
-            };
-
-            findZoom();
-
-            map.addEventListener('zoomend', findZoom);
-        });
-    </script>
-
     <mapml-viewer projection="OSMTILE" zoom="14" lat="45.406314" lon="-75.6883335" controls=""
         controlslist="geolocation">
         <map-layer data-testid="osm-layer" label="OpenStreetMap" checked="">
-            <map-link rel="license" title="Â© OpenStreetMap contributors CC BY-SA"
+            <map-link rel="license" title="© OpenStreetMap contributors CC BY-SA"
                 href="https://www.openstreetmap.org/copyright"></map-link>
             <map-extent units="OSMTILE" checked="checked">
                 <map-input name="z" type="zoom" value="18" min="0" max="18"></map-input>
@@ -94,16 +45,33 @@
             </map-extent>
         </map-layer>
         <map-layer label="Feature" checked="">
-            <map-meta name="projection" content="OSMTILE"></map-meta><map-feature zoom="15">
-                <map-featurecaption>location</map-featurecaption>
-                <map-geometry cs="gcrs">
-                    <map-point class="feature">
-                        <map-coordinates>-75.697180 45.415865</map-coordinates>
-                    </map-point>
-                </map-geometry>
-            </map-feature>
-            <map-style>
-            </map-style>
+          <map-link rel="stylesheet" href="1.css" media="(map-zoom: 0)"></map-link>
+          <map-link rel="stylesheet" href="2.css" media="(map-zoom: 1)"></map-link>
+          <map-link rel="stylesheet" href="3.css" media="(map-zoom: 2)"></map-link>
+          <map-link rel="stylesheet" href="4.css" media="(map-zoom: 3)"></map-link>
+          <map-link rel="stylesheet" href="5.css" media="(map-zoom: 4)"></map-link>
+          <map-link rel="stylesheet" href="6.css" media="(map-zoom: 5)"></map-link>
+          <map-link rel="stylesheet" href="7.css" media="(map-zoom: 6)"></map-link>
+          <map-link rel="stylesheet" href="8.css" media="(map-zoom: 7)"></map-link>
+          <map-link rel="stylesheet" href="9.css" media="(map-zoom: 8)"></map-link>
+          <map-link rel="stylesheet" href="10.css" media="(map-zoom: 9)"></map-link>
+          <map-link rel="stylesheet" href="11.css" media="(map-zoom: 10)"></map-link>
+          <map-link rel="stylesheet" href="12.css" media="(map-zoom: 11)"></map-link>
+          <map-link rel="stylesheet" href="13.css" media="(map-zoom: 12)"></map-link>
+          <map-link rel="stylesheet" href="14.css" media="(map-zoom: 13)"></map-link>
+          <map-link rel="stylesheet" href="15.css" media="(map-zoom: 14)"></map-link>
+          <map-link rel="stylesheet" href="16.css" media="(map-zoom: 15)"></map-link>
+          <map-link rel="stylesheet" href="17.css" media="(map-zoom: 16)"></map-link>
+          <map-link rel="stylesheet" href="18.css" media="(map-zoom: 17)"></map-link>
+          <map-meta name="projection" content="OSMTILE"></map-meta>
+          <map-feature zoom="15">
+              <map-featurecaption>location</map-featurecaption>
+              <map-geometry cs="gcrs">
+                  <map-point class="feature">
+                      <map-coordinates>-75.697180 45.415865</map-coordinates>
+                  </map-point>
+              </map-geometry>
+          </map-feature>
         </map-layer>
     </mapml-viewer>
 
