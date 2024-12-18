@@ -9,7 +9,9 @@
   </head>
   <body>
     <mapml-viewer projection="OSMTILE" zoom="7" lat="51.8" lon="-97.8" controls>
-      <map-layer label="CBMT" src="../cbmt-osmtile.mapml" checked ></map-layer>
+      <map-layer  src="../natgeo-osmtile.mapml" media="(0 <= map-zoom <= 5)" checked ></map-layer>
+      <map-layer  src="../cbmt-osmtile.mapml" media="(6 <= map-zoom <= 10)" checked ></map-layer>
+      <map-layer  src="../toporama-osmtile.mapml" media="(11 <= map-zoom <= 22)" checked ></map-layer>
     </mapml-viewer>
   </body>
 </html>
