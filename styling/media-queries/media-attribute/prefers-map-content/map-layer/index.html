@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Minimum Snow and Ice</title>
+  <script type="module" src="../../../../../dist/mapml.js"></script>
+  <link rel="stylesheet" href="../../../../../global.css">
+  <link id="stylesheet" rel="stylesheet" href="../default.css">
+</head>
+
+<body>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Ensure M.options.contentPreference is initialized
+      if (!M.options.contentPreference) {
+        M.options.contentPreference = [];
+      }
+
+      // Get references to the elements
+      const buttons = document.querySelectorAll('.content-button');
+      const tableButton = document.querySelector('.table-button');
+      const selectedPreferencesDisplay = document.getElementById('selectedPreferences');
+      const layers = document.querySelectorAll('map-layer');
+      const map = document.querySelector('mapml-viewer');
+
+      // Function to update the selected preferences display
+      function updatePreferencesDisplay() {
+        const preferences = M.options.contentPreference || [];
+        selectedPreferencesDisplay.textContent = preferences.length
+          ? preferences.join(', ')
+          : 'None';
+          // force the map to update, since the media query updates on
+          // map moveend
+          map.zoomTo(map.lat+.0001,map.lon,map.zoom);
+      }
+
+      // Function to check layer visibility
+
+      // Add click event listeners to each button
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+
+          const contentType = button.getAttribute('data-type');
+
+          // Check if the type is already selected
+          let index = M.options.contentPreference.indexOf(contentType);
+
+          if (index === -1) {
+            // Add the type if not already selected
+            M.options.contentPreference.push(contentType);
+            button.classList.add('selected'); // Optional: Add visual indication
+          } else {
+            while (index !== -1) {
+              // Remove the type if already selected
+              M.options.contentPreference.splice(index, 1);
+              button.classList.remove('selected'); // Optional: Remove visual indication
+              index = M.options.contentPreference.indexOf(contentType);
+            }
+          }
+
+          // Update the display and check layer visibility
+          updatePreferencesDisplay();
+
+        });
+      });
+
+      tableButton.addEventListener('click', async () => {
+        const stylesheet = document.getElementById('stylesheet');
+        const prefersTable = map.matchMedia('(prefers-map-content: table)').matches;
+        if (prefersTable) {
+          stylesheet.setAttribute('href', '../prefers-table.css');
+        } else {
+          stylesheet.setAttribute('href', '../default.css');
+        }
+      });
+
+
+        updatePreferencesDisplay();
+
+    });
+  </script>
+
+  <mapml-viewer projection="CBMTILE" zoom="4" lat="60" lon="-90" controls>
+    <map-layer label="Minimum Snow and Ice - WMS GetMap" src="msi.mapml"
+      media="((prefers-map-content: image) and (not (prefers-map-content: tile))) or (not ((prefers-map-content: tile) or (prefers-map-content: feature) or (prefers-map-content: table) or (prefers-map-content: image)))"
+      checked></map-layer>
+    <map-layer label="Permanent snow and ice (prob. 94% or more) WMS GetMap" src="msi-94-plus.mapml"
+      media="((prefers-map-content: image) and (not (prefers-map-content: tile))) or (not ((prefers-map-content: tile) or (prefers-map-content: feature) or (prefers-map-content: table) or (prefers-map-content: image)))"
+      checked></map-layer>
+    <map-layer label="Probability of the annual minimum snow and ice presence - Tiled WMS GetMap"
+      media="(prefers-map-content: tile)" src="msi-tiles.mapml" checked></map-layer>
+    <map-layer label="Permanent snow and ice (prob. 94% or more) WMS GetMap - Tiled WMS GetMap"
+      media="(prefers-map-content: tile)" src="msi-94-plus-tiles.mapml" checked></map-layer>
+    <map-layer label="Provinces and territories of Canada" src="features.mapml" media="(prefers-map-content: feature)"
+      checked></map-layer>
+  </mapml-viewer>
+
+  <table border="1">
+    <caption>Descriptions, by province or territory, of the spatial distribution of the probability of the minimum annual snow and ice accumulation (MSI) on August 15, 2000</caption>
+    <thead>
+      <tr>
+        <th>Standard Geographic Classification (SGC) Code</th>
+        <th>Province or Territory Name</th>
+        <th>Description of distribution of minimum annual snow and ice accumulation (MSI) 2000-08-15</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>10</td>
+        <td>Newfoundland and Labrador</td>
+        <td>Low probabilities dominate the island of Newfoundland, with moderate increases along the northern peninsula. Labrador has generally moderate probability, ranging to high in northern North Coast region.</td>
+      </tr>
+      <tr>
+        <td>11</td>
+        <td>Prince Edward Island</td>
+        <td>Moderate probabilities dominate across the province.</td>
+      </tr>
+      <tr>
+        <td>12</td>
+        <td>Nova Scotia</td>
+        <td>Low probabilities dominate, with slight increases in the Cape Breton highlands.</td>
+      </tr>
+      <tr>
+        <td>13</td>
+        <td>New Brunswick</td>
+        <td>Low to moderate probabilities dominate across the province, with moderate values in the central and northwest towards the Gaspé.</td>
+      </tr>
+      <tr>
+        <td>24</td>
+        <td>Quebec</td>
+        <td>Northern Quebec shows higher probabilities, with moderate to low values in central and southern regions.</td>
+      <tr>
+        <td>35</td>
+        <td>Ontario</td>
+        <td>Northern regions exhibit moderate probabilities, transitioning to generally low in southern areas, with some moderate increase north of Lake Superior.</td>
+      </tr>
+      <tr>
+        <td>46</td>
+        <td>Manitoba</td>
+        <td>Low probabilities dominate the province, with moderate to increases in northwestern regions.</td>
+      </tr>
+      <tr>
+        <td>47</td>
+        <td>Saskatchewan</td>
+        <td>Low probabilities dominate in southern and central regions, with moderate values in the northeast.</td>
+      </tr>
+      <tr>
+        <td>48</td>
+        <td>Alberta</td>
+        <td>Low probabilities dominate, with moderate values near the southwestern mountain region.</td>
+      </tr>
+      <tr>
+        <td>59</td>
+        <td>British Columbia</td>
+        <td>Moderate to high probabilities dominate the coastal and  mountainous regions, with lower values in the interior.</td>
+      </tr>
+      <tr>
+        <td>60</td>
+        <td>Yukon</td>
+        <td>Low probabilities are found the interior, with moderate to high probabilities in mountainous and coastal regions.</td>
+      </tr>
+      <tr>
+        <td>61</td>
+        <td>Northwest Territories</td>
+        <td>Very low probabilities dominate in the south, with moderate to high probability in the great lakes and coastal regions.</td>
+      </tr>
+      <tr>
+        <td>62</td>
+        <td>Nunavut</td>
+        <td>Moderate probabilities towards the southern borders, with high values in Hudson's Bay, the Arctic archipelago and most coastal regions. Permanent snow and ice can be found in the northern islands.</td>
+      </tr>
+      </tr></tbody>
+  </table>
+
+  <div class="description">
+    <h3>Content Preferences</h3>
+    <div>
+      <button class="content-button" data-type="image">Images</button>
+      <button class="content-button" data-type="tile">Tiles</button>
+      <button class="content-button" data-type="feature">Features</button>
+      <button class="content-button table-button" data-type="table">Tables</button>
+    </div>
+    <p>Selected Preferences: <span id="selectedPreferences">None</span></p>
+  </div>
+
+</body>
+
+</html>
