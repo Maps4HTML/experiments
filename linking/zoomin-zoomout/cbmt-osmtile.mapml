@@ -3,17 +3,14 @@
     <map-meta charset="utf-8"></map-meta>
     <map-title>Canada Base Map - Transportation (CBMT)</map-title>
     <map-link rel="license" href="https://www.nrcan.gc.ca/earth-sciences/geography/topographic-information/free-data-geogratis/licence/17285" title="Canada Base Map © Natural Resources Canada"></map-link>
-    <map-link rel="zoomout" href="natgeo-osmtile.mapml"></map-link>
-    <map-link rel="zoomin" href="toporama-osmtile.mapml"></map-link>
-<map-meta name="extent" content="top-left-easting=-20409298, top-left-northing=13687732, bottom-right-easting=-1624134, bottom-right-northing=4774563"></map-meta>
   </map-head>
   <map-body>
     <map-extent units="OSMTILE" checked="checked" hidden="hidden">
-      <map-input name="z" type="zoom" min="6" max="10"></map-input>
+      <map-input name="z" type="zoom" min="0" max="22"></map-input>
       <map-input name="y" type="location" units="tilematrix" axis="row"></map-input>
       <map-input name="x" type="location" units="tilematrix" axis="column"></map-input>
-      <map-link rel="tile" tref="https://geoappext.nrcan.gc.ca/arcgis/rest/services/BaseMaps/CBMT_CBCT_GEOM_3857/MapServer/tile/{z}/{y}/{x}?m4h=t" ></map-link>
-      <map-link rel="tile" tref="https://geoappext.nrcan.gc.ca/arcgis/rest/services/BaseMaps/CBMT_TXT_3857/MapServer/tile/{z}/{y}/{x}?m4h=t" ></map-link>
+      <map-link rel="tile" tref="https://maps-cartes.services.geo.ca/server2_serveur2/rest/services/BaseMaps/CBMT_CBCT_GEOM_3857/MapServer/tile/{z}/{y}/{x}?m4h=t" ></map-link>
+      <map-link rel="tile" tref="https://maps-cartes.services.geo.ca/server2_serveur2/rest/services/BaseMaps/CBMT_TXT_3857/MapServer/tile/{z}/{y}/{x}?m4h=t" ></map-link>
     </map-extent>
   </map-body>
 </mapml->
