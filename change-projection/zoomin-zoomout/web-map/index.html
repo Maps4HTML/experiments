@@ -48,7 +48,10 @@
   </head>
   <body>
     <map is="web-map" projection="CBMTILE" zoom="8" lat="48.840422" lon="-101.219978" controls>
-      <map-layer label="CBMT" src="../cbmt-changeProjection.mapml" checked></map-layer>
+      <map-layer label="CBMT" media="(6 <= map-zoom <= 8)" src="../cbmt-changeProjection.mapml" checked ></map-layer>
+      <map-layer label="ASDI" media="(0 <= map-zoom <= 3)" src="../asdi-changeProjection.mapml" checked ></map-layer>
+      <map-layer label="Atlas of Canada"  media="(4 <= map-zoom <= 5)"  src="../cbmt-changeProjection.mapml" checked ></map-layer>
+      <map-layer label="OSM" media="(9 <= map-zoom <= 18)" src="../cbmt-changeProjection.mapml" checked ></map-layer>
     </map>
   </body>
 </html>
