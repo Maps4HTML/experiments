@@ -12,6 +12,10 @@ const pmtilesRulesReady = sheet.load().then(() => {
   pmtilesRules.set('https://maps4html.org/experiments/vector-tiles/pmtiles/spearfish.pmtiles?theme=dark', {
     theme: { theme: 'dark' }
   });
+  pmtilesRules.set(
+    'https://data.source.coop/protomaps/openstreetmap/tiles/v3.pmtiles',
+    { theme: { theme: 'dark' } }
+  );
   return pmtilesRules;
 });
 

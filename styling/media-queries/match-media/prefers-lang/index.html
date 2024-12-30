@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>prefers-lang matchMedia experiment</title>
+  <script type="module" src="../../../../dist/mapml.js"></script>
+  <link rel="stylesheet" href="../../../../global.css">
+    <style>
+      body {
+        display: flex;
+      }
+
+      mapml-viewer {
+        flex: 2;
+        height: 50vh;
+      }
+
+      .description {
+        padding: 20px;
+        flex: 1;
+      }
+
+      @media (max-width: 768px) {
+        .desktop-only {
+          display: none;
+        }
+
+        body {
+          display: block;
+        }
+
+        mapml-viewer {
+          height: 50vh !important;
+          width: 100%;
+        }
+
+        .description {
+          height: auto;
+          width: 100%;
+        }
+      }
+     </style> 
+     <noscript> 
+       <style> 
+         /* Ensure fallback content (children of the map element) is displayed if 
+         custom/built-in elements is supported but javascript is disabled. */ 
+         mapml-viewer:not(:defined) > :not(map-layer) { 
+           display: initial; 
+         } 
+         
+         /* "Reset" the properties used to pre-style (to avoid Layout Shift) if
+         custom/built-in elements is supported but javascript is disabled. */
+         mapml-viewer:not(:defined) {
+           display: initial;
+           contain: initial;
+           contain-intrinsic-size: initial;
+         }
+        /* Ensure client-side image map fallbacks are displayed if custom/built-in
+        elements is supported but javascript is disabled. */
+        map[is="web-map"]:not(:defined) + img[usemap] {
+          display: initial;
+        }
+
+        /* "Reset" the properties used to pre-style (to avoid Layout Shift) if
+        custom/built-in elements is supported but javascript is disabled. */
+        map[is="web-map"]:not(:defined) {
+          display: initial;
+          contain: initial;
+          contain-intrinsic-size: initial;
+        }
+       </style> 
+     </noscript> 
+    <script>
+      document.addEventListener('DOMContentLoaded',(e) => {
+        // this experiment is meant to be the procedural equivalent of:
+        // 
+        // <map-layer lang=en data-media="(prefers-lang: en)" src="https://geogratis.gc.ca/mapml/en/osmtile/cbmt/" checked></map-layer>
+        // <map-layer lang=fr data-media="(prefers-lang: fr)" src="https://geogratis.gc.ca/mapml/fr/osmtile/cbmt/" checked></map-layer>
+        // <map-layer         data-media="not (prefers-lang: en) and not (prefers-lang: fr)"data-testid="osm-layer" label="OpenStreetMap" checked>
+        //   <map-link rel="license" title="© OpenStreetMap contributors CC BY-SA" href="https://www.openstreetmap.org/copyright"></map-link>
+        //   <map-extent units="OSMTILE" checked="checked">
+        //     <map-input name="z" type="zoom" value="18" min="0" max="18">  </map-input>
+        //     <map-input name="x" type="location" units="tilematrix" axis="column" min="0" max="262144">  </map-input>
+        //     <map-input name="y" type="location" units="tilematrix" axis="row" min="0" max="262144">  </map-input>
+        //     <map-link rel="tile" tref="https://tile.openstreetmap.org/{//z}/{x}/{y}.png">  </map-link>
+        //   </map-extent>
+        // </map-layer>
+        
+        let map = document.querySelector('mapml-viewer'),
+            preferenceMatcher = map.matchMedia('(prefers-lang: en) and (not (map-zoom > 15))'),
+            prefersEn = preferenceMatcher.matches,
+            en = map.querySelector('[lang=en]'),
+            fr = map.querySelector('[lang=fr]'),
+            osm = map.querySelector('[data-testid="osm-layer"]');
+
+        
+        const setBaseLayer = (prefersEn) => {
+          if (prefersEn) {
+            // The behaviour of a <map-layer> when it matches a media query 
+            // (in the media attribute, specifically), should be to add itself to the
+            // layer control (in accord with its hidden attribute state) and to the map
+            // (in accord with its checked attribute state) i.e. it may or may not
+            // actually render in either place, depending on those attributes.
+            // HOWEVER, when a <map-layer> does NOT match a media query, it should 
+            // NOT be present on the map, nor in the layer control, and it should not
+            // fetch stuff or be active in any way.  i.e. it is REALLY disabled
+            en.checked = true;
+            en.hidden = false;
+            // this does not work, because the lang attribute is not observed for changes
+            map.setAttribute('lang','en');
+            // geogratis layers out of date wrt map-extent evolution
+            en.shadowRoot.querySelector('map-extent').checked = true;
+            osm.checked = false;
+            osm.hidden = true;
+            fr.checked = false;
+            fr.hidden = true;
+          } else if (map.matchMedia('(prefers-lang: fr) and (not (map-zoom > 15))').matches) {
+            // this does not work, because the lang attribute is not observed for changes
+            map.setAttribute('lang','fr');
+            fr.checked = true;
+            fr.hidden = false;
+            // geogratis layers out of date wrt map-extent evolution
+            fr.shadowRoot.querySelector('map-extent').checked = true;
+            osm.checked = false;
+            osm.hidden = true;
+            en.checked = false;
+            en.hidden = true;
+            //  else if (map.matchMedia('(not (prefers-lang: fr) and (not (prefers-lang: en)) or (map-zoom > 15)').matches)
+          } else {
+            osm.checked = true;
+            osm.hidden = false;
+            fr.checked = false;
+            fr.hidden = true;
+            en.checked = false;
+            en.hidden = true;
+          }
+        };
+        // need to wait until all layers are ready, can take a moment...
+        map.whenLayersReady().then(()=>setBaseLayer(prefersEn));
+        
+        const changeHandler = (e) => {
+            let matches = preferenceMatcher.matches;
+            setBaseLayer(matches); 
+          };
+        preferenceMatcher.addEventListener('change', changeHandler);
+       
+      });
+    </script>
+  </head>
+  <body>
+    
+    <mapml-viewer projection="OSMTILE" zoom="4" lat="52.07950600379697" lon="-85.61090083272045"  controls controlslist="geolocation">
+      <map-layer lang="en" src="https://geogratis.gc.ca/mapml/en/osmtile/cbmt/" hidden></map-layer>
+      <map-layer lang="fr" src="https://geogratis.gc.ca/mapml/fr/osmtile/cbmt/" hidden></map-layer>
+      <map-layer data-testid="osm-layer" label="OpenStreetMap" hidden>
+        <map-link rel="license" title="© OpenStreetMap contributors CC BY-SA" href="https://www.openstreetmap.org/copyright"></map-link>
+        <map-extent units="OSMTILE" checked hidden>
+          <map-input name="z" type="zoom" value="18" min="0" max="18"></map-input>
+          <map-input name="x" type="location" units="tilematrix" axis="column" min="0" max="262144"></map-input>
+          <map-input name="y" type="location" units="tilematrix" axis="row" min="0" max="262144"></map-input>
+          <map-link rel="tile" tref="https://tile.openstreetmap.org/{z}/{x}/{y}.png"></map-link>
+        </map-extent>
+      </map-layer>
+      <!-- we don't have a french equivalent, so omit because it may confuse the reader -->
+<!--      <map-layer label="Restaurants" checked="">
+        <map-meta name="extent" content="top-left-easting=-8433179, top-left-northing=5689316, bottom-right-easting=-8420968, bottom-right-northing=5683139"></map-meta>
+        <map-extent units="OSMTILE" checked="">
+           <map-select id="restaurants" name="cusine">
+               <map-option value="restaurants" selected="selected">All cuisines</map-option>
+               <map-option value="african">African</map-option>
+               <map-option value="asian">Asian</map-option>
+               <map-option value="cajun">Cajun</map-option>
+               <map-option value="indian">Indian</map-option>
+               <map-option value="italian">Italian</map-option>
+               <map-option value="mexican">Mexican</map-option>
+           </map-select>
+           <map-link tref="https://maps4html.org/experiments/shared/restaurants/{cusine}.mapml" rel="features"></map-link>
+        </map-extent>
+      </map-layer>-->
+    </mapml-viewer>
+      <div class="description">
+      <h2>Experiment: <code>HTMLMapmlViewerElement.matchMedia('(prefers-lang: xx)')</code></h2>
+      <p>This page uses the HTMLMapmlViewerElement.matchMedia function to select map <strong>content</strong> based on the browser's preferred language setting, in the user's language, ideally.</p>
+      <p>If your browser isn't set to prefer english or french , the map should display the OpenStreetMap base layer.  Otherwise, it will display the Canada Base Map layer in english or french, accordingly.</p>
+      <img src="en.png"> <img src="fr.png"> <img src="osm.png"> 
+      <h3 class="desktop-only">How to Set or Change Your Browser's Preferred Language (navigator.language)</h3>
+      <ul class="desktop-only">
+          <li><strong>Google Chrome:</strong>
+              <ul>
+                <li>Go to <code><a href="chrome://settings/languages">chrome://settings/languages</a></code> and add languages, in the order of your preference, in which you wish to display content. Content is presented in the preferred language (preference established by list order), if available.  Set the first 'preferred' language to a language and locale. This establishes the language of the browser's menus etc. Push restart for new settings to take effect.</li>
+              </ul>
+          </li>
+          <li><strong>Mozilla Firefox:</strong>
+              <ul>
+                  <li>Go to <code>about:preferences</code>, scroll down to "Language", and click the button titled "Choose..." beside the label "Choose your preferred language for displaying pages".  Add languages in which you wish to display content in order of your preference. Content is presented in order of preference, if available.</li>
+              </ul>
+          </li>
+          <li><strong>Microsoft Edge:</strong>
+              <ul>
+                  <li>Open <code>edge://settings/languages</code> and add languages. Set the first 'preferred' language to any language and locale. Restart the browser for the setting to take effect.</li>
+              </ul>
+          </li>
+      </ul>
+      <p>Manipulating these settings will allow you to see how the <code>mapml-viewer</code> element adapts to different language settings used by users.</p>
+    </div>
+  </body>
+</html>
