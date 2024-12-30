@@ -6,52 +6,30 @@
     <title>Change projection at z=9</title>
     <script type="module" src="../../../dist/mapml.js"></script>
     <link rel="stylesheet" href="../../../global.css">
-    <script type="module">
-      let customProjectionDefinition = `{
-            "projection": "EPSG3573", 
-            "proj4string" : "+proj=laea +lat_0=90 +lon_0=-100 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs", 
-            "origin" : [-4889334.802955,4889334.802955], 
-            "resolutions" : [38197.92815,19098.96407,9549.482037,4774.741019,2387.370509,1193.685255,596.8426273,298.4213137,149.2106568,74.60532841,37.30266421],  
-            "bounds" : [[-4594983,4507258],[4655569,-4562485]],  
-            "tilesize" : 256 
-        }`;
-      let map = document.querySelector("mapml-viewer");
-      let cProjection = map.defineCustomProjection(customProjectionDefinition);    
-    </script>
-    <script type="module">
-      let customProjectionDefinition = `{
-            "projection": "ATLAS_POLAR_MAP",
-            "proj4string" : "+proj=aeqd +lat_0=90 +lon_0=-90 +x_0=0 +y_0=0 +ellps=sphere +units=m +no_defs +type=crs",
-            "code" : "ATLAS_POLAR_MAP",
-            "origin" : [-20015200,20015200],
-            "resolutions" :  [33073,16536.5,8268.246,4134.123,2067.061,1033.531,516.765],
-            "bounds" : [[4979939,-4846977],[-5139071,3980038]],
-            "tilesize" : 256
-        }`;
-      let map = document.querySelector("mapml-viewer");
-      let cProjection = map.defineCustomProjection(customProjectionDefinition);
-    </script>
-    <script type="module">
-    /* EPSG:3005 */
-      let customProjectionDefinition = `{
-            "projection": "BCTILE",
-            "proj4string" : "+proj=aea +lat_1=50 +lat_2=58.5 +lat_0=45 +lon_0=-126 +x_0=1000000 +y_0=0 +ellps=GRS80 +datum=NAD83 +units=m +no_defs",
-            "origin" : [-13239300, 19868500],
-            "resolutions" :  [9783.9400003175,4891.969998835831,2445.9849999470835,1222.9925001058336,611.4962500529168,305.74812489416644,152.8740625,76.4370312632292,38.2185156316146,19.10925781316146,9.554628905257811,4.7773144526289055,2.3886572265790367,1.1943286131572264],
-            "bounds" : [[-219204, 93819], [2191523, 2065365]],
-            "tilesize" : 256
-        }`;
-      let map = document.querySelector("mapml-viewer");
-      let cProjection = map.defineCustomProjection(customProjectionDefinition);
-     // map.projection =  cProjection;
-    </script>
+    <script type="module" src="../projections/EPSG3573.js"></script>
+    <script type="module" src="../projections/ATLAS_POLAR_MAP.js"></script>
   </head>
   <body>
     <mapml-viewer projection="CBMTILE" zoom="8" lat="48.840422" lon="-101.219978" controls>
-      <map-layer label="CBMT" media="(6 <= map-zoom <= 8)" src="../cbmt-changeProjection.mapml" checked ></map-layer>
       <map-layer label="ASDI" media="(0 <= map-zoom <= 3)" src="../asdi-changeProjection.mapml" checked ></map-layer>
-      <map-layer label="Atlas of Canada"  media="(4 <= map-zoom <= 5)"  src="../cbmt-changeProjection.mapml" checked ></map-layer>
+      <map-layer label="Atlas of Canada"  media="(4 <= map-zoom <= 5)"  src="../atlas-changeProjection.mapml" checked ></map-layer>
+      <map-layer label="CBMT" media="(6 <= map-zoom <= 8)" src="../cbmt-changeProjection.mapml" checked ></map-layer>
       <map-layer label="OSM" media="(9 <= map-zoom <= 18)" src="../cbmt-changeProjection.mapml" checked ></map-layer>
     </mapml-viewer>
+    <script>
+      let map = document.querySelector('mapml-viewer');
+      map.addEventListener('zoomend', (e) => {
+        let m = e.target;
+        if (m.zoom >= 0 && m.zoom <= 3) {
+          m.projection = "EPSG3573";
+        } else if (m.zoom >= 4 && m.zoom <= 5) {
+          m.projection = "ATLAS_POLAR_MAP";
+        } else if (m.zoom >= 6 && m.zoom <= 8) {
+          m.projection = "CBMTILE";
+        } else {
+          m.projection = "OSMTILE";
+        }
+      });
+    </script>
   </body>
 </html>
