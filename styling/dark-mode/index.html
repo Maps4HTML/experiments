@@ -38,13 +38,20 @@
     using
     <code>&lt;meta name="color-scheme" content="dark light"&gt;</code>,
     allowing the UA to render this document with an appropriate color scheme.
+    
+    The <code>&lt;map-layer media=(prefers-color-scheme: dark)&gt;</code> is used
+    to identify the layer to use either mode. While a linked <strong>CSS</strong> 
+    stylesheet can be selected using the <code>&lt;map-link media="(prefers-color-scheme: dark)"</code>
+    declaration, this technique has not yet been implemented for stylesheet 
+    modules for pmtiles archives.  Open an issue if you would like to see this 
+    implemented.
     </p>
     
     <p class="user-preference-message">
       <mark>Set the preference for dark mode in your browser/OS settings or dev tools!</mark>
     </p>
     
-    <mapml-viewer projection="OSMTILE" zoom="1" lat="16.929920585017086" lon="-3.5156250000000004" controls>
+    <mapml-viewer projection="OSMTILE" zoom="1" lat="16.929920585" lon="-3.515625" controls>
       <map-layer checked media="(prefers-color-scheme: dark)">
         <map-title>OpenStreetMap - pmtiles dark theme</map-title>
         <map-link rel="stylesheet" type="application/pmtiles+stylesheet" href="../../vector-tiles/pmtiles/darkTheme.js"></map-link>
