@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="dark light">
     <title>Dark mode</title>
-    <script type="module" src="../dist/mapml.js"></script>
-<!--    <script type="module" src="../dist/web-map.js"></script>-->
+    <script type="module" src="../../dist/mapml.js"></script>
     <style>
       body {
         font-family: 'system-ui', sans-serif;
@@ -45,8 +44,29 @@
       <mark>Set the preference for dark mode in your browser/OS settings or dev tools!</mark>
     </p>
     
-    <mapml-viewer projection="OSMTILE" zoom="1" lat="50" lon="-100" controls>
-      <map-layer label="CBMT" src="../refactoring-temporary/osm.mapml" checked></map-layer>
+    <mapml-viewer projection="OSMTILE" zoom="1" lat="16.929920585017086" lon="-3.5156250000000004" controls>
+      <map-layer checked media="(prefers-color-scheme: dark)">
+        <map-title>OpenStreetMap - pmtiles dark theme</map-title>
+        <map-link rel="stylesheet" type="application/pmtiles+stylesheet" href="../../vector-tiles/pmtiles/darkTheme.js"></map-link>
+        <map-link rel="license" title="© OpenStreetMap contributors CC BY-SA" href="https://www.openstreetmap.org/copyright"></map-link>
+        <map-extent units="OSMTILE" checked="checked" hidden="hidden">
+          <map-input name="z" type="zoom" value="18" min="0" max="18"></map-input>
+          <map-input name="x" type="location" units="tilematrix" axis="column" min="0" max="262144"></map-input>
+          <map-input name="y" type="location" units="tilematrix" axis="row" min="0" max="262144"></map-input>
+          <map-link rel="tile" type="application/vnd.mapbox-vector-tile" tref="https://data.source.coop/protomaps/openstreetmap/tiles/v3.pmtiles"></map-link>
+        </map-extent>
+      </map-layer>
+      <map-layer checked media="(prefers-color-scheme: light)">
+        <map-title>OpenStreetMap - pmtiles light theme</map-title>
+        <map-link rel="stylesheet" type="application/pmtiles+stylesheet" href="../../vector-tiles/pmtiles/lightTheme.js"></map-link>
+        <map-link rel="license" title="© OpenStreetMap contributors CC BY-SA" href="https://www.openstreetmap.org/copyright"></map-link>
+        <map-extent units="OSMTILE" checked="checked" hidden="hidden">
+          <map-input name="z" type="zoom" value="18" min="0" max="18"></map-input>
+          <map-input name="x" type="location" units="tilematrix" axis="column" min="0" max="262144"></map-input>
+          <map-input name="y" type="location" units="tilematrix" axis="row" min="0" max="262144"></map-input>
+          <map-link rel="tile" type="application/vnd.mapbox-vector-tile" tref="https://data.source.coop/protomaps/openstreetmap/tiles/v3.pmtiles"></map-link>
+        </map-extent>
+      </map-layer>
     </mapml-viewer>
     
     <p><b>References</b></p>
