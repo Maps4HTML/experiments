@@ -7,5 +7,5 @@
             "bounds" : [[4979939,-4846977],[-5139071,3980038]],
             "tilesize" : 256
         }`;
-      let map = document.querySelector("mapml-viewer");
+      let map = document.querySelector("mapml-viewer,map[is=web-map]");
       let cProjection = map.defineCustomProjection(customProjectionDefinition);
