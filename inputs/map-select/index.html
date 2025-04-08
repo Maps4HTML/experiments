@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>&lt;map-select&gt; / &lt;map-option&gt; </title>
+        <script type="module" src="../../dist/mapml.js"></script>
+        <link rel="stylesheet" href="../../global.css">
+    </head>
+  <body>
+  <mapml-viewer projection="CBMTILE" zoom="3" lat="60.4" lon="-82.6" controls>
+    <map-layer checked>
+        <map-title>Territorial Evolution</map-title>
+        <map-link rel="license" href="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/TE/MapServer" title="Open Government Licence - Canada"></map-link>
+        <map-link rel="legend" href="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/TE/MapServer/legend"></map-link>
+        <map-extent label="WMS" units="CBMTILE" checked>
+            <map-input name="z" type="zoom" value="7" min="2" max="7"></map-input>
+            <map-input name="xmin" type="location" units="pcrs" position="top-left" axis="easting" min="-7786477.0" max="7148753.0"></map-input>
+            <map-input name="ymin" type="location" units="pcrs" position="bottom-left" axis="northing" min="-927808.0" max="7928344.0"></map-input>
+            <map-input name="xmax" type="location" units="pcrs" position="top-right" axis="easting" min="-7786477.0" max="7148753.0"></map-input>
+            <map-input name="ymax" type="location" units="pcrs" position="top-left" axis="northing" min="-927808.0" max="7928344.0"></map-input>
+            <map-input name="w" type="width"></map-input>
+            <map-input name="h" type="height"></map-input>
+            <map-select name="year">
+              <!-- the server in this case is organized with particular group
+                  of layers to render a particular year. These layers are
+              provided to the WMS LAYERS parameter according to that
+              standard's convention, as a comma-separated list of layer
+              names (in the case of this server implementation, the layer 
+              names are integer numbers) -->
+              <map-option label="1867">226,227,228,230,232,233,234</map-option>
+              <map-option label="1870">216,217,218,220,222,223,224</map-option>
+              <map-option label="1871">206,207,208,210,212,213,214</map-option>
+              <map-option label="1873">196,197,198,200,202,203,204</map-option>
+              <map-option label="1874">186,187,188,190,192,193,194</map-option>
+              <map-option label="1876">176,177,178,180,182,183,184</map-option>
+              <map-option label="1880">166,167,168,170,172,173,174</map-option>
+              <map-option label="1881">156,157,158,160,162,163,164</map-option>
+              <map-option label="1882">146,147,148,150,152,153,154</map-option>
+              <map-option label="1886">136,137,138,140,142,143,144</map-option>
+              <map-option label="1889">126,127,128,130,132,133,134</map-option>
+              <map-option label="1895">115,116,117,118,120,122,123,124</map-option>
+              <map-option label="1897">104,105,106,107,109,111,112,113</map-option>
+              <map-option label="1898">93,94,95,96,98,100,101,102</map-option>
+              <map-option label="1901">82,83,84,85,87,89,90,91</map-option>
+              <map-option label="1905">71,72,73,74,76,78,79,80</map-option>
+              <map-option label="1912">60,61,62,63,65,67,68,69</map-option>
+              <map-option label="1920">49,50,51,52,54,56,57,58</map-option>
+              <map-option label="1927">38,39,40,41,43,45,46,47</map-option>
+              <map-option label="1949">28,29,30,32,34,35,36</map-option>
+              <map-option label="1999">19,20,22,24,25,26</map-option>
+              <map-option label="2001">10,11,13,15,16,17</map-option>
+              <map-option label="2003">1,2,4,6,7,8</map-option>
+            </map-select>
+            <map-link rel="image" tref="https://geoappext.nrcan.gc.ca/arcgis/services/FGP/TE/MapServer/WMSServer?SERVICE=WMS&amp;VERSION=1.3.0&amp;CRS=EPSG:3978&amp;LAYERS={year}&amp;BBOX={xmin},{ymin},{xmax},{ymax}&amp;REQUEST=GetMap&amp;FORMAT=image/png&amp;TRANSPARENT=FALSE&amp;WIDTH={w}&amp;HEIGHT={h}&amp;STYLES="></map-link>
+        </map-extent>
+    </map-layer>
+  </mapml-viewer>
+  </body>
+</html>
