@@ -6,6 +6,36 @@
     <title>Right-to-left text (Ottawa Restaurants)</title>
     <script type="module" src="../../dist/mapml.js"></script>
     <link rel="stylesheet" href="../../global.css">
+    <script>
+async function waitForMapLayersAndCheckExtents() {
+  // Wait for the map-layer custom element to be defined
+  await customElements.whenDefined('map-layer');
+  
+  // Query all map-layer elements in the document
+  const mapLayers = document.querySelectorAll('map-layer');
+  
+  // Collect promises from each layer's whenReady function
+  const readyPromises = Array.from(mapLayers).map(layer => layer.whenReady());
+  
+  // Wait for all layers to be ready
+  await Promise.all(readyPromises);
+  
+  // Loop through each layer and set checked attribute on map-extent elements
+  // because geogratis is a bit out of date and its map-extents don't have checked
+  for (const layer of mapLayers) {
+    if (layer.shadowRoot) {
+      const mapExtents = layer.shadowRoot.querySelectorAll('map-extent');
+      mapExtents.forEach(extent => {
+        extent.setAttribute('checked', '');
+        extent.setAttribute('hidden', '');
+      });
+    }
+  }
+}
+
+waitForMapLayersAndCheckExtents().catch(console.error);
+
+    </script>
   </head>
   <body>
     <mapml-viewer dir="rtl" projection="OSMTILE" zoom="15" lat="45.4069740362364" lon="-75.70155300710053" controls>
