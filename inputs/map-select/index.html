@@ -6,11 +6,14 @@
         <title>&lt;map-select&gt; / &lt;map-option&gt; </title>
         <script type="module" src="../../dist/mapml.js"></script>
         <link rel="stylesheet" href="../../global.css">
+        <script src="/shared/script/geogratis-search-handler.js"></script>
     </head>
   <body>
-  <mapml-viewer projection="CBMTILE" zoom="3" lat="60.4" lon="-82.6" controls>
+  <mapml-viewer projection="CBMTILE" zoom="3" lat="60.4" lon="-82.6" controls controlslist="search">
     <map-layer checked>
         <map-title>Territorial Evolution</map-title>
+        <map-link rel="suggestions" tref="https://geogratis.gc.ca/services/geoname/en/geonames.json?q={searchTerms}*&num=20"></map-link>
+        <map-link rel="search" tref="https://geogratis.gc.ca/services/geoname/en/geonames.json?q={searchTerms}&num=20"></map-link>
         <map-link rel="license" href="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/TE/MapServer" title="Open Government Licence - Canada"></map-link>
         <map-link rel="legend" href="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/TE/MapServer/legend"></map-link>
         <map-extent label="WMS" units="CBMTILE" checked>

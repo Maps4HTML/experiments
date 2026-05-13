@@ -134,9 +134,11 @@ mapml-viewer {
 <input id="loadfile" name="loadfile" type="file" accept=".geojson"/>
 <label for="loadfile">Load GeoJSON</label>
 </div>
-<mapml-viewer zoom="2" lat="0" lon="0" controls controlslist="geolocation">
+<mapml-viewer zoom="2" lat="0" lon="0" controls controlslist="geolocation search">
   <map-layer label="OpenStreetMap" checked >
     <map-link rel="license" href="https://www.openstreetmap.org/copyright" title="© OpenStreetMap contributors CC BY-SA"></map-link>
+    <map-link rel="suggestions" tref="https://photon.komoot.io/api?q={searchTerms}"></map-link>
+    <map-link rel="search" tref="https://photon.komoot.io/api?q={searchTerms}"></map-link>
     <map-extent units="OSMTILE" checked>
       <map-input name="z" type="zoom" value="18" min="0" max="18"></map-input>
       <map-input name="x" type="location" units="tilematrix" axis="column" min="0" max="262144"></map-input>
@@ -145,6 +147,7 @@ mapml-viewer {
     </map-extent>
   </map-layer>
 </mapml-viewer>
+<script src="/shared/script/photon-search-handler.js"></script>
 <a class="credits" href="https://www.flaticon.com/free-icons/parchment" title="parchment icons">Parchment icons created by Freepik - Flaticon</a>
 </div>
 </div>

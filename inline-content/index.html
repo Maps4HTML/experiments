@@ -51,8 +51,10 @@
     &lt;/map&gt;
       </pre>
     </div>
-    <mapml-viewer zoom="16" lon="-75.704540" lat="45.399918" controls projection="CBMTILE">
+    <mapml-viewer zoom="16" lon="-75.704540" lat="45.399918" controls controlslist="search" projection="CBMTILE">
       <map-layer label="Canada Base Map - Transportation" checked hidden>
+        <map-link rel="suggestions" tref="https://geogratis.gc.ca/services/geoname/en/geonames.json?q={searchTerms}*&num=20"></map-link>
+        <map-link rel="search" tref="https://geogratis.gc.ca/services/geoname/en/geonames.json?q={searchTerms}&num=20"></map-link>
         <map-extent units="CBMTILE" checked hidden>
           <map-input  name="z" type="zoom" value="17" min="0" max="17"></map-input>
           <map-input  name="y" type="location" units="tilematrix" axis="row" min="29750" max="34475"></map-input>
@@ -141,5 +143,6 @@
         </map-feature>
       </map-layer>
     </mapml-viewer>
+    <script src="/shared/script/geogratis-search-handler.js"></script>
   </body>
 </html>

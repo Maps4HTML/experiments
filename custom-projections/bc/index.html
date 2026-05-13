@@ -20,11 +20,14 @@
       let cProjection = map.defineCustomProjection(customProjectionDefinition);
       map.projection =  cProjection;
     </script>
+    <script src="/shared/script/geogratis-search-handler.js"></script>
   </head>
   <body>
-    <mapml-viewer zoom="3" lon="-125.667383" lat="54.60128" controls projection="BCTILE">
+    <mapml-viewer zoom="3" lon="-125.667383" lat="54.60128" controls controlslist="search" projection="BCTILE">
       <map-layer label="BC basemap" checked>
         <map-link rel="license" title="Government of British Columbia" href="https://maps.gov.bc.ca/arcserver/rest/services/province/albers_cache/MapServer/wmts/"></map-link>
+        <map-link rel="suggestions" tref="https://geogratis.gc.ca/services/geoname/en/geonames.json?q={searchTerms}*&num=20"></map-link>
+        <map-link rel="search" tref="https://geogratis.gc.ca/services/geoname/en/geonames.json?q={searchTerms}&num=20"></map-link>
         <map-extent units="BCTILE" checked hidden>
           <map-input  type="zoom" name="z" min="0" max="11" value="3"></map-input>
           <map-input  type="location" name="x" axis="column" units="tilematrix" min="42" max="50"></map-input>

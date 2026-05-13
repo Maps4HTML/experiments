@@ -3,6 +3,8 @@
     <map-title>OpenStreetMap</map-title>
     <meta http-equiv="Content-Type" content="text/mapml;projection=OSMTILE"/>
     <meta charset="utf-8"/>
+    <map-link rel="suggestions" tref="https://photon.komoot.io/api?q={searchTerms}"></map-link>
+    <map-link rel="search" tref="https://photon.komoot.io/api?q={searchTerms}"></map-link>
     <map-link rel="license" href="https://www.openstreetmap.org/copyright" title="© OpenStreetMap contributors CC BY-SA"/>
   </map-head>
   <map-body>
