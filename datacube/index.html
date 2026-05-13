@@ -6,11 +6,12 @@
         <title>Minimum Snow and Ice</title>
         <script type="module" src="../dist/mapml.js"></script>
         <link rel="stylesheet" href="../global.css">
+        <script src="/shared/script/geogratis-search-handler.js"></script>
     </head>
   <body>
-  <mapml-viewer projection="CBMTILE" zoom="4" lat="60" lon="-90" controls>
+  <mapml-viewer projection="CBMTILE" zoom="4" lat="60" lon="-90" controls controlslist="search">
     <map-layer label="CBMT" src="../refactoring-temporary/cbmtile-cbmt.mapml" checked hidden></map-layer>
-    <map-layer label="Minimum Snow and Ice" src="msi.mapml" checked></map-layer>
+    <map-layer label="Minimum Snow and Ice" src="msi.mapml" checked opacity="0.7"></map-layer>
     <map-layer label="Permanent snow and ice (prob. 94% or more) WMS GetMap" src="msi-94-plus.mapml" checked></map-layer>
   </mapml-viewer>
   </body>

@@ -6,9 +6,10 @@
     <title>National Geographic base map</title>
     <script type="module" src="../../dist/mapml.js"></script>
     <link rel="stylesheet" href="../../global.css">
+    <script src="/shared/script/photon-search-handler.js"></script>
   </head>
   <body>
-    <mapml-viewer zoom="3" lon="0" lat="0" controls projection="OSMTILE">
+    <mapml-viewer zoom="3" lon="0" lat="0" controls controlslist="search" projection="OSMTILE">
       <map-layer  src="natgeo.mapml" checked></map-layer>
     </mapml-viewer>
   </body>

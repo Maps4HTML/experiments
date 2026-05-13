@@ -6,6 +6,8 @@
         <map-link rel="license" title="Canadian Federal Geospatial Platform" href="https://geoappext.nrcan.gc.ca/arcgis/rest/services/FGP/NCR_RCN/MapServer/"></map-link>
         <map-meta name="projection" content="ATLAS_POLAR_MAP"></map-meta>
         <map-meta name="zoom" content="min=0,max=6" ></map-meta>
+        <map-link rel="suggestions" tref="https://geogratis.gc.ca/services/geoname/en/geonames.json?q={searchTerms}*&amp;num=20"></map-link>
+        <map-link rel="search" tref="https://geogratis.gc.ca/services/geoname/en/geonames.json?q={searchTerms}&amp;num=20"></map-link>
     </map-head>
     <map-body>
       <!-- 

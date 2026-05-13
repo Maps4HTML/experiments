@@ -7,6 +7,8 @@
     <map-link rel="style" title="National Geographic Basemap" href="natgeo.mapml"/>
     <map-link rel="self style" title="Satellite Imagery with place names" href="labelled_imagery.mapml"/>
     <map-link rel="style" title="Satellite Imagery" href="imagery.mapml"/>
+    <map-link rel="suggestions" tref="https://photon.komoot.io/api?q={searchTerms}"></map-link>
+    <map-link rel="search" tref="https://photon.komoot.io/api?q={searchTerms}"></map-link>
   </map-head>
   <map-body>
     <map-extent units="OSMTILE" checked="checked" hidden="hidden">

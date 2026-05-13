@@ -10,14 +10,10 @@
   <body>
     <!-- spearfish zoom="12" lon="-103.72558592353018" lat="44.42865428227619" -->
     <!-- restaurants zoom="15" lon="-75.703611" lat="45.411105" -->
-  <mapml-viewer zoom="15" lon="-75.703611" lat="45.411105" controls projection="OSMTILE">
+  <mapml-viewer zoom="15" lon="-75.703611" lat="45.411105" controls controlslist="search" projection="OSMTILE">
     <map-layer label="National Geographic"  checked>
-      <map-extent label="National Geographic" units="OSMTILE" checked>
-        <map-input name="TileMatrix" type="zoom" value="18" min="0" max="18"></map-input>
-        <map-input name="TileCol" type="location" units="tilematrix" axis="column" min="0" max="262144"></map-input>
-        <map-input name="TileRow" type="location" units="tilematrix" axis="row" min="0" max="262144"></map-input>
-        <map-link rel="tile" tref="https://server.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer/WMTS/tile/1.0.0/NatGeo_World_Map/default/default028mm/{TileMatrix}/{TileRow}/{TileCol}.jpg"></map-link>
-      </map-extent>
+    <map-link rel="suggestions" tref="https://photon.komoot.io/api?q={searchTerms}"></map-link>
+    <map-link rel="search" tref="https://photon.komoot.io/api?q={searchTerms}"></map-link>
       <map-extent label="Labelled Imagery" units="OSMTILE" checked>
         <map-input name="TileMatrix" type="zoom" value="18" min="0" max="18"></map-input>
         <map-input name="TileCol" type="location" units="tilematrix" axis="column" min="0" max="262144"></map-input>
@@ -30,6 +26,12 @@
         <map-input name="TileCol" type="location" units="tilematrix" axis="column" min="0" max="262144"></map-input>
         <map-input name="TileRow" type="location" units="tilematrix" axis="row" min="0" max="262144"></map-input>
         <map-link rel="tile" tref="https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/WMTS/tile/1.0.0/World_Imagery/default/default028mm/{TileMatrix}/{TileRow}/{TileCol}.jpg"></map-link>
+      </map-extent>
+      <map-extent label="National Geographic" units="OSMTILE" checked opacity="0.7">
+        <map-input name="TileMatrix" type="zoom" value="18" min="0" max="18"></map-input>
+        <map-input name="TileCol" type="location" units="tilematrix" axis="column" min="0" max="262144"></map-input>
+        <map-input name="TileRow" type="location" units="tilematrix" axis="row" min="0" max="262144"></map-input>
+        <map-link rel="tile" tref="https://server.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer/WMTS/tile/1.0.0/NatGeo_World_Map/default/default028mm/{TileMatrix}/{TileRow}/{TileCol}.jpg"></map-link>
       </map-extent>
     </map-layer>
     <map-layer label="Restaurants">

@@ -18,7 +18,7 @@
     <map-feature id="LHIN-ON-V-Simplified.11" class="LHIN-ON-V-Simplified">
       <map-featurecaption>Champlain</map-featurecaption>
       <map-geometry>
-        <map-a href="/experiments/linking/features/sportsplex.mapml#22,-75.74590432701136,45.3272171653716" type="text/mapml" target="_self">
+        <map-a href="sportsplex.mapml#22,-75.74590432701136,45.3272171653716" type="text/mapml" target="_self">
           <map-multipolygon>
             <map-polygon>
               <map-coordinates>1559332.94849 -226542.49462 1559226.82136 -226710.73601 1558953.94261 -226939.42183 1559486.16899 -226099.84425 1559332.94849 -226542.49462</map-coordinates>
