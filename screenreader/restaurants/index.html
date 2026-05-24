@@ -6,11 +6,12 @@
     <title>Ottawa Restaurants</title>
     <script type="module" src="../../dist/mapml.js"></script>
     <link rel="stylesheet" href="../../global.css">
+    <script src="/shared/script/photon-search-handler.js"></script>
   </head>
   <body>
 <!--    <mapml-viewer projection="CBMTILE" zoom="17" lat="45.4069740362364" lon="-75.70155300710053" >
       <map-layer label="CBMT" src="/experiments/refactoring-temporary/cbmtile-cbmt.mapml" checked hidden></map-layer>-->
-    <mapml-viewer id="map" projection="OSMTILE" zoom="14" lat="45.406314" lon="-75.6883335" controls controlslist="geolocation search">
+    <mapml-viewer projection="OSMTILE" zoom="14" lat="45.406314" lon="-75.6883335" controls controlslist="geolocation search">
       <map-caption>Ottawa Restaurants Map</map-caption>
       <!-- the osm.mapml includes search and suggestions links to photon,
            and this page relies on the default search/suggestions handler -->

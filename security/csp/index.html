@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="content-security-policy" content="
-      default-src 'self';
+      default-src 'self'
+                  'sha256-Dg/+S/ZgqYPHC7APbOr4sSXBNAQV0DlPV2T8f9zGm20=';
       style-src 'self'
                 'unsafe-hashes'
                 'sha256-i+apkz/LmUo63uwfP1/iCMKtQhZhY1CBUGVKuovPL0c='
@@ -14,12 +15,43 @@
       img-src 'self'
               data:
               https://geoappext.nrcan.gc.ca
-              https://maps-cartes.services.geo.ca;
+              https://maps-cartes.services.geo.ca
+              https://www.w3.org/community/;
     ">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>CSP evaluation</title>
     <script type="module" src="../../dist/mapml.js"></script>
     <link rel="stylesheet" href="self.css">
+    <script>
+async function waitForMapLayersAndCheckExtents() {
+  // Wait for the map-layer custom element to be defined
+  await customElements.whenDefined('map-layer');
+  
+  // Query all map-layer elements in the document
+  const mapLayers = document.querySelectorAll('map-layer');
+  
+  // Collect promises from each layer's whenReady function
+  const readyPromises = Array.from(mapLayers).map(layer => layer.whenReady());
+  
+  // Wait for all layers to be ready
+  await Promise.all(readyPromises);
+  
+  // Loop through each layer and set checked attribute on map-extent elements
+  // because geogratis is a bit out of date and its map-extents don't have checked
+  for (const layer of mapLayers) {
+    if (layer.shadowRoot) {
+      const mapExtents = layer.shadowRoot.querySelectorAll('map-extent');
+      mapExtents.forEach(extent => {
+        extent.setAttribute('checked', '');
+        extent.setAttribute('hidden', '');
+      });
+    }
+  }
+}
+
+waitForMapLayersAndCheckExtents().catch(console.error);
+
+    </script>
   </head>
   <body>
     
