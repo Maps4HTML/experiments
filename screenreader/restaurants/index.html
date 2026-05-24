@@ -6,13 +6,14 @@
     <title>Ottawa Restaurants</title>
     <script type="module" src="../../dist/mapml.js"></script>
     <link rel="stylesheet" href="../../global.css">
-    <script src="/shared/script/photon-search-handler.js"></script>
   </head>
   <body>
 <!--    <mapml-viewer projection="CBMTILE" zoom="17" lat="45.4069740362364" lon="-75.70155300710053" >
       <map-layer label="CBMT" src="/experiments/refactoring-temporary/cbmtile-cbmt.mapml" checked hidden></map-layer>-->
-    <mapml-viewer projection="OSMTILE" zoom="14" lat="45.406314" lon="-75.6883335" controls controlslist="geolocation search">
+    <mapml-viewer id="map" projection="OSMTILE" zoom="14" lat="45.406314" lon="-75.6883335" controls controlslist="geolocation search">
       <map-caption>Ottawa Restaurants Map</map-caption>
+      <!-- the osm.mapml includes search and suggestions links to photon,
+           and this page relies on the default search/suggestions handler -->
       <map-layer label="OpenStreetMap" src="../../refactoring-temporary/osm.mapml" checked hidden></map-layer>
       <map-layer id="restaurant" label="Restaurants" checked>
         <map-meta name="cs" content="gcrs" ></map-meta>
@@ -31,5 +32,74 @@
           </map-extent>
       </map-layer>
     </mapml-viewer>
+<!-- <script>
+  const map = document.getElementById('map');
+
+  // Keep a reference to the results layer so we can replace it on each search
+  let resultsLayer = null;
+
+  map.addEventListener('mapsearch', (e) => {
+    e.preventDefault(); // suppress the default results dropdown
+
+    // Clear the suggestions list
+    const results = map._map._container.querySelector('.mapml-search-results');
+    if (results) results.innerHTML = '';
+
+    // Remove the previous results layer
+    if (resultsLayer) {
+      resultsLayer.remove();
+      resultsLayer = null;
+    }
+
+    // Merge GeoJSON features from all responding layers into one collection
+    const features = [];
+    for (const { data } of e.detail.responses) {
+      if (data?.features) features.push(...data.features);
+    }
+    if (features.length === 0) return;
+
+    const fc = { type: 'FeatureCollection', features };
+
+    // geojson2mapml converts to <map-feature> elements and adds the layer
+    resultsLayer = map.geojson2mapml(fc, {
+      label: 'Search Results',
+      projection: 'OSMTILE',
+      caption: (feature) => {
+        const p = feature.properties || {};
+        const parts = [p.name];
+        for (const k of ['city', 'county', 'state', 'country']) {
+          if (p[k] && p[k] !== p.name) parts.push(p[k]);
+        }
+        return parts.filter(Boolean).join(', ') || 'Unnamed';
+      },
+      properties: (feature) => {
+        const p = feature.properties || {};
+        const dl = document.createElement('dl');
+        if (p.name) {
+          dl.innerHTML += `<dt>Name</dt><dd>${p.name}</dd>`;
+        }
+        if (p.osm_key) {
+          dl.innerHTML += `<dt>Type</dt><dd>${p.osm_key}${p.osm_value ? ': ' + p.osm_value : ''}</dd>`;
+        }
+        if (p.city) dl.innerHTML += `<dt>City</dt><dd>${p.city}</dd>`;
+        if (p.state) dl.innerHTML += `<dt>State</dt><dd>${p.state}</dd>`;
+        if (p.country) dl.innerHTML += `<dt>Country</dt><dd>${p.country}</dd>`;
+        return dl;
+      }
+    });
+
+    // Navigate to the first result
+    const first = features[0];
+    const bbox = first.bbox
+      || (first.properties?.extent?.length === 4 ? first.properties.extent : null);
+    if (bbox) {
+      const [west, south, east, north] = bbox;
+      map.zoomTo(south, west, north - south, east - west);
+    } else if (first.geometry?.coordinates) {
+      const [lon, lat] = first.geometry.coordinates;
+      map.zoomTo(lat, lon, 0, 0);
+    }
+  });
+</script> -->
   </body>
 </html>
