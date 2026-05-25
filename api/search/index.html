@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Search API</title>
+    <script type="module" src="../../dist/mapml.js"></script>
+    <style>
+      body {
+        font-family: 'system-ui', sans-serif;
+        max-width: 50rem;
+        margin: 0 auto;
+        padding: 0 1rem;
+        overflow-wrap: break-word;
+      }
+      mapml-viewer {
+        width: 100%;
+        min-height: 50vh;
+      }
+    </style>
+  </head>
+  <body>
+    <mapml-viewer controls controlslist="search" projection="CBMTILE" zoom="2" lat="65.023821" lon="-96.924205">
+      <map-layer checked>
+        <map-title>Searchable Canada Base Map</map-title>
+        <map-link rel="suggestions" tref="https://geolocator.api.geo.ca/?q={searchTerms}&lang=en&keys=geonames"></map-link>
+        <map-link rel="search" tref="https://geolocator.api.geo.ca/?q={searchTerms}&lang=en&keys=geonames"></map-link>
+
+        <map-extent units="CBMTILE"  checked hidden>
+        <map-input name="z" type="zoom"  value="17" min="0" max="17"></map-input>
+        <map-input name="y" type="location" units="tilematrix" axis="row" min="29750"  max="34475"></map-input>
+        <map-input name="x" type="location" units="tilematrix" axis="column" min="26484"  max="32463"></map-input>
+        <map-link rel="tile" tref="https://geoappext.nrcan.gc.ca/arcgis/rest/services/BaseMaps/CBMT3978/MapServer/tile/{z}/{y}/{x}?m4h=t"></map-link>
+        </map-extent>
+      </map-layer>
+    </mapml-viewer>
+    <script>
+      const viewer = document.querySelector('mapml-viewer');
+
+      // --- Suggestions (typeahead) ---
+      viewer.addEventListener('mapsuggestions', (e) => {
+        e.preventDefault();
+        const items = [];
+        for (const { data } of e.detail.responses) {
+          if (!Array.isArray(data)) continue;
+          for (const r of data) {
+            items.push({
+              text: `${r.name}, ${r.province} (${r.category})`,
+              value: r.name,
+              lat: r.lat,
+              lng: r.lng,
+              bbox: r.bbox || undefined
+            });
+          }
+        }
+        e.detail.setResults(items);
+      });
+
+      // --- Search results ---
+      viewer.addEventListener('mapsearch', (e) => {
+        e.preventDefault();
+        const items = [];
+        for (const { data } of e.detail.responses) {
+          if (!Array.isArray(data)) continue;
+          for (const r of data) {
+            items.push({
+              text: `${r.name}, ${r.province} (${r.category})`,
+              lat: r.lat,
+              lng: r.lng,
+              bbox: r.bbox || undefined
+            });
+          }
+        }
+        e.detail.setResults(items);
+      });
+    </script>
+  </body>
+</html>
