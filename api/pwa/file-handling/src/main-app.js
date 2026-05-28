@@ -147,7 +147,7 @@ mapml-viewer {
     </map-extent>
   </map-layer>
 </mapml-viewer>
-<script src="/shared/script/photon-search-handler.js"></script>
+<script src="../../../shared/script/photon-search-handler.js"></script>
 <a class="credits" href="https://www.flaticon.com/free-icons/parchment" title="parchment icons">Parchment icons created by Freepik - Flaticon</a>
 </div>
 </div>
