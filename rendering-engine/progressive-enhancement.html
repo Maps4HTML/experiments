@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Progressive enhancement — Leaflet vs MapLibre</title>
+    <link rel="stylesheet" href="../global.css" />
+    <style>
+      body {
+        margin: 0;
+      }
+      header {
+        padding: 0.5rem 1rem;
+      }
+      header h1 {
+        margin: 0;
+        font-size: 1.1rem;
+      }
+      header p {
+        margin: 0.25rem 0 0;
+        font-size: 0.9rem;
+        max-width: 70ch;
+      }
+      header nav {
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+      }
+      .example {
+        border-top: 1px solid #ccc;
+        padding: 0.5rem 1rem 1rem;
+      }
+      .example > h2 {
+        font-size: 1rem;
+        margin: 0.5rem 0;
+      }
+      .example > p {
+        margin: 0 0 0.75rem;
+        font-size: 0.9rem;
+        max-width: 80ch;
+      }
+      /*
+        The two engines register the same custom-element names, so each map
+        must live in its own document. iframes give each its own custom
+        element registry; the identical MapML markup is loaded in both.
+      */
+      .panes {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+      }
+      .pane {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+      }
+      .pane h3 {
+        margin: 0 0 0.35rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+      .pane iframe {
+        width: 100%;
+        height: 60vh;
+        min-height: 320px;
+        border: 1px solid #ccc;
+      }
+      /* Small screens: stack both maps vertically. */
+      @media (max-width: 700px) {
+        .panes {
+          grid-template-columns: 1fr;
+        }
+        .pane iframe {
+          height: 55vh;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Progressive enhancement</h1>
+      <p>
+        Identical <code>&lt;mapml-viewer&gt;</code> markup rendered by the
+        Leaflet build (left) and the MapLibre GL build (right). Each map runs
+        in its own iframe because both engines register the same custom-element
+        names. A more capable engine takes advantage of extra markup; a less
+        capable engine still renders a usable map.
+      </p>
+      <nav>
+        See also:
+        <a href="graceful-degradation.html">graceful degradation</a>
+      </nav>
+    </header>
+
+    <section class="example">
+      <h2>3-D globe view (OSMTILE / Web Mercator)</h2>
+      <p>
+        Both maps declare <code>view="globe"</code> and
+        <code>controlslist="static view"</code> on the same plain OSMTILE layer.
+        MapLibre GL honours the <code>view</code> and <code>static</code> attributes, 
+        presenting the map as a frozen 3-D globe with a view and lock control. Leaflet 
+        ignores the attribute and controlslist token it does not understand and renders 
+        the same content as a flat 2-D map — both engines produce a working map from the 
+        identical markup.
+      </p>
+      <div class="panes">
+        <section class="pane">
+          <h3>Leaflet — flat 2-D map</h3>
+          <iframe
+            src="leaflet.html"
+            title="OSMTILE rendered with Leaflet"
+          ></iframe>
+        </section>
+        <section class="pane">
+          <h3>MapLibre GL JS — enhanced 3-D globe</h3>
+          <iframe
+            src="maplibre.html"
+            title="OSMTILE rendered as a 3-D globe with MapLibre GL JS"
+          ></iframe>
+        </section>
+      </div>
+    </section>
+  </body>
+</html>

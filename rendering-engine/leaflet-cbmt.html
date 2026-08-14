@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>CBMTILE graceful degradation — Leaflet</title>
+    <script type="module" src="../dist/MapML.js/dist/mapml.js"></script>
+    <link rel="stylesheet" href="../global.css" />
+    <style>
+      html,
+      body {
+        height: 100%;
+      }
+      mapml-viewer:defined {
+        width: 100%;
+        height: 100%;
+      }
+      mapml-viewer:not(:defined) > * {
+        display: none;
+      }
+      map-layer {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!--
+      Identical markup is loaded in leaflet-cbmt.html and maplibre-cbmt.html.
+      The layer offers the Canada Base Map in two projections via a pair of
+      <map-extent>s. A CBMTILE (EPSG:3978 Lambert) viewer renders the matching
+      CBMTILE extent and disables the OSMTILE one; an engine that can only do
+      Web Mercator gracefully degrades to the OSMTILE (EPSG:3857) extent.
+    -->
+    <mapml-viewer projection="CBMTILE" zoom="3" lat="60" lon="-95" controls>
+      <map-layer label="Canada Base Map (projection-negotiated)" checked>
+        <map-link
+          rel="license"
+          href="https://open.canada.ca/en/open-government-licence-canada"
+          title="Open Government Licence — Canada"
+        ></map-link>
+        <!-- Preferred: native CBMTILE (EPSG:3978 Lambert Conformal Conic) -->
+        <map-extent label="CBMT — Lambert (CBMTILE)" units="CBMTILE" checked>
+          <map-input name="z" type="zoom" min="0" max="18"></map-input>
+          <map-input
+            name="y"
+            type="location"
+            units="tilematrix"
+            axis="row"
+          ></map-input>
+          <map-input
+            name="x"
+            type="location"
+            units="tilematrix"
+            axis="column"
+          ></map-input>
+          <map-link
+            rel="tile"
+            tref="https://maps-cartes.services.geo.ca/server2_serveur2/rest/services/BaseMaps/CBMT3978/MapServer/tile/{z}/{y}/{x}"
+          ></map-link>
+        </map-extent>
+        <!-- Fallback: Web Mercator (OSMTILE / EPSG:3857) -->
+        <map-extent label="CBMT — Web Mercator (OSMTILE)" units="OSMTILE" checked>
+          <map-input name="z" type="zoom" value="15" min="0" max="15"></map-input>
+          <map-input
+            name="y"
+            type="location"
+            units="tilematrix"
+            axis="row"
+            min="0"
+            max="32768"
+          ></map-input>
+          <map-input
+            name="x"
+            type="location"
+            units="tilematrix"
+            axis="column"
+            min="0"
+            max="32768"
+          ></map-input>
+          <map-link
+            rel="tile"
+            tref="https://maps-cartes.services.geo.ca/server2_serveur2/rest/services/BaseMaps/CBMT_CBCT_GEOM_3857/MapServer/tile/{z}/{y}/{x}"
+          ></map-link>
+          <map-link
+            rel="tile"
+            tref="https://maps-cartes.services.geo.ca/server2_serveur2/rest/services/BaseMaps/CBMT_TXT_3857/MapServer/tile/{z}/{y}/{x}"
+          ></map-link>
+        </map-extent>
+      </map-layer>
+    </mapml-viewer>
+  </body>
+</html>
