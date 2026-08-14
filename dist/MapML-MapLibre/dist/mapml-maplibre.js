@@ -36142,22 +36142,32 @@ var UF = /* @__PURE__ */ new Set([
 	#m;
 	#h;
 	#g;
+	#_;
+	#v;
+	#y;
+	#b;
+	#x;
+	#S;
+	#C = !1;
 	constructor(e, t, n) {
-		this.#e = e, this.#t = n, this.#n = document.createElement("div"), this.#n.className = "mapml-contextmenu", this.#n.setAttribute("role", "menu"), this.#n.setAttribute("tabindex", "-1"), this.#n.hidden = !0, t.appendChild(this.#n), this.#r = document.createElement("div"), this.#r.className = "mapml-contextmenu mapml-submenu", this.#r.setAttribute("role", "menu"), this.#r.setAttribute("tabindex", "-1"), this.#r.hidden = !0, t.appendChild(this.#r), this.#v(), this.#y(), this.#f = () => this.#T(), this.#p = (e) => {
+		this.#e = e, this.#t = n, this.#n = document.createElement("div"), this.#n.className = "mapml-contextmenu", this.#n.setAttribute("role", "menu"), this.#n.setAttribute("tabindex", "-1"), this.#n.hidden = !0, t.appendChild(this.#n), this.#r = document.createElement("div"), this.#r.className = "mapml-contextmenu mapml-submenu", this.#r.setAttribute("role", "menu"), this.#r.setAttribute("tabindex", "-1"), this.#r.hidden = !0, t.appendChild(this.#r), this.#T(), this.#E(), this.#f = () => this.#M(), this.#p = (e) => {
 			if (this.#n.hidden) return;
 			let t = e.composedPath();
 			t.includes(this.#n) || t.includes(this.#r) || this.close();
-		}, this.#m = (e) => this.#A(e), this.#h = () => this.#E(), this.#e.addEventListener("mapml:historychanged", this.#f), this.#n.addEventListener("keydown", this.#F), this.#r.addEventListener("keydown", this.#I), document.addEventListener("mousedown", this.#p, !0), document.addEventListener("keydown", this.#m), document.addEventListener("fullscreenchange", this.#h), this.#_(), this.#T();
+		}, this.#m = (e) => this.#L(e), this.#h = () => this.#N(), this.#e.addEventListener("mapml:historychanged", this.#f), this.#n.addEventListener("keydown", this.#H), this.#r.addEventListener("keydown", this.#U), document.addEventListener("mousedown", this.#p, !0), document.addEventListener("keydown", this.#m), document.addEventListener("fullscreenchange", this.#h), this.#w(), this.#M();
 	}
 	destroy() {
-		this.#e.removeEventListener("mapml:historychanged", this.#f), this.#n.removeEventListener("keydown", this.#F), this.#r.removeEventListener("keydown", this.#I), document.removeEventListener("mousedown", this.#p, !0), document.removeEventListener("keydown", this.#m), document.removeEventListener("fullscreenchange", this.#h);
+		this.#e.removeEventListener("mapml:historychanged", this.#f), this.#n.removeEventListener("keydown", this.#H), this.#r.removeEventListener("keydown", this.#U), document.removeEventListener("mousedown", this.#p, !0), document.removeEventListener("keydown", this.#m), document.removeEventListener("fullscreenchange", this.#h);
 		let e = this.#e.renderer.map;
-		e && (this.#g && e.off("contextmenu", this.#g), this.#d &&= (e.keyboard.enable(), !1)), this.#n.remove(), this.#r.remove();
+		e && (this.#g && e.off("contextmenu", this.#g), this.#d &&= (e.keyboard.enable(), !1)), this.#x !== void 0 && (clearTimeout(this.#x), this.#x = void 0);
+		let t = this.#_;
+		t && (this.#v && t.removeEventListener("touchstart", this.#v), this.#y && t.removeEventListener("touchmove", this.#y), this.#b && (t.removeEventListener("touchend", this.#b), t.removeEventListener("touchcancel", this.#b))), this.#n.remove(), this.#r.remove();
 	}
-	async #_() {
+	async #w() {
 		await this.#e.whenReady();
 		let e = this.#e.renderer.map;
-		e && (this.#g = (e) => {
+		if (!e) return;
+		this.#g = (e) => {
 			this.#c = {
 				lng: e.lngLat.lng,
 				lat: e.lngLat.lat,
@@ -36165,10 +36175,50 @@ var UF = /* @__PURE__ */ new Set([
 					x: e.point.x,
 					y: e.point.y
 				}
-			}, this.#k(e.point.x, e.point.y, !1);
-		}, e.on("contextmenu", this.#g));
+			}, this.#I(e.point.x, e.point.y, !1);
+		}, e.on("contextmenu", this.#g);
+		let t = e.getCanvasContainer();
+		this.#_ = t;
+		let n = () => {
+			this.#x !== void 0 && (clearTimeout(this.#x), this.#x = void 0), this.#S = void 0;
+		};
+		this.#v = (r) => {
+			if (r.touches.length !== 1) {
+				n();
+				return;
+			}
+			let i = r.touches[0];
+			i && (this.#S = {
+				x: i.clientX,
+				y: i.clientY
+			}, this.#x = setTimeout(() => {
+				this.#x = void 0;
+				let n = this.#S;
+				if (this.#S = void 0, !n) return;
+				let r = t.getBoundingClientRect(), i = n.x - r.left, a = n.y - r.top, o = e.unproject([i, a]);
+				this.#c = {
+					lng: o.lng,
+					lat: o.lat,
+					containerPoint: {
+						x: i,
+						y: a
+					}
+				}, this.#C = !0, this.#I(i, a, !1);
+			}, 600));
+		}, this.#y = (e) => {
+			let t = this.#S;
+			if (!t) return;
+			let r = e.touches[0];
+			if (!r) {
+				n();
+				return;
+			}
+			(Math.abs(r.clientX - t.x) > 10 || Math.abs(r.clientY - t.y) > 10) && n();
+		}, this.#b = (e) => {
+			n(), this.#C &&= (e.preventDefault(), !1);
+		}, t.addEventListener("touchstart", this.#v, { passive: !0 }), t.addEventListener("touchmove", this.#y, { passive: !0 }), t.addEventListener("touchend", this.#b), t.addEventListener("touchcancel", this.#b);
 	}
-	#v() {
+	#T() {
 		let e = this.#t, t = (e) => {
 			if (e.kind === "separator") {
 				let e = document.createElement("div");
@@ -36183,13 +36233,13 @@ var UF = /* @__PURE__ */ new Set([
 			return t.innerHTML = `<span>${e.label}</span>${n}${e.kbd ? `<kbd>${e.kbd}</kbd>` : ""}`, e.submenuIndicator && (t.setAttribute("aria-haspopup", "true"), t.setAttribute("aria-expanded", "false"), t.setAttribute("aria-controls", "mapml-copy-submenu")), t.addEventListener("click", () => {
 				if (!t.disabled) {
 					if (e.openSubmenu) {
-						this.#x(!0);
+						this.#O(!0);
 						return;
 					}
 					e.run(), this.close();
 				}
 			}), t.addEventListener("mouseenter", () => {
-				t.disabled || (e.openSubmenu ? this.#x(!1) : this.#s && this.#S());
+				t.disabled || (e.openSubmenu ? this.#O(!1) : this.#s && this.#k());
 			}), this.#n.appendChild(t), {
 				kind: "item",
 				el: t,
@@ -36228,7 +36278,7 @@ var UF = /* @__PURE__ */ new Set([
 				id: "fullscreen",
 				label: e.btnFullScreen,
 				kbd: "F",
-				run: () => this.#H()
+				run: () => this.#Y()
 			}),
 			t({ kind: "separator" }),
 			t({
@@ -36245,7 +36295,7 @@ var UF = /* @__PURE__ */ new Set([
 				id: "paste",
 				label: e.cmPasteLayer,
 				kbd: "P",
-				run: () => this.#w()
+				run: () => this.#j()
 			}),
 			t({ kind: "separator" }),
 			t({
@@ -36253,7 +36303,7 @@ var UF = /* @__PURE__ */ new Set([
 				id: "toggle-controls",
 				label: e.cmToggleControls,
 				kbd: "T",
-				run: () => this.#V()
+				run: () => this.#J()
 			}),
 			t({
 				kind: "item",
@@ -36271,7 +36321,7 @@ var UF = /* @__PURE__ */ new Set([
 			})
 		];
 	}
-	#y() {
+	#E() {
 		let e = this.#t;
 		this.#r.id = "mapml-copy-submenu";
 		let t = [
@@ -36289,7 +36339,7 @@ var UF = /* @__PURE__ */ new Set([
 				id: "copy-location",
 				label: e.cmCopyLocation,
 				run: () => {
-					let e = this.#c ?? this.#b();
+					let e = this.#c ?? this.#D();
 					e && FF(PF(this.#e, e, Lj.options.defaultLocCoor));
 				}
 			}
@@ -36298,14 +36348,14 @@ var UF = /* @__PURE__ */ new Set([
 			let n = document.createElement("button");
 			return n.type = "button", n.className = "mapml-contextmenu-item", n.setAttribute("role", "menuitem"), n.dataset.id = e.id, n.tabIndex = -1, n.innerHTML = `<span>${e.label}</span>`, n.addEventListener("click", () => {
 				e.run(), this.close();
-			}), n.addEventListener("mouseenter", () => this.#C(t)), this.#r.appendChild(n), {
+			}), n.addEventListener("mouseenter", () => this.#A(t)), this.#r.appendChild(n), {
 				el: n,
 				id: e.id,
 				run: e.run
 			};
 		});
 	}
-	#b() {
+	#D() {
 		let e = this.#e.renderer.map;
 		if (!e) return;
 		let t = e.getCenter(), n = e.getCanvas();
@@ -36318,9 +36368,9 @@ var UF = /* @__PURE__ */ new Set([
 			}
 		};
 	}
-	#x(e) {
+	#O(e) {
 		if (this.#s) {
-			e && this.#C(0);
+			e && this.#A(0);
 			return;
 		}
 		this.#s = !0, this.#r.hidden = !1;
@@ -36329,18 +36379,18 @@ var UF = /* @__PURE__ */ new Set([
 		let n = this.#e.getBoundingClientRect(), r = this.#n.offsetLeft, i = this.#n.offsetWidth, a = this.#r.offsetWidth, o;
 		o = r + i + a <= n.width ? r + i : Math.max(0, r - a);
 		let s = t ? t.el.offsetTop : 0;
-		this.#r.style.left = `${o}px`, this.#r.style.top = `${this.#n.offsetTop + s}px`, this.#o = 0, e && this.#C(0);
+		this.#r.style.left = `${o}px`, this.#r.style.top = `${this.#n.offsetTop + s}px`, this.#o = 0, e && this.#A(0);
 	}
-	#S() {
+	#k() {
 		this.#s && (this.#s = !1, this.#r.hidden = !0, this.#i.find((e) => e.kind === "item" && e.id === "copy")?.el.setAttribute("aria-expanded", "false"));
 	}
-	#C(e) {
+	#A(e) {
 		if (!(e < 0 || e >= this.#a.length)) {
 			for (let t = 0; t < this.#a.length; t++) this.#a[t].el.tabIndex = t === e ? 0 : -1;
 			this.#o = e, this.#a[e].el.focus();
 		}
 	}
-	async #w() {
+	async #j() {
 		let e = "";
 		try {
 			e = await navigator.clipboard.readText();
@@ -36350,25 +36400,25 @@ var UF = /* @__PURE__ */ new Set([
 		}
 		e && await IF(this.#e, e, this.#t);
 	}
-	#T() {
+	#M() {
 		for (let e of this.#i) {
 			if (e.kind !== "item") continue;
 			let t = e.isEnabled();
 			e.el.disabled = !t, e.el.setAttribute("aria-disabled", t ? "false" : "true");
 		}
-		this.#E();
+		this.#N();
 	}
-	#E() {
+	#N() {
 		let e = this.#i.find((e) => e.kind === "item" && e.id === "fullscreen");
 		if (!e || e.kind !== "item") return;
-		let t = this.#O() ? this.#t.btnExitFullScreen : this.#t.btnFullScreen;
+		let t = this.#F() ? this.#t.btnExitFullScreen : this.#t.btnFullScreen;
 		e.el.innerHTML = `<span>${t}</span><kbd>F</kbd>`;
 	}
-	#D() {
+	#P() {
 		return this.#e;
 	}
-	#O() {
-		let e = this.#D();
+	#F() {
+		let e = this.#P();
 		if (!e) return !1;
 		let t = document.fullscreenElement;
 		if (!t) return !1;
@@ -36381,23 +36431,23 @@ var UF = /* @__PURE__ */ new Set([
 		}
 		return !1;
 	}
-	#k(e, t, n) {
-		this.#T(), this.#u = n, this.#n.hidden = !1;
+	#I(e, t, n) {
+		this.#M(), this.#u = n, this.#n.hidden = !1;
 		let r = this.#e.renderer.map?.keyboard;
-		r && r.isEnabled() && (r.disable(), this.#d = !0), this.#S();
+		r && r.isEnabled() && (r.disable(), this.#d = !0), this.#k();
 		let i = this.#e.getBoundingClientRect(), a = this.#n.offsetWidth, o = this.#n.offsetHeight, s = Math.max(0, i.width - a - 2), c = Math.max(0, i.height - o - 2);
 		if (this.#n.style.left = `${Math.min(Math.max(0, e), s)}px`, this.#n.style.top = `${Math.min(Math.max(0, t), c)}px`, n) {
-			let e = this.#R();
-			e >= 0 ? this.#B(e) : this.#n.focus();
+			let e = this.#G();
+			e >= 0 ? this.#q(e) : this.#n.focus();
 		}
 	}
 	get isOpen() {
 		return !this.#n.hidden;
 	}
 	close() {
-		this.#S(), !this.#n.hidden && (this.#n.hidden = !0, this.#d &&= (this.#e.renderer.map?.keyboard.enable(), !1), this.#u && this.#e.renderer.map?.getCanvas().focus(), this.#u = !1);
+		this.#k(), !this.#n.hidden && (this.#n.hidden = !0, this.#d &&= (this.#e.renderer.map?.keyboard.enable(), !1), this.#u && this.#e.renderer.map?.getCanvas().focus(), this.#u = !1);
 	}
-	#A(e) {
+	#L(e) {
 		if (!(!e.composedPath().includes(this.#e) && this.#n.hidden)) {
 			if (!this.#n.hidden && e.key === "Escape") {
 				e.preventDefault(), this.close();
@@ -36407,18 +36457,18 @@ var UF = /* @__PURE__ */ new Set([
 				e.preventDefault(), this.close();
 				return;
 			}
-			!this.#n.hidden && !e.defaultPrevented && (UF.has(e.code) && (this.#r.hidden ? this.#F(e) : this.#I(e), e.defaultPrevented) || this.#j(e)) || this.#n.hidden && this.#M(e);
+			!this.#n.hidden && !e.defaultPrevented && (UF.has(e.code) && (this.#r.hidden ? this.#H(e) : this.#U(e), e.defaultPrevented) || this.#R(e)) || this.#n.hidden && this.#z(e);
 		}
 	}
-	#j(e) {
+	#R(e) {
 		if (this.#n.hidden || e.ctrlKey || e.metaKey || e.altKey) return !1;
 		switch (e.code) {
-			case "KeyT": return e.preventDefault(), this.#V(), this.close(), !0;
-			case "KeyF": return e.preventDefault(), this.#H(), this.close(), !0;
+			case "KeyT": return e.preventDefault(), this.#J(), this.close(), !0;
+			case "KeyF": return e.preventDefault(), this.#Y(), this.close(), !0;
 			case "KeyD": return e.preventDefault(), this.#e.toggleDebug(), this.close(), !0;
 			case "KeyC": {
 				let t = this.#i.find((e) => e.kind === "item" && e.id === "copy");
-				return t && !t.el.disabled ? (e.preventDefault(), this.#B(this.#i.indexOf(t)), this.#x(!0), !0) : !1;
+				return t && !t.el.disabled ? (e.preventDefault(), this.#q(this.#i.indexOf(t)), this.#O(!0), !0) : !1;
 			}
 			case "KeyP": {
 				let t = this.#i.find((e) => e.kind === "item" && e.id === "paste");
@@ -36431,12 +36481,12 @@ var UF = /* @__PURE__ */ new Set([
 			default: return !1;
 		}
 	}
-	#M(e) {
+	#z(e) {
 		if (this.#n.hidden && (e.key === "ContextMenu" || e.shiftKey && e.key === "F10")) {
-			if (this.#N() || this.#P()) return;
+			if (this.#B() || this.#V()) return;
 			e.preventDefault();
 			let t = this.#e.renderer.map.getCanvas().getBoundingClientRect(), n = this.#e.getBoundingClientRect();
-			this.#k(t.left - n.left + t.width / 2, t.top - n.top + t.height / 2, !0);
+			this.#I(t.left - n.left + t.width / 2, t.top - n.top + t.height / 2, !0);
 			return;
 		}
 		if (e.altKey && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
@@ -36451,7 +36501,7 @@ var UF = /* @__PURE__ */ new Set([
 		}
 		(e.ctrlKey || e.metaKey) && e.code === "KeyR" && !e.altKey && !e.shiftKey && this.#e.historyLength > 1 && (e.preventDefault(), this.#e.reload());
 	}
-	#N() {
+	#B() {
 		let e = this.#e.shadowRoot;
 		if (!e) return !1;
 		let t = e.activeElement;
@@ -36459,37 +36509,37 @@ var UF = /* @__PURE__ */ new Set([
 		for (; t.shadowRoot && t.shadowRoot.activeElement;) t = t.shadowRoot.activeElement;
 		return !!t.closest("fieldset.mapml-layer-item, fieldset.mapml-layer-extent");
 	}
-	#P() {
+	#V() {
 		let e = this.#e.shadowRoot;
 		if (!e) return !1;
 		let t = e.querySelectorAll(".mapml-contextmenu.mapml-layer-menu, .mapml-contextmenu.mapml-extent-menu");
 		for (let e of t) if (!e.hidden) return !0;
 		return !1;
 	}
-	#F = (e) => {
+	#H = (e) => {
 		switch (e.code) {
 			case "Escape":
 				e.preventDefault(), this.close();
 				return;
 			case "ArrowDown":
-				e.preventDefault(), this.#L(1);
+				e.preventDefault(), this.#W(1);
 				return;
 			case "ArrowUp":
-				e.preventDefault(), this.#L(-1);
+				e.preventDefault(), this.#W(-1);
 				return;
 			case "ArrowRight": {
 				let t = this.#i[this.#l];
-				t && t.kind === "item" && t.id === "copy" && !t.el.disabled && (e.preventDefault(), this.#x(!0));
+				t && t.kind === "item" && t.id === "copy" && !t.el.disabled && (e.preventDefault(), this.#O(!0));
 				return;
 			}
 			case "Tab":
-				e.preventDefault(), this.#L(e.shiftKey ? -1 : 1);
+				e.preventDefault(), this.#W(e.shiftKey ? -1 : 1);
 				return;
 			case "Home":
-				e.preventDefault(), this.#B(this.#R());
+				e.preventDefault(), this.#q(this.#G());
 				return;
 			case "End":
-				e.preventDefault(), this.#B(this.#z());
+				e.preventDefault(), this.#q(this.#K());
 				return;
 			case "Enter":
 			case "Space": {
@@ -36502,11 +36552,11 @@ var UF = /* @__PURE__ */ new Set([
 			case "KeyC":
 			case "KeyP":
 			case "KeyV":
-				this.#j(e);
+				this.#R(e);
 				return;
 		}
 	};
-	#I = (e) => {
+	#U = (e) => {
 		let t = this.#a.length;
 		if (t !== 0) switch (e.code) {
 			case "Escape":
@@ -36516,24 +36566,24 @@ var UF = /* @__PURE__ */ new Set([
 			case "Tab": {
 				e.preventDefault();
 				let n = e.code === "Tab" && e.shiftKey ? -1 : 1;
-				this.#C((this.#o + n + t) % t);
+				this.#A((this.#o + n + t) % t);
 				return;
 			}
 			case "ArrowUp":
-				e.preventDefault(), this.#C((this.#o - 1 + t) % t);
+				e.preventDefault(), this.#A((this.#o - 1 + t) % t);
 				return;
 			case "ArrowLeft":
-				e.preventDefault(), this.#S();
+				e.preventDefault(), this.#k();
 				{
 					let e = this.#i.findIndex((e) => e.kind === "item" && e.id === "copy");
-					e >= 0 && this.#B(e);
+					e >= 0 && this.#q(e);
 				}
 				return;
 			case "Home":
-				e.preventDefault(), this.#C(0);
+				e.preventDefault(), this.#A(0);
 				return;
 			case "End":
-				e.preventDefault(), this.#C(t - 1);
+				e.preventDefault(), this.#A(t - 1);
 				return;
 			case "Enter":
 			case "Space":
@@ -36541,7 +36591,7 @@ var UF = /* @__PURE__ */ new Set([
 				return;
 		}
 	};
-	#L(e) {
+	#W(e) {
 		let t = this.#i.length;
 		if (t === 0) return;
 		let n = this.#l;
@@ -36549,26 +36599,26 @@ var UF = /* @__PURE__ */ new Set([
 			n = (n + e + t) % t;
 			let r = this.#i[n];
 			if (r.kind === "item" && !r.el.disabled) {
-				this.#B(n);
+				this.#q(n);
 				return;
 			}
 		}
 	}
-	#R() {
+	#G() {
 		for (let e = 0; e < this.#i.length; e++) {
 			let t = this.#i[e];
 			if (t.kind === "item" && !t.el.disabled) return e;
 		}
 		return -1;
 	}
-	#z() {
+	#K() {
 		for (let e = this.#i.length - 1; e >= 0; e--) {
 			let t = this.#i[e];
 			if (t.kind === "item" && !t.el.disabled) return e;
 		}
 		return -1;
 	}
-	#B(e) {
+	#q(e) {
 		if (e < 0) return;
 		for (let t = 0; t < this.#i.length; t++) {
 			let n = this.#i[t];
@@ -36578,15 +36628,15 @@ var UF = /* @__PURE__ */ new Set([
 		let t = this.#i[e];
 		t && t.kind === "item" && t.el.focus();
 	}
-	#V() {
+	#J() {
 		this.#e.controls = !this.#e.controls;
 	}
-	#H() {
-		if (this.#O()) {
+	#Y() {
+		if (this.#F()) {
 			document.exitFullscreen();
 			return;
 		}
-		let e = this.#D();
+		let e = this.#P();
 		e && e.requestFullscreen();
 	}
 }, GF = "\n.mapml-contextmenu {\n  position: absolute;\n  z-index: 10000;\n  min-width: 200px;\n  padding: 4px 0;\n  margin: 0;\n  background: #fff;\n  border: 1px solid #999;\n  border-radius: 4px;\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);\n  font: 13px/1.4 sans-serif;\n  color: #222;\n  list-style: none;\n  user-select: none;\n}\n.mapml-contextmenu[hidden] {\n  display: none;\n}\n.mapml-contextmenu-item {\n  display: block;\n  width: 100%;\n  padding: 4px 12px;\n  background: none;\n  border: 0;\n  text-align: left;\n  font: inherit;\n  color: inherit;\n  cursor: pointer;\n}\n.mapml-contextmenu-item:hover:not(:disabled),\n.mapml-contextmenu-item:focus:not(:disabled) {\n  background: #2a72d4;\n  color: #fff;\n  outline: none;\n}\n.mapml-contextmenu-item:disabled {\n  color: #aaa;\n  cursor: default;\n}\n.mapml-contextmenu-item kbd {\n  margin-left: 12px;\n  padding: 1px 4px;\n  font-family: inherit;\n  font-size: 11px;\n  color: #555;\n  background: #eee;\n  border: 1px solid #ccc;\n  border-radius: 3px;\n}\n.mapml-contextmenu-item:hover:not(:disabled) kbd,\n.mapml-contextmenu-item:focus:not(:disabled) kbd {\n  color: #eee;\n  background: rgba(255, 255, 255, 0.15);\n  border-color: rgba(255, 255, 255, 0.3);\n}\n.mapml-contextmenu-separator {\n  height: 1px;\n  margin: 4px 0;\n  background: #ddd;\n}\n.mapml-contextmenu-submenu-indicator {\n  margin-left: 12px;\n  color: #666;\n}\n.mapml-contextmenu-item:hover:not(:disabled) .mapml-contextmenu-submenu-indicator,\n.mapml-contextmenu-item:focus:not(:disabled) .mapml-contextmenu-submenu-indicator {\n  color: inherit;\n}\n", KF = "url(\"data:image/svg+xml,%0A%3Csvg width='26' height='52' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Cg transform='translate(0 -1000.4)'%3E%3Cuse transform='translate(0 26)' width='100%25' height='100%25' xlink:href='%23a'/%3E%3Cuse transform='translate(0 26)' width='100%25' height='100%25' xlink:href='%23b'/%3E%3Cuse transform='translate(0 26)' width='100%25' height='100%25' xlink:href='%23c'/%3E%3Cuse transform='translate(0 26)' width='100%25' height='100%25' xlink:href='%23d'/%3E%3Cpath id='a' transform='translate(0 1000.4)' d='M5 15v6h6v-2H7v-4z' color='%23000' fill='%23000'/%3E%3Cpath id='b' transform='translate(0 1000.4)' d='M21 15v6h-6v-2h4v-4z' color='%23000' fill='%23000'/%3E%3Cpath d='M10 1037.4v4l1 1h4l1-1v-4l-1-1h-4z' color='%23000' fill='%23000'/%3E%3Cpath id='d' d='M5 1011.4v-6h6v2H7v4z' color='%23000' fill='%23000'/%3E%3Cpath id='c' d='M21 1011.4v-6h-6v2h4v4z' color='%23000' fill='%23000'/%3E%3C/g%3E%3C/svg%3E\")", qF = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000'%3E%3Cpath d='M0 0h24v24H0V0z' fill='none'/%3E%3Cpath d='M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z'/%3E%3C/svg%3E\")", JF = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000'%3E%3Cpath d='M21 3L3 10.53v.98l6.84 2.65L12.48 21h.98L21 3z'/%3E%3C/svg%3E\")", YF = `
