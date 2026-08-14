@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Graceful degradation — Leaflet vs MapLibre</title>
+    <link rel="stylesheet" href="../global.css" />
+    <style>
+      body {
+        margin: 0;
+      }
+      header {
+        padding: 0.5rem 1rem;
+      }
+      header h1 {
+        margin: 0;
+        font-size: 1.1rem;
+      }
+      header p {
+        margin: 0.25rem 0 0;
+        font-size: 0.9rem;
+        max-width: 70ch;
+      }
+      header nav {
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+      }
+      .example {
+        border-top: 1px solid #ccc;
+        padding: 0.5rem 1rem 1rem;
+      }
+      .example > h2 {
+        font-size: 1rem;
+        margin: 0.5rem 0;
+      }
+      .example > p {
+        margin: 0 0 0.75rem;
+        font-size: 0.9rem;
+        max-width: 80ch;
+      }
+      /*
+        The two engines register the same custom-element names, so each map
+        must live in its own document. iframes give each its own custom
+        element registry; the identical MapML markup is loaded in both.
+      */
+      .panes {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+      }
+      .pane {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+      }
+      .pane h3 {
+        margin: 0 0 0.35rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+      .pane iframe {
+        width: 100%;
+        height: 60vh;
+        min-height: 320px;
+        border: 1px solid #ccc;
+      }
+      /* Small screens: stack both maps vertically. */
+      @media (max-width: 700px) {
+        .panes {
+          grid-template-columns: 1fr;
+        }
+        .pane iframe {
+          height: 55vh;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Graceful degradation</h1>
+      <p>
+        Identical <code>&lt;mapml-viewer&gt;</code> markup rendered by the
+        Leaflet build (left) and the MapLibre GL build (right). Each map runs
+        in its own iframe because both engines register the same custom-element
+        names. When an engine cannot honour the preferred resource, it falls
+        back to an alternative the author supplied.
+      </p>
+      <nav>
+        See also:
+        <a href="progressive-enhancement.html">progressive enhancement</a>
+      </nav>
+    </header>
+
+    <section class="example">
+      <h2>CBMTILE projection negotiation</h2>
+      <p>
+        Both maps declare <code>projection="CBMTILE"</code> and load the
+        <em>same</em> layer, whose Canada Base Map is offered in two
+        projections via a pair of <code>&lt;map-extent&gt;</code> elements: one
+        <code>units="CBMTILE"</code> (EPSG:3978 Lambert) and one
+        <code>units="OSMTILE"</code> (EPSG:3857 Web Mercator). Leaflet renders
+        the native CBMTILE extent (disabling the OSMTILE one); MapLibre GL, if
+        it cannot honour the Lambert projection, gracefully degrades to the
+        OSMTILE extent.
+      </p>
+      <div class="panes">
+        <section class="pane">
+          <h3>Leaflet — native CBMTILE (Lambert)</h3>
+          <iframe
+            src="leaflet-cbmt.html"
+            title="CBMTILE graceful degradation rendered with Leaflet"
+          ></iframe>
+        </section>
+        <section class="pane">
+          <h3>MapLibre GL — degrades to OSMTILE</h3>
+          <iframe
+            src="maplibre-cbmt.html"
+            title="CBMTILE graceful degradation rendered with MapLibre GL"
+          ></iframe>
+        </section>
+      </div>
+    </section>
+  </body>
+</html>

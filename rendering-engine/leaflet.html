@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>MapML rendered with Leaflet</title>
+    <script type="module" src="../dist/MapML.js/dist/mapml.js"></script>
+    <link rel="stylesheet" href="../global.css" />
+    <style>
+      html,
+      body {
+        height: 100%;
+      }
+      mapml-viewer:defined {
+        width: 100%;
+        height: 100%;
+      }
+      mapml-viewer:not(:defined) > * {
+        display: none;
+      }
+      map-layer {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <mapml-viewer view="globe" static projection="OSMTILE" lat="45.4" lon="-75.7" zoom="4" controls controlslist="view static">
+      <map-layer label="OpenStreetMap" checked>
+        <map-link
+          rel="license"
+          href="https://www.openstreetmap.org/copyright"
+          title="© OpenStreetMap contributors"
+        ></map-link>
+        <map-extent units="OSMTILE" checked>
+          <map-input name="z" type="zoom" min="0" max="19"></map-input>
+          <map-input
+            name="x"
+            type="location"
+            axis="column"
+            units="tilematrix"
+          ></map-input>
+          <map-input
+            name="y"
+            type="location"
+            axis="row"
+            units="tilematrix"
+          ></map-input>
+          <map-link
+            rel="tile"
+            tref="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+            type="image/png"
+          ></map-link>
+        </map-extent>
+      </map-layer>
+    </mapml-viewer>
+  </body>
+</html>
