@@ -36238,8 +36238,8 @@ var UF = /* @__PURE__ */ new Set([
 					}
 					e.run(), this.close();
 				}
-			}), t.addEventListener("mouseenter", () => {
-				t.disabled || (e.openSubmenu ? this.#O(!1) : this.#s && this.#k());
+			}), t.addEventListener("pointerenter", (n) => {
+				n.pointerType === "mouse" && (t.disabled || (e.openSubmenu ? this.#O(!1) : this.#s && this.#k()));
 			}), this.#n.appendChild(t), {
 				kind: "item",
 				el: t,
