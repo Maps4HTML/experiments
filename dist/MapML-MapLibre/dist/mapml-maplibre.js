@@ -35734,6 +35734,7 @@ var hF = class {
 	#i;
 	#a;
 	#o;
+	#s;
 	constructor(e) {
 		this.#e = e;
 	}
@@ -35749,16 +35750,20 @@ var hF = class {
 		let r = document.createElement("div");
 		r.className = "leaflet-control-layers-list", t.append(n, r);
 		let i = (e) => {
-			e?.preventDefault(), t.classList.add("leaflet-control-layers-expanded"), e instanceof MouseEvent && e.detail === 0 && setTimeout(() => this.#u(), 0);
+			e?.preventDefault(), t.classList.add("leaflet-control-layers-expanded"), e instanceof MouseEvent && e.detail === 0 && setTimeout(() => this.#d(), 0);
 		}, a = () => {
-			this.#l() || t.classList.remove("leaflet-control-layers-expanded");
+			this.#u() || t.classList.remove("leaflet-control-layers-expanded");
 		};
-		return n.addEventListener("click", i), t.addEventListener("mouseenter", i), t.addEventListener("mouseleave", a), this.#o = a, e.on("movestart", this.#o), this.#a = () => this.#s(), this.#e.addEventListener("mapml:layerschanged", this.#a), this.#t = t, this.#n = n, this.#r = r, this.#s(), t;
+		return n.addEventListener("click", i), n.addEventListener("touchend", (e) => {
+			e.preventDefault(), i();
+		}, { passive: !1 }), t.addEventListener("mouseenter", i), t.addEventListener("mouseleave", a), this.#s = (e) => {
+			e.target instanceof Node && !t.contains(e.target) && a();
+		}, e.getContainer().addEventListener("touchstart", this.#s, { passive: !0 }), this.#o = a, e.on("movestart", this.#o), this.#a = () => this.#c(), this.#e.addEventListener("mapml:layerschanged", this.#a), this.#t = t, this.#n = n, this.#r = r, this.#c(), t;
 	}
 	onRemove() {
-		this.#o && this.#i && this.#i.off("movestart", this.#o), this.#a && this.#e.removeEventListener("mapml:layerschanged", this.#a), this.#t?.remove(), this.#t = void 0, this.#n = void 0, this.#r = void 0, this.#i = void 0;
+		this.#o && this.#i && this.#i.off("movestart", this.#o), this.#s && this.#i && (this.#i.getContainer().removeEventListener("touchstart", this.#s), this.#s = void 0), this.#a && this.#e.removeEventListener("mapml:layerschanged", this.#a), this.#t?.remove(), this.#t = void 0, this.#n = void 0, this.#r = void 0, this.#i = void 0;
 	}
-	#s() {
+	#c() {
 		let e = this.#r, t = this.#t;
 		if (!e || !t) return;
 		let n = e.getRootNode(), r = e.contains(n.activeElement) ? n.activeElement : null;
@@ -35771,13 +35776,13 @@ var hF = class {
 		t.removeAttribute("hidden");
 		let a = document.createElement("fieldset");
 		a.className = "leaflet-control-layers-overlays";
-		for (let e of i) a.appendChild(this.#c(e));
+		for (let e of i) a.appendChild(this.#l(e));
 		e.appendChild(a), r !== null && e.contains(r) && r.focus({ preventScroll: !0 });
 	}
-	#c(e) {
+	#l(e) {
 		return e.getLayerControlHTML(this.#e.locale);
 	}
-	#l() {
+	#u() {
 		let e = this.#t;
 		if (!e) return !1;
 		let t = e.getRootNode();
@@ -35786,7 +35791,7 @@ var hF = class {
 		for (let e of n) if (!e.hidden) return !0;
 		return !1;
 	}
-	#u() {
+	#d() {
 		let e = this.#r;
 		e && e.querySelector("fieldset.mapml-layer-item input.leaflet-control-layers-selector")?.focus();
 	}
